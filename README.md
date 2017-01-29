@@ -1,6 +1,8 @@
 Aikar's Minecraft Timings Viewer v2
 =======
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/aikar/timings.svg)](https://greenkeeper.io/)
+
 This is the system behind <https://timings.aikar.co/> that processes Timing reports.
 Timings v2 requires one of the following server softwares:
   - PaperSpigot 1.8.9

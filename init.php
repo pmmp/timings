@@ -24,13 +24,14 @@ $dirName = basename(__DIR__);
 define('TIMINGS_ENV', $dirName === 'prod' || $dirName === 'v2' ? 'prod' : $ini["environment"]);
 define('MAX_CACHE_BYTES', 1024 * 512);
 
-if ($ini['trusted_ip'] === $_SERVER['REMOTE_ADDR'] || gethostbyname("aikarip") === $_SERVER['REMOTE_ADDR']) {
-	error_reporting(E_ALL & ~E_NOTICE);
-	ini_set('display_errors', true);
-	define('DEBUGGING', true);
-} else {
-	define('DEBUGGING', false);
-}
+//if ($ini['trusted_ip'] === $_SERVER['REMOTE_ADDR'] || gethostbyname("aikarip") === $_SERVER['REMOTE_ADDR']) {
+//	error_reporting(E_ALL & ~E_NOTICE);
+//	ini_set('display_errors', true);
+//	define('DEBUGGING', true);
+//} else {
+//	define('DEBUGGING', false);
+//}
+//	define('DEBUGGING', false);
 
 if (TIMINGS_ENV === 'dev') {
 	define('BASE_URL', $ini["base_url_dev"]);

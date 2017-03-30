@@ -1,0 +1,22 @@
+version: '3'
+services:
+    nginx:
+        build: .
+        image: timings-nginx
+        ports:
+            - "127.0.0.1:7081:80"
+        volumes:
+            - code:/var/www/html/timings
+        depends_on:
+            - phpfpm
+
+    phpfpm:
+        image: php:7.1-fpm
+        volumes:
+            - code:/var/www/html/timings
+        expose:
+            - 9000
+
+volumes:
+    code:
+    

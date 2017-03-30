@@ -1,0 +1,47 @@
+server {
+	listen 80;
+
+	index index.php;
+	root /var/www/html/timings;
+
+	server_name timings.pmmp.io;
+
+	location =/legacy/timings.js {
+		try_files $uri =404;
+	}
+
+	location =/legacy/timings.css {
+		try_files $uri =404;
+	}
+
+	location =/index.php {
+		#Taken from snippets/fastcgi-php.conf on Ubuntu 16.04;
+		##BEGIN
+		# regex to split $uri to $fastcgi_script_name and $fastcgi_path
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+
+		# Check that the PHP script exists before passing it
+		try_files $fastcgi_script_name =404;
+
+		# Bypass the fact that try_files resets $fastcgi_path_info
+		# see: http://trac.nginx.org/nginx/ticket/321
+		set $path_info $fastcgi_path_info;
+		fastcgi_param PATH_INFO $path_info;
+
+		fastcgi_index index.php;
+		##END
+		fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
+		include        fastcgi_params;
+
+		fastcgi_pass phpfpm:9000;
+		#fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+	}
+
+	location =/ {
+		allow all;
+	}
+
+	location ~ / {
+		deny all;
+	}
+}

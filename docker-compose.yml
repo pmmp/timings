@@ -11,6 +11,8 @@ services:
             - code:/var/www/html/timings
         depends_on:
             - phpfpm
+        restart: unless-stopped
+
 
     phpfpm:
         build: 
@@ -23,6 +25,7 @@ services:
             - code:/var/www/html/timings
         expose:
             - 9000
+        restart: unless-stopped
 
 volumes:
     code:

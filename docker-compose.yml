@@ -1,7 +1,9 @@
 version: '3'
 services:
     nginx:
-        build: .
+        build: 
+            context: .
+            dockerfile: Dockerfile-nginx
         image: timings-nginx
         ports:
             - "127.0.0.1:7081:80"
@@ -11,7 +13,12 @@ services:
             - phpfpm
 
     phpfpm:
-        image: php:7.1-fpm
+        build: 
+            context: .
+            dockerfile: Dockerfile-phpfpm
+            args:
+                - NR_INSTALL_KEY
+        image: timings-php_fpm
         volumes:
             - code:/var/www/html/timings
         expose:

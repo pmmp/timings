@@ -1,0 +1,8 @@
+FROM php:7.1-fpm
+ARG NR_INSTALL_KEY
+RUN [ ! -z $NR_INSTALL_KEY ] && echo $NR_INSTALL_KEY
+RUN curl https://download.newrelic.com/548C16BF.gpg | apt-key add -
+RUN echo "deb http://apt.newrelic.com/debian/ newrelic non-free" > /etc/apt/sources.list.d/newrelic.list && apt-get update
+RUN apt-get install -y newrelic-php5
+RUN newrelic-install install && echo
+RUN sed -i 's/newrelic.appname = "PHP Application"/newrelic.appname = "Timings"/' /usr/local/etc/php/conf.d/newrelic.ini

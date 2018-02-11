@@ -31,12 +31,11 @@ class Timings {
 		 * @var StorageService $storage
 		 */
 
-        $timingData = '';
+		$timingData = '';
 
-        if (!empty($_GET['url'])) {
+        if (!empty($_GET['url']) && strlen($id) < 20 && preg_match('/[A-Za-z0-9+\/=]+/', $_GET['url'])) {
             $id = $_GET['url'];
             $storage = new LegacyStorageService();
-            $id = util::sanitizeHex($id);
             $this->id = $id;
             $this->storage = $storage;
             $timingData = trim($storage->get($id));

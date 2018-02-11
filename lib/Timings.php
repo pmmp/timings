@@ -33,15 +33,15 @@ class Timings {
 
 		$timingData = '';
 
-        if (!empty($_GET['url']) && strlen($id) < 20 && preg_match('/[A-Za-z0-9+\/=]+/', $_GET['url'])) {
-            $id = $_GET['url'];
-            $storage = new LegacyStorageService();
-            $this->id = $id;
-            $this->storage = $storage;
-            $timingData = trim($storage->get($id));
-        }
+		if (!empty($_GET['url']) && strlen($id) < 20 && preg_match('/[A-Za-z0-9+\/=]+/', $_GET['url'])) {
+			$id = $_GET['url'];
+			$storage = new LegacyStorageService();
+			$this->id = $id;
+			$this->storage = $storage;
+			$timingData = trim($storage->get($id));
+		}
 
-        LegacyHandler::load($timingData);
-        exit;
+		LegacyHandler::load($timingData);
+		exit;
 	}
 } 

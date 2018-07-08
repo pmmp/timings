@@ -9,14 +9,11 @@
  * @license MIT
  */
 namespace Starlis\Timings;
-
 trait Singleton {
 	protected static $instance;
-
 	function __wakeup() {
 		static::$instance = $this;
 	}
-
 	/**
 	 * @return $this
 	 */

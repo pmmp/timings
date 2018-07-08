@@ -6,23 +6,7 @@
 .idea/uiDesigner.xml
 # contains user specific settings
 .idea/libraries/Dart_Packages.xml
-.babel-cache
-.cache
-
-dist/
-static/dist
-static/timings.css
-static/timings.min.js
-static/timings.css.map
-static/.sass-cache
 
 config.dev.ini
 nbproject/
 
-.pub
-pubspec.lock
-.packages
-build/
-**/packages/
-node_modules
-npm-debug.log

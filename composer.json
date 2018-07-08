@@ -8,10 +8,7 @@
 			"email": "aikar@aikar.co"
 		}
 	],
-	"require": {
-		"brandonwamboldt/utilphp": "^1.1",
-		"davedevelopment/stiphle": "dev-master"
-	},
+	"require": {},
 	"autoload": {
 		"psr-4": {
 			"Starlis\\Timings\\": "lib/"

@@ -9,4 +9,6 @@
 
 config.dev.ini
 nbproject/
+composer.phar
+.env
 

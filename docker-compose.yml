@@ -7,26 +7,47 @@ services:
         image: timings-nginx
         ports:
             - "127.0.0.1:7081:80"
-        volumes:
-            - code:/var/www/html/timings
         depends_on:
             - phpfpm
         restart: unless-stopped
 
-
     phpfpm:
+        image: timings-phpfpm
         build: 
             context: .
             dockerfile: Dockerfile-phpfpm
-            args:
-                - NR_INSTALL_KEY
-        image: timings-php_fpm
-        volumes:
-            - code:/var/www/html/timings
+        env_file:
+            - .env
+        environment:
+            # Don't expose MySQL root password to PHP
+            MYSQL_ROOT_PASSWORD: ''
         expose:
             - 9000
+        depends_on:
+            - mysql
         restart: unless-stopped
 
+    mysql:
+        build: database/
+        image: timings-mysql
+        environment:
+            #Unset MYSQL_HOST to allow MySQL to start
+            #https://github.com/docker-library/mysql/issues/82#issuecomment-230292558
+            MYSQL_HOST: ''
+        env_file:
+            - .env
+        volumes:
+            - mysql:/var/lib/mysql
+        restart: unless-stopped
+
+    #pma:
+    #    image: phpmyadmin/phpmyadmin:4.8
+    #    depends_on:
+    #        - mysql
+    #    ports:
+    #        - "127.0.0.1:7082:80"
+    #    environment:
+    #        PMA_HOST: 'mysql'
+
 volumes:
-    code:
-    
+    mysql:

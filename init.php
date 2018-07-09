@@ -40,13 +40,8 @@ if (TIMINGS_ENV === 'dev') {
 	define('BASE_URL', $ini["base_url_prod"]);
 	define('BASE_URL_VIEW', $ini["base_url_view_prod"]);
 }
-
 require_once __DIR__ . "/lib/util.php";
 require_once __DIR__ . '/vendor/autoload.php';
-/*spl_autoload_register(function ($class_name) {
-    include 'lib/' . $class_name . '.php';
-});*/
-
 // To make it a little harder to try to exploit the uploader, implement a closed source version
 // of the security class if it exists, else fall back to the simple rules.
 if (!empty($ini['custom_security'])) {

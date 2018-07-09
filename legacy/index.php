@@ -9,9 +9,6 @@
  * @license MIT
  */
 
-if (!defined('TIMINGS_ENV')) {
-	die;
-}
 global $legacyData;
 
 

@@ -58,10 +58,13 @@ class Timings {
                         $timingData = trim($storage->get($id));
                 } else if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_GET['upload']) && $_GET['upload'] === 'true') {
                         $storage = new MySqlStorageService($mysqlHost, $mysqlDatabase, $mysqlUser, $mysqlPassword);
-
                         $id = $storage->set($_POST['data']);
-                        header('Content-Type: application/json');
-                        echo \json_encode(["id" => $id]);
+                        if (!empty($_POST['browser']) && $_POST['browser'] !== 'true') {
+                            header('Content-Type: application/json');
+                            echo \json_encode(["id" => $id]);
+                            die();
+                        }
+                        header('Location: ?id='.$id);
                         die();
                 }
 

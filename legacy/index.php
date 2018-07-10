@@ -225,7 +225,7 @@ ob_start();
 <?php
 /*
 
-<!--button id="paste_toggle">Paste Contents</button>
+ <!--button id="paste_toggle">Paste Contents</button>
 <form id="url" method="POST"  style="padding-top: 5px">
 	Paste ID:
 
@@ -234,16 +234,10 @@ ob_start();
 	<input type="submit" value="View"/>
 </form>
 <br />
-(Press Paste Contents and paste your timings to get a shareable link)
-
-
-<form id="paste" method='post' style="display:none">
-	<br/>
-	<textarea id="uploadbox" name='timings' cols="100" rows="8"><?php echo htmlentities($legacyData); ?></textarea>
-	<input type='submit' value='Paste'/>
-</form-->
-<?php
+(Press Paste Contents and paste your timings to get a shareable link) 
 */ ?>
+
+
 <div style="width:100%;clear:left;">
 	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<ins class="adsbygoogle"
@@ -271,8 +265,14 @@ if (!$legacyData) {
 	<div style="padding:50px;margin:auto;text-align: center">
 		To use the Timings parser, please type <b>/timings paste</b> in game, console or RCON.
 		It will then give you a link to view it on this page.<br/><br/>
+		Or paste your timings output below
 
-		The old Paste option has been removed for now as it is not needed.
+		<form id="paste" method='post' action="?upload=true">
+			<br/>
+			<textarea id="uploadbox" name='data' cols="100" rows="8"></textarea></br>
+			<form type="hidden" name="browser" value="true">
+			<input type='submit' value='Paste'/>
+		</form>
 	</div>
 
 	<?php

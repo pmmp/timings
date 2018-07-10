@@ -7,6 +7,8 @@ services:
         image: timings-nginx
         ports:
             - "127.0.0.1:7081:80"
+        # volumes:
+        #     - "./:/var/www/html/timings"
         depends_on:
             - phpfpm
         restart: unless-stopped
@@ -18,6 +20,8 @@ services:
             dockerfile: Dockerfile-phpfpm
         env_file:
             - .env
+        # volumes:
+        #     - "./:/var/www/html/timings"
         environment:
             # Don't expose MySQL root password to PHP
             MYSQL_ROOT_PASSWORD: ''

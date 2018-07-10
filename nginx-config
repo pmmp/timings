@@ -3,6 +3,7 @@ server {
 
 	index index.php;
 	root /var/www/html/timings;
+	client_max_body_size 260k;
 
 	server_name timings.pmmp.io;
 

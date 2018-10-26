@@ -62,9 +62,6 @@ foreach (explode("\n", $legacyData) as $line) {
 				$xplugin = $taskmatch[1];
 				$m[0] = 'Task: ' . str_replace(':', ' ', preg_replace('/.*? Id\:\((.*)\)/', '\1', $taskmatch[2]));
 
-				if (preg_match('/.*\.(.*)$/', $m[0], $cleanmatch)) {
-					$m[0] = "Task: " . $cleanmatch[1];
-				}
 				$active =& $report[trim($xplugin)];
 			}
 

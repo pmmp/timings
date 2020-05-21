@@ -197,9 +197,6 @@ ob_start();
 			href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=payments%40starlis%2ecom&lc=US&item_name=Aikar%20Timings&no_note=0&currency_code=USD"><b>[donating]</b></a>
 		<br/>
 
-		<p>For Timings v2, a much more in depth system, you need to use<br />
-			<a href="https://paper.emc.gs" title="Paper - Minecraft Server">Paper Minecraft Server</a> (Spigot Fork).<br/>
-		</p>
 	</div>
 
 	<div class="topright" style="float: right;margin:0 20px">

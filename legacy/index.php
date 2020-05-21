@@ -501,7 +501,7 @@ if ($legacyData) {
 		echo " - Sample Time: " . round($sample / 1000 / 1000 / 1000, 3) . 's';
 	}
 	if ($version) {
-		echo "  - Spigot Version: $version\n";
+		echo "  - Pocketmine-MP Version: $version\n";
 	}
 
 	$activatedPercent = 1;

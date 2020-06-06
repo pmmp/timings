@@ -24,8 +24,8 @@ $subkey = 'Minecraft - Breakdown (counted by other timings, not included in tota
 $report = array($subkey => array('Total' => 0), 'Minecraft' => array('Total' => 0));
 $current = null;
 $version = '';
-if (preg_match('/# Version (git-(?:Paper)?Spigot-)?(.*)/i', $legacyData, $m)) {
-	$version = $m[2];
+if (preg_match('/# PocketMine-MP (.*)/i', $legacyData, $m)) {
+	$version = $m[1];
 }
 $highEntityTick = false;
 
@@ -197,9 +197,6 @@ ob_start();
 			href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=payments%40starlis%2ecom&lc=US&item_name=Aikar%20Timings&no_note=0&currency_code=USD"><b>[donating]</b></a>
 		<br/>
 
-		<p>For Timings v2, a much more in depth system, you need to use<br />
-			<a href="https://paper.emc.gs" title="Paper - Minecraft Server">Paper Minecraft Server</a> (Spigot Fork).<br/>
-		</p>
 	</div>
 
 	<div class="topright" style="float: right;margin:0 20px">
@@ -501,7 +498,7 @@ if ($legacyData) {
 		echo " - Sample Time: " . round($sample / 1000 / 1000 / 1000, 3) . 's';
 	}
 	if ($version) {
-		echo "  - Spigot Version: $version\n";
+		echo "  - PocketMine-MP Version: $version\n";
 	}
 
 	$activatedPercent = 1;

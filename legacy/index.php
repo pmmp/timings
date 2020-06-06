@@ -24,8 +24,8 @@ $subkey = 'Minecraft - Breakdown (counted by other timings, not included in tota
 $report = array($subkey => array('Total' => 0), 'Minecraft' => array('Total' => 0));
 $current = null;
 $version = '';
-if (preg_match('/# Version (git-(?:Paper)?Spigot-)?(.*)/i', $legacyData, $m)) {
-	$version = $m[2];
+if (preg_match('/# PocketMine-MP (.*)/i', $legacyData, $m)) {
+	$version = $m[1];
 }
 $highEntityTick = false;
 

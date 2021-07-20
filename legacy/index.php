@@ -534,8 +534,11 @@ if ($legacyData) {
                 $serverLoad = str_replace(',', '', $m[0]);
                 $avgTPS = $numTicks / $desiredTicks * 20;
                 if ($serverLoad < 95 && $avgTPS < 19) {
-                        $recommendations[] = "<b>Notice: Your AVG TPS is less than 19 but server load is less than 95. This may mean your server is having memory issues (leak or not enough). " .
-                                "<br />This is usually a sign that Java is spending too much time Garbage Collecting. Try using -XX:+UseG1GC -XX:MaxGCPauseMillis=50 flags and increasing your -Xmx.</b>";
+                        $recommendations[] = "<b>Notice: Your AVG TPS is less than 19 but server load is less than 95." .
+                                "<br />This means that something (not the server's main thread) is hogging the CPU." . 
+				"<br />This might be because of overloaded AsyncWorkers (plugins scheduling too many AsyncTasks or AsyncTasks running for too long)," .
+				"<br />too much activity on the network, or something else might be running on the machine and hogging the CPU." .
+				"<br />You should check the machine's overall CPU usage to see if anything else might be using a lot of CPU.</b>";
                 } else if ($serverLoad >= 99) {
                         $recommendations[] = "<b>Your server is lagging because it is overloaded (99%+ Server Load). Try reducing View Distance if it is above 4.</b>";
                 }

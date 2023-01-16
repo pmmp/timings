@@ -3,6 +3,9 @@
 namespace Starlis\Timings;
 
 class MySqlStorageService extends StorageService {
+
+    private $db;
+
     public function __construct($host, $database, $username, $password) {
         $this->db = new \PDO("mysql:host=$host;dbname=$database;charset=utf8", $username, $password);
         $this->db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);

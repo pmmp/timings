@@ -44,7 +44,7 @@ class Timings {
                 $mysqlUser = getenv('MYSQL_USER');
                 $mysqlPassword = getenv('MYSQL_PASSWORD');
 
-                if (!empty($_GET['url']) && strlen($id) < 20 && preg_match('/[A-Za-z0-9+\/=]+/', $_GET['url'])) {
+                if (!empty($_GET['url']) && strlen($_GET['url']) < 20 && preg_match('/[A-Za-z0-9+\/=]+/', $_GET['url'])) {
                         $id = $_GET['url'];
                         $storage = new LegacyStorageService();
                         $this->id = $id;

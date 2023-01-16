@@ -8,7 +8,6 @@
 			"email": "aikar@aikar.co"
 		}
 	],
-	"require": {},
 	"autoload": {
 		"psr-4": {
 			"Starlis\\Timings\\": "lib/"
@@ -16,5 +15,8 @@
 	},
 	"config": {
 		"autoloader-suffix": "TimingsClassLoader"
+	},
+	"require-dev": {
+		"phpstan/phpstan": "1.9.11"
 	}
 }

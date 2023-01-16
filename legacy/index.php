@@ -113,7 +113,7 @@ foreach ($report as &$rep) {
 		if ($k == 'Total') $total += $ent;
 		$totalTimings += $ent[1];
 
-		if (stristr($k, ' - entityBaseTick') || stristr($k, ' - entityTick') || $k == 'Full Server Tick') {
+		if ($numTicks === 0 && (stristr($k, ' - entityBaseTick') || stristr($k, ' - entityTick') || $k == '** Full Server Tick') || $k == '** Server Tick Update Cycle') {
 			$numTicks = max($ent[1], $numTicks);
 		}
 		if ($k == '** entityBaseTick' || $k == 'entityBaseTick' || $k == '** tickEntity') {
@@ -349,7 +349,7 @@ if ($sample) {
 				$sevent = "<b>" . trim(substr($event, 2)) . "</b>";
 			}
 
-			if ($event == "** Full Server Tick") {
+			if ($event == "Full Server Tick") {
 				$sevent = showInfo('fst', 'Full Server Tick');
 				$serverLoad = $pct_tick;
 			}

@@ -283,30 +283,54 @@ if ($sample) {
 	<?php
 	foreach ($report as $plugin => $timings) {
 		$ptotal = $timings['Total'];
+		$pctStyle = '';
+		$pct = 0;
+		$totals = 0;
+		$pctStr = '';
 		if ($sample) {
+			$pct = $ptotal / ($sample ? $sample : $total);
 			if ($plugin == 'Minecraft') {
-				$pct = pct($ptotal / ($sample ? $sample : $total), 1, 5, 70, 40, 20);
+				$pctStyle = pct($pct, 1, 70, 40, 20);
 			} else {
-				$pct = pct($ptotal / ($sample ? $sample : $total), 1, 5, 6, 3, 1);
+				$pctStyle = pct($pct, 1, 6, 3, 1);
 			}
-			$totals = round($ptotal / 1000 / 1000 / 1000, 3) . ' s';
+			$pctStr = number_format($pct * 100, 2) . '%';
+			$totals = number_format($ptotal / 1000 / 1000 / 1000, 3) . ' s';
 		}
 		unset($timings['Total']);
 		ob_start();
-		echo '<div class="sectionHeader">';
-		echo "<hr /><div class='title'>";
-		echo pad($plugin, 21, true);
-		if ($plugin != $subkey) {
-			echo "Total: $totals\tPct: $pct";
+		echo '<div>';
+		echo <<<TITLE
+<hr/>
+<div class="title">
+<table>
+	<tr>
+		<td>$plugin</td>
+TITLE;
+		if ($plugin != $subkey){
+			echo <<<TITLE
+		<td>Total: $totals</td>
+		<td class="$pctStyle">Pct: $pctStr</td>
+TITLE;
 		}
-		echo "</div><hr />";
-		echo "<span class='head'><pre>  " . pad("Pct Total", 10) . "\t" . pad("Pct Tick", 8) . "\t"
-			. pad("Total", 8) . "\t" . pad("Avg", 9) . "\t" . pad("PerTick", 8) . "\t" . pad("Count", 10);
-
-		echo "\t\tEvent\n</pre></span>";
-		echo "<hr />";
-		echo '</div>';
-		echo '<div class="sectionReport">';
+		echo <<<TITLE
+	</tr>
+</table>
+</div>
+<hr/>
+TITLE;
+		echo "<table>";
+		echo <<<HEADER
+<tr>
+	<th class="metrics-column">Pct Total</th>
+	<th class="metrics-column">Pct Tick</th>
+	<th class="metrics-column">Total</th>
+	<th class="metrics-column">Avg</th>
+	<th class="metrics-column">PerTick</th>
+	<th class="metrics-column">Count</th>
+	<th class="event-name-column">Event</th>
+</tr>
+HEADER;
 		$i = 0;
 		$hiddenelem = false;
 		$shown = 0;
@@ -321,24 +345,23 @@ if ($sample) {
 				$avg = $avg * $timesPerTick;
 			}
 
+			$countStr = number_format($time[1] / 1000, 1) . 'k';
 
-			$avg = pad($avg, 9);
-			$count = round($time[1] / 1000, 2);
-			$count = pad(number_format($count, 1) . 'k', 11);
+			$pctTick = ($avg / 1000 / 1000 / 50) * 100;
+			$pctTickStyle = pct($pctTick, 1 /*$count * 1000 / $numTicks*/, 40, 15, 3);
+			$pctTickStr = number_format($pctTick, 2) . '%';
+			$avg = number_format($avg / 1000 / 1000, 2);
 
-			$pct_tick = pct($avg / 1000 / 1000 / 50, 1 /*$count * 1000 / $numTicks*/, 8, 40, 15, 3);
-			$avg = pad(number_format(round($avg / 1000 / 1000, 2), 2) . ' ms', 12);
-
-			$stime = number_format(round($time[0] / 1000 / 1000 / 1000, 2), 2) . ' s';
-			$stime = pad($stime, 8);
-			$pct_tot_raw = ($time[0] / ($sample ? $sample : $total));
-			$pct_tot = pct($pct_tot_raw, 1, 10, 50, 20, 10);
+			$stime = number_format($time[0] / 1000 / 1000 / 1000, 2);
+			$pctTotal = ($time[0] / ($sample ? $sample : $total)) * 100;
+			$pctTotalStyle = pct($pctTotal, 1, 50, 20, 10);
+			$pctTotalStr = number_format($pctTotal, 2) . '%';
 			$origevent = $event;
 			if (preg_match("/\.([a-zA-Z0-9\$_]+::.+)/s", $event, $em)) {
 				$event = $em[1];
 			}
 			$event = trim($event);
-                        if ($event == "Task: Unknown(Single)" && substr($plugin, 0, 6) == "dynmap" && $pct_tot_raw > 0.005) {
+                        if ($event == "Task: Unknown(Single)" && substr($plugin, 0, 6) == "dynmap" && $pctTotal > 0.005) {
                                 $recommendations[] = "<b>You are using DynMap, and its rendering is causing you a decent amoung of lag due to it loading chunks.</b>";
                         }
 
@@ -351,7 +374,8 @@ if ($sample) {
 
 			if ($event == "Full Server Tick") {
 				$sevent = showInfo('fst', 'Full Server Tick');
-				$serverLoad = $pct_tick;
+				$serverLoadStr = "<span class=\"$pctTickStyle\">$pctTickStr</span>";
+				$serverLoad = $pctTick;
 			}
 
 			if ($event == "** Connection Handler") {
@@ -365,7 +389,7 @@ if ($sample) {
 				$sevent = showInfo('sched', 'Plugin Scheduler');
 			}
 			$i++;
-			if (($plugin == $subkey && $i >= 11) || $pct_tot_raw < 0.0003 || ($plugin != "Minecraft" && $i >= 6 && $plugin != $subkey)) {
+			if (($plugin == $subkey && $i >= 11) || $pctTotal < 0.0003 || ($plugin != "Minecraft" && $i >= 6 && $plugin != $subkey)) {
 				$disabled = " hidden";
 				$hiddenelem = true;
 			} else {
@@ -373,15 +397,24 @@ if ($sample) {
 				$shown++;
 			}
 
-			$timesPerTick = pad(number_format($timesPerTick, $timesPerTick > 10 ? 0 : 1), 4);
-			echo "<span class='event $disabled'><pre>  $pct_tot\t$pct_tick\t$stime\t$avg\t$timesPerTick\t$count";
-
-			echo "\t    $sevent\n</pre></span>";
+			$timesPerTick = number_format($timesPerTick, $timesPerTick > 10 ? 0 : 1);
+			echo <<<ROW
+<tr class='event $disabled'>
+	<td class="metrics-column $pctTotalStyle">$pctTotalStr</td>
+	<td class="metrics-column $pctTickStyle">$pctTickStr</td>
+	<td class="metrics-column">$stime s</td>
+	<td class="metrics-column">$avg ms</td>
+	<td class="metrics-column">$timesPerTick</td>
+	<td class="metrics-column">$countStr</td>
+	<td class="event-name-column">$sevent</td>
+</tr>
+ROW;
 		}
+
+		echo "</table>";
 		if ($hiddenelem) {
 			echo "<button class='show_rest'>Show rest...</button><br />";
 		}
-
 		echo '</div>';
 		$buffer = ob_get_contents();
 		ob_end_clean();
@@ -470,7 +503,6 @@ if ($sample) {
 		Async Tasks do not count on this entry. See all Task: Entries for your plugins to find a culprit.
 	</div>
 	<script type="text/javascript">
-		$('.learnmore').button();
 		function showInfo(btn) {
 			$("#info-" + $(btn).attr('info')).dialog({width: "80%", modal: true});
 		}
@@ -510,7 +542,7 @@ if ($legacyData) {
 		if ($totalAvgEntities > 800 && $activatedPercent > .70) {
 			$highEntityTick = true;
 		}
-		$activatedPercent = pct($activatedPercent, 1, 5, 75, 60, 50);
+		$activatedPercent = pct($activatedPercent, 1, 75, 60, 50);
 		echo number_format($activatedAvgEntities, 2);
 		echo ' / ';
 		echo number_format($totalAvgEntities, 2);
@@ -528,7 +560,7 @@ if ($legacyData) {
 		$desiredTicks = $sample / 1000 / 1000 / 1000 * 20;
 		echo " - Average TPS: " . number_format($numTicks / $desiredTicks * 20, 2);
 	}
-	echo " - Server Load: $serverLoad";
+	echo " - Server Load: $serverLoadStr";
 	echo '</pre></span><hr />';
         if (preg_match("#[\\d,\\.]+#", $serverLoad, $m)) {
                 $serverLoad = str_replace(',', '', $m[0]);
@@ -554,22 +586,16 @@ if ($legacyData) {
 
 echo $buffer;
 
-function pct($pct, $mod = 1, $pad = 8, $high = 0, $med = 0, $low = 0) {
-	$num = round($pct * 100, 2);
-	$prefix = '';
-	$suffix = '';
-	if ($num * $mod > $high && $high != 0) {
-		$prefix = '<span style="background:black;color:red">';
-		$suffix = '</span>';
-	} elseif ($num * $mod > $med && $med != 0) {
-		$prefix = '<span style="background:black;color:orange">';
-		$suffix = '</span>';
-	} else if ($num * $mod > $low && $low != 0) {
-		$prefix = '<span style="background:black;color:yellow">';
-		$suffix = '</span>';
+function pct($pct, $mod = 1, $high = 0, $med = 0, $low = 0) {
+	if ($pct * $mod > $high && $high != 0) {
+		return 'high-highlight';
+	} elseif ($pct * $mod > $med && $med != 0) {
+		return 'mid-highlight';
+	} else if ($pct * $mod > $low && $low != 0) {
+		return 'low-highlight';
 	}
 
-	return $prefix . pad(number_format($num, 2) . '%', $pad) . $suffix;
+	return '';
 }
 
 function pad($string, $len, $right = false) {

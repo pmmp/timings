@@ -299,7 +299,7 @@ HEADER;
 				$sevent = showInfo('sched', 'Plugin Scheduler');
 			}
 			$i++;
-			if (($plugin == $subkey && $i >= 11) || $pctTotal < 0.0003 || ($plugin != "Minecraft" && $i >= 6 && $plugin != $subkey)) {
+			if ((($plugin == "Minecraft" || $plugin == $subkey) && $i >= 11) || $pctTotal < 0.0003 || ($plugin != "Minecraft" && $i >= 6 && $plugin != $subkey)) {
 				$disabled = " hidden";
 				$hiddenelem = true;
 			} else {

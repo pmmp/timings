@@ -429,45 +429,63 @@ ob_end_clean();
 echo $head;
 
 if ($legacyData) {
-	echo "<span class='head'><pre>";
+	echo "<span class='head'>";
 
-	echo "Total: " . round($total / 1000 / 1000 / 1000, 3) . "s (Ticks: $numTicks)";
+	$sampleTimeS = 0;
 	if ($sample) {
-		echo " - Sample Time: " . round($sample / 1000 / 1000 / 1000, 3) . 's';
+		$sampleTimeS = round($sample / 1000 / 1000 / 1000, 3);
 	}
-	if ($version) {
-		echo "  - PocketMine-MP Version: $version\n";
-	}
+	$totalTimeS = round($total / 1000 / 1000 / 1000, 3);
 
+	?>
+		<table>
+		<tr>
+			<td><b>PocketMine-MP Version</b></td>
+			<td><?php echo $version ?></td>
+		</tr>
+		<tr>
+			<td><b>Sample time</b></td>
+			<td><?php echo $sampleTimeS ?> s (Ticks: <?php echo $numTicks ?>)</td>
+		</tr>
+		<tr>
+			<td><b>Total CPU time spent</b></td>
+			<td><?php echo $totalTimeS ?></td>
+		</tr>
+	<?php
 	$activatedPercent = 1;
-	if ($activatedEntityTicks && $numTicks) {
-		echo "Average Entities: ";
-		$activatedAvgEntities = $activatedEntityTicks / $numTicks;
-		$totalAvgEntities = $entityTicks / $numTicks;
-		$activatedPercent = $activatedAvgEntities / $totalAvgEntities;
-		if ($totalAvgEntities > 800 && $activatedPercent > .70) {
-			$highEntityTick = true;
-		}
-		$activatedPercent = pct($activatedPercent, 1, 75, 60, 50);
-		echo number_format($activatedAvgEntities, 2);
-		echo ' / ';
-		echo number_format($totalAvgEntities, 2);
-		if (($totalAvgEntities - ($playerTicks / $numTicks)) > 300) {
-			echo " ($activatedPercent)";
-		}
-
-	} else if ($entityTicks && $numTicks) {
-		echo " - Average Entities: " . number_format($entityTicks / $numTicks, 2);
+	if ($entityTicks && $numTicks) {
+		?>
+		<tr>
+			<td><b>Average Entities</b></td>
+			<td><?php echo number_format($entityTicks / $numTicks, 2) ?></td>
+		</tr>
+		<?php
 	}
 	if ($playerTicks && $numTicks) {
-		echo " - Average Players: " . number_format($playerTicks / $numTicks, 2);
+		?>
+		<tr>
+			<td><b>Average Players</b></td>
+			<td><?php echo number_format($playerTicks / $numTicks, 2) ?></td>
+		</tr>
+		<?php
 	}
 	if ($numTicks && $sample) {
 		$desiredTicks = $sample / 1000 / 1000 / 1000 * 20;
-		echo " - Average TPS: " . number_format($numTicks / $desiredTicks * 20, 2);
+		?>
+		<tr>
+			<td><b>Average TPS</b></td>
+			<td><?php echo number_format($numTicks / $desiredTicks * 20, 2) ?></td>
+		</tr>
+		<?php
 	}
-	echo " - Server Load: $serverLoadStr";
-	echo '</pre></span><hr />';
+	?>
+		<tr>
+			<td><b>Server Load</b></td>
+			<td><?php echo $serverLoadStr ?></td>
+		</tr>
+	</table>
+	<?php
+	echo '</span><hr />';
         if (preg_match("#[\\d,\\.]+#", $serverLoad, $m)) {
                 $serverLoad = str_replace(',', '', $m[0]);
                 $avgTPS = $numTicks / $desiredTicks * 20;

@@ -33,15 +33,9 @@ div.title {
 hr {
     margin: 0;
 }
-span.head pre {
+span.head {
     padding: 0;
     margin: 5px;
-}
-pre {
-    tab-size: 4;
-    -moz-tab-size: 4;
-    -o-tab-size:  4;
-
 }
 .sectionReport button {
     float: none;

@@ -1,5 +1,5 @@
 
-FROM php:7.2-fpm
+FROM php:8.2-fpm
 RUN docker-php-ext-install -j$(nproc) mysqli pdo pdo_mysql
 RUN echo 'display_errors=off;' >> /usr/local/etc/php/php.ini
 COPY . /var/www/html/timings

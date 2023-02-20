@@ -27,8 +27,6 @@ $version = '';
 if (preg_match('/# PocketMine-MP (.*)/i', $legacyData, $m)) {
 	$version = $m[1];
 }
-$highEntityTick = false;
-
 // legacy
 $exclude = array('entityAIJump', 'entityAILoot', 'entityAIMove',
 	'entityTickRest', 'entityAI', 'entityBaseTick');
@@ -105,11 +103,10 @@ $entityTicks = 0;
 $playerTicks = 0;
 $totalTimings = 0;
 
-$activatedEntityTicks = 0;
 $report = array_sort($report, 'Total', SORT_DESC);
 foreach ($report as &$rep) {
 	arsort($rep);
-	array_walk($rep, function (&$ent, $k) use (&$totalTimings, &$total, &$entityTicks, &$numTicks, &$playerTicks, &$activatedEntityTicks) {
+	array_walk($rep, function (&$ent, $k) use (&$totalTimings, &$total, &$entityTicks, &$numTicks, &$playerTicks) {
 		if ($k == 'Total') {
 			$total += $ent;
 			return;
@@ -121,9 +118,6 @@ foreach ($report as &$rep) {
 		}
 		if ($k == '** entityBaseTick' || $k == 'entityBaseTick' || $k == '** tickEntity') {
 			$entityTicks = $ent[1];
-		}
-		if ($k == "** activatedTickEntity") {
-			$activatedEntityTicks = $ent[1];
 		}
 		if ($k == "** tickEntity - EntityPlayer") {
 			$playerTicks = $ent[1];
@@ -193,12 +187,6 @@ if (!$legacyData) {
 	<?php
 
 } else {
-if ($highEntityTick) {
-	$recommendations[] = "Consider reducing your entity-activation-range settings, as your activation rate is high (" . $activatedPercent . "). Recommended: monsters 24, animals 16, misc 12";
-}
-if ($sample) {
-//    echo "Sample time is provided, so all percentages are based off that\n\n";
-}
 ?>
 <div id="reports">
 	<?php
@@ -282,10 +270,6 @@ HEADER;
 				$event = $em[1];
 			}
 			$event = trim($event);
-                        if ($event == "Task: Unknown(Single)" && substr($plugin, 0, 6) == "dynmap" && $pctTotal > 0.005) {
-                                $recommendations[] = "<b>You are using DynMap, and its rendering is causing you a decent amoung of lag due to it loading chunks.</b>";
-                        }
-
 
 			$sevent = "<b title='$origevent'>$event</b>";
 

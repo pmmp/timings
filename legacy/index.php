@@ -108,11 +108,13 @@ foreach ($report as &$rep) {
 	arsort($rep);
 	array_walk($rep, function (&$ent, $k) use (&$totalTimings, &$total, &$entityTicks, &$numTicks, &$playerTicks) {
 		if ($k == 'Total') {
-			$total += $ent;
 			return;
 		}
 		$totalTimings += $ent[1];
 
+		if($k === 'Full Server Tick') {
+			$total = $ent[0];
+		}
 		if ($numTicks === 0 && (stristr($k, ' - entityBaseTick') || stristr($k, ' - entityTick') || $k == '** Full Server Tick') || $k == '** Server Tick Update Cycle') {
 			$numTicks = max($ent[1], $numTicks);
 		}
@@ -124,10 +126,12 @@ foreach ($report as &$rep) {
 		}
 	});
 }
+if ($total !== 0) {
+	$report["Minecraft"]["Total"] = $total;
+}
 $recommendations = array();
 
 $numTicks = max(1, $numTicks);
-$total -= $report[$subkey]['Total'];
 ob_start();
 ?>
 <!DOCTYPE html>
@@ -433,7 +437,7 @@ if ($legacyData) {
 		</tr>
 		<tr>
 			<td><b>Total CPU time spent</b></td>
-			<td><?php echo $totalTimeS ?></td>
+			<td><?php echo $totalTimeS ?> s</td>
 		</tr>
 	<?php
 	$activatedPercent = 1;

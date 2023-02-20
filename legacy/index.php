@@ -110,7 +110,10 @@ $report = array_sort($report, 'Total', SORT_DESC);
 foreach ($report as &$rep) {
 	arsort($rep);
 	array_walk($rep, function (&$ent, $k) use (&$totalTimings, &$total, &$entityTicks, &$numTicks, &$playerTicks, &$activatedEntityTicks) {
-		if ($k == 'Total') $total += $ent;
+		if ($k == 'Total') {
+			$total += $ent;
+			return;
+		}
 		$totalTimings += $ent[1];
 
 		if ($numTicks === 0 && (stristr($k, ' - entityBaseTick') || stristr($k, ' - entityTick') || $k == '** Full Server Tick') || $k == '** Server Tick Update Cycle') {

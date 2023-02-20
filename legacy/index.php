@@ -155,7 +155,7 @@ ob_start();
 	<div style="text-align:center;width: 310px;margin:auto;float: left">
 		<br/>
 		&copy; Aikar of <a href='http://ref.emc.gs/?gas=timingsphp' rel="nofollow">Empire Minecraft</a><br/>
-		<a href="http://github.com/aikar/timings" title="Source Code">[source]</a> 
+		<a href="http://github.com/pmmp/timings" title="Source Code">[source]</a>
 			Has timings helped you solve issues with performance? Consider
 			<a
 			href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=payments%40starlis%2ecom&lc=US&item_name=Aikar%20Timings&no_note=0&currency_code=USD"><b>[donating]</b></a>

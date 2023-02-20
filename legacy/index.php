@@ -312,7 +312,7 @@ HEADER;
 	<td class="metrics-column $pctTotalStyle">$pctTotalStr</td>
 	<td class="metrics-column $pctTickStyle">$pctTickStr</td>
 	<td class="metrics-column">$stime s</td>
-	<td class="metrics-column">$avg ms</td>
+	<td class="metrics-column $pctTickStyle">$avg ms</td>
 	<td class="metrics-column">$timesPerTick</td>
 	<td class="metrics-column">$countStr</td>
 	<td class="event-name-column">$sevent</td>

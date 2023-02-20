@@ -148,12 +148,6 @@ ob_start();
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 	<script src="legacy/timings.js"></script>
 	<meta name="robots" content="noindex">
-	<style>
-		pre {
-			margin: 0;
-		}
-	</style>
-
 </head>
 <body>
 <?php echo '<!-- ' . $totalTimings . ' -->'; ?>

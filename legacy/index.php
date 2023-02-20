@@ -262,7 +262,7 @@ HEADER;
 			$countStr = number_format($time[1] / 1000, 1) . 'k';
 
 			$pctTick = ($avg / 1000 / 1000 / 50) * 100;
-			$pctTickStyle = pct($pctTick, 1 /*$count * 1000 / $numTicks*/, 40, 15, 3);
+			$pctTickStyle = pct($pctTick, 1 /*$count * 1000 / $numTicks*/, 50, 20, 10);
 			$pctTickStr = number_format($pctTick, 2) . '%';
 			$avg = number_format($avg / 1000 / 1000, 2);
 

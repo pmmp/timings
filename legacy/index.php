@@ -33,7 +33,7 @@ $exclude = array('entityAIJump', 'entityAILoot', 'entityAIMove',
 foreach (explode("\n", $legacyData) as $line) {
 	if (empty($line)) continue;
 	if ($line[0] != " " && $line[0] != "#") {
-		$plugin = $line;
+		$plugin = trim($line);
 		if ($plugin == 'Custom Timings' || $plugin == "Minecraft - ** indicates it&#39;s already counted by another timing") {
 			$plugin = 'Minecraft';
 		}

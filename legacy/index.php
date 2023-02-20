@@ -201,49 +201,6 @@ ob_start();
 		<br/>
 
 	</div>
-
-	<div class="topright" style="float: right;margin:0 20px">
-		<br/>
-
-		<div style="text-align:center;margin:auto">
-			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-			<ins class="adsbygoogle responsive-ad"
-			     style="display:inline-block;"
-			     data-ad-client="ca-pub-9196273905174409"
-			     data-ad-slot="8082511770"></ins>
-			<script>
-				(adsbygoogle = window.adsbygoogle || []).push({});
-			</script>
-		</div>
-
-
-	</div>
-</div>
-<?php
-/*
-
- <!--button id="paste_toggle">Paste Contents</button>
-<form id="url" method="POST"  style="padding-top: 5px">
-	Paste ID:
-
-	<input type="text" name="url" value="<?php
-	echo htmlentities($_REQUEST['url']);?>" style="width: 240px"/>
-	<input type="submit" value="View"/>
-</form>
-<br />
-(Press Paste Contents and paste your timings to get a shareable link) 
-*/ ?>
-
-
-<div style="width:100%;clear:left;">
-	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-	<ins class="adsbygoogle"
-	     style="clear:left;margin-top:20px;display:inline-block;width:728px;height:15px"
-	     data-ad-client="ca-pub-9196273905174409"
-	     data-ad-slot="2035978176"></ins>
-	<script>
-		(adsbygoogle = window.adsbygoogle || []).push({});
-	</script>
 </div>
 <hr style="clear:left"/>
 <?php
@@ -433,21 +390,6 @@ ROW;
 		?>
 		<button onclick='$(".hidden").toggle()'>Toggle all hidden</button>
 	<?php } ?>
-	<br/><br/><br/>
-
-	<div style="text-align:center;margin:auto">
-		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-		<ins class="adsbygoogle responsive-ad"
-		     style="display:inline-block;"
-		     data-ad-client="ca-pub-9196273905174409"
-		     data-ad-slot="2697476978"></ins>
-		<script>
-			(adsbygoogle = window.adsbygoogle || []).push({});
-		</script>
-
-	</div>
-	<br/><br/><br/>
-
 </div>
 
 <div style="display: none">

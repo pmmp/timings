@@ -43,52 +43,53 @@ foreach (explode("\n", $legacyData) as $line) {
 		if (preg_match("/(.+?) Time: (\\d+) Count: (\\d+) Avg: /", $line, $m)) {
 			array_shift($m);
 
+			[$timingName, $timeNs, $count] = $m;
 			$active =& $current;
-			$m[0] = trim($m[0]);
-			if ($m[0] == 'Player Tick' || $m[0] == 'Connection Handler') {
-				$m[0] = '** Connection Handler';
+			$timingName = trim($timingName);
+			if ($timingName == 'Player Tick' || $timingName == 'Connection Handler') {
+				$timingName = '** Connection Handler';
 			}
 			if (isset($_GET['dev'])) {
 				//print_r($m);
 			}
-			if (preg_match("/Plugin: (.*) Event:(.*)/", $m[0], $eventmatch)) {
+			if (preg_match("/Plugin: (.*) Event:(.*)/", $timingName, $eventmatch)) {
 				$xplugin = $eventmatch[1];
-				$m[0] = trim($eventmatch[2]);
+				$timingName = trim($eventmatch[2]);
 				$active =& $report[trim($xplugin)];
 			}
-			if (preg_match("/Task: (.*) Runnable: (.*)/", $m[0], $taskmatch)) {
+			if (preg_match("/Task: (.*) Runnable: (.*)/", $timingName, $taskmatch)) {
 				$xplugin = $taskmatch[1];
-				$m[0] = 'Task: ' . str_replace(':', ' ', preg_replace('/.*? Id\:\((.*)\)/', '\1', $taskmatch[2]));
+				$timingName = 'Task: ' . str_replace(':', ' ', preg_replace('/.*? Id\:\((.*)\)/', '\1', $taskmatch[2]));
 
 				$active =& $report[trim($xplugin)];
 			}
 
-			$data = array(@$m[1], $m[2]);
-			if (!in_array($m[0], $exclude) && substr($m[0], 0, 2) != "**") {
-				if (!isset($current[@$m[0]])) {
-					$active[$m[0]] = $data;
+			$data = array(@$timeNs, $count);
+			if (!in_array($timingName, $exclude) && substr($timingName, 0, 2) != "**") {
+				if (!isset($current[@$timingName])) {
+					$active[$timingName] = $data;
 				} else {
-					$active[$m[0]][0] += $m[1];
-					$active[$m[0]][1] += $m[2];
+					$active[$timingName][0] += $timeNs;
+					$active[$timingName][1] += $count;
 				}
 				$tasks = '** Tasks';
-				if (substr($m[0], 0, 5) == "Task:") {
+				if (substr($timingName, 0, 5) == "Task:") {
 					if (!isset($report[$subkey][$tasks])) {
 						$report[$subkey][$tasks] = $data;
 					} else {
-						$report[$subkey][$tasks][0] += $m[1];
-						$report[$subkey][$tasks][1] += $m[2];
+						$report[$subkey][$tasks][0] += $timeNs;
+						$report[$subkey][$tasks][1] += $count;
 					}
 				}
-				if (!empty($m[1])) {
-					@$active['Total'] += $m[1];
+				if (!empty($timeNs)) {
+					@$active['Total'] += $timeNs;
 				}
 			} else {
-				if (!isset($report[$subkey][$m[0]])) {
-					$report[$subkey][$m[0]] = $data;
+				if (!isset($report[$subkey][$timingName])) {
+					$report[$subkey][$timingName] = $data;
 				} else {
-					$report[$subkey][$m[0]][0] += $m[1];
-					$report[$subkey][$m[0]][1] += $m[2];
+					$report[$subkey][$timingName][0] += $timeNs;
+					$report[$subkey][$timingName][1] += $count;
 				}
 			}
 		}

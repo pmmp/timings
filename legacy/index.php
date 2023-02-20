@@ -152,39 +152,6 @@ ob_start();
 		pre {
 			margin: 0;
 		}
-
-		.topright {
-			/*float: left;*/
-			/*text-align:center;*/
-		}
-
-		.responsive-ad {
-			width: 320px;
-			height: 50px;
-		}
-
-		@media (max-width: 600px) {
-			.topright {
-				width: 100%;
-				text-align: center !important;
-			}
-		}
-
-		@media (min-width: 500px) {
-			/*.topright { text-align: right; } */
-			.responsive-ad {
-				width: 468px;
-				height: 60px;
-			}
-		}
-
-		@media (min-width: 1139px) {
-			.responsive-ad {
-				width: 728px;
-				height: 90px;
-			}
-		}
-
 	</style>
 
 </head>

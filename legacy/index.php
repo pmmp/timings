@@ -338,10 +338,10 @@ ROW;
 	if ($legacyData) {
 		?>
 		<button onclick='$(".hidden").toggle()'>Toggle all hidden</button>
+		<div class="footer">
+			<a href="/?id=<?php echo $_GET['id'] ?? 0 ?>&amp;raw=1">View raw</a>
+		</div>
 	<?php } ?>
-	<div class="footer">
-		<a href="/?id=<?php echo $_GET['id'] ?? 0 ?>&amp;raw=1">View raw</a>
-	</div>
 </div>
 
 <div style="display: none">

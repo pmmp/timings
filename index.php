@@ -19,5 +19,4 @@ if (!empty($ini['custom_security'])) {
 	/** @noinspection PhpIncludeInspection */
 	require_once $ini['custom_security'];
 }
-libxml_disable_entity_loader(true);
 Timings::bootstrap();

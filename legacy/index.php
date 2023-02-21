@@ -11,11 +11,6 @@
 
 global $legacyData;
 
-if (isset($_GET['raw'])) {
-	echo $legacyData;
-	return;
-}
-
 $spigotConfigPattern = "/&amp;amp;lt;spigotConfig&amp;amp;gt;(.*)&amp;amp;lt;\\/spigotConfig&amp;amp;gt;/ms";
 if (preg_match($spigotConfigPattern, $legacyData, $configMatch)) {
 	$spigotConfig = $configMatch[1];

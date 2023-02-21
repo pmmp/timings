@@ -50,6 +50,11 @@ class Timings {
                         $this->id = $id;
                         $this->storage = $storage;
                         $timingData = trim($storage->get($id));
+                        if (isset($_GET['raw'])) {
+                                header('Content-Type: text/plain');
+                                echo $timingData;
+                                die();
+                        }
                 } else if(!empty($_GET['id']) && filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, $filterOptions)) {
                         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, $filterOptions);
                         $storage = new MySqlStorageService($mysqlHost, $mysqlDatabase, $mysqlUser, $mysqlPassword);

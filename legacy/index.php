@@ -209,7 +209,7 @@ if (!$legacyData) {
 				$pctStyle = pct($pct, 1, 6, 3, 1);
 			}
 			$pctStr = number_format($pct * 100, 2) . '%';
-			$totals = number_format($ptotal / 1000 / 1000 / 1000, 3) . ' s';
+			$totals = timeUnits($ptotal, 3);
 		}
 		unset($timings['Total']);
 		ob_start();
@@ -264,9 +264,9 @@ HEADER;
 			$pctTick = ($avg / 1000 / 1000 / 50) * 100;
 			$pctTickStyle = pct($pctTick, 1 /*$count * 1000 / $numTicks*/, 50, 20, 10);
 			$pctTickStr = number_format($pctTick, 2) . '%';
-			$avg = number_format($avg / 1000 / 1000, 2);
+			$avgStr = timeUnits($avg);
 
-			$stime = number_format($time[0] / 1000 / 1000 / 1000, 2);
+			$timeStr = timeUnits($time[0]);
 			$pctTotal = ($time[0] / ($sample ? $sample : $total)) * 100;
 			$pctTotalStyle = pct($pctTotal, 1, 50, 20, 10);
 			$pctTotalStr = number_format($pctTotal, 2) . '%';
@@ -312,8 +312,8 @@ HEADER;
 <tr class='event $disabled'>
 	<td class="metrics-column $pctTotalStyle">$pctTotalStr</td>
 	<td class="metrics-column $pctTickStyle">$pctTickStr</td>
-	<td class="metrics-column $pctTotalStyle">$stime s</td>
-	<td class="metrics-column $pctTickStyle">$avg ms</td>
+	<td class="metrics-column $pctTotalStyle">$timeStr</td>
+	<td class="metrics-column $pctTickStyle">$avgStr</td>
 	<td class="metrics-column">$timesPerTick</td>
 	<td class="metrics-column">$countStr</td>
 	<td class="event-name-column">$sevent</td>
@@ -509,6 +509,22 @@ function pct($pct, $mod = 1, $high = 0, $med = 0, $low = 0) {
 	}
 
 	return '';
+}
+
+function timeUnits(float $nanoseconds, int $precision = 2) : string{
+	foreach([
+		1000 * 1000 * 1000 * 60 * 60 * 24 => "d",
+		1000 * 1000 * 1000 * 60 * 60 => "h",
+		1000 * 1000 * 1000 * 60 => "m",
+		1000 * 1000 * 1000 => "s",
+		1000 * 1000 => "ms",
+		1000 => "μs",
+	] as $factor => $unit){
+		if($nanoseconds > $factor){
+			return number_format($nanoseconds / $factor, $precision) . " " . $unit;
+		}
+	}
+	return number_format($nanoseconds, $precision) . " ns";
 }
 
 function pad($string, $len, $right = false) {

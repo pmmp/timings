@@ -11,6 +11,10 @@
 
 global $legacyData;
 
+if (isset($_GET['raw'])) {
+	echo $legacyData;
+	return;
+}
 
 $spigotConfigPattern = "/&amp;amp;lt;spigotConfig&amp;amp;gt;(.*)&amp;amp;lt;\\/spigotConfig&amp;amp;gt;/ms";
 if (preg_match($spigotConfigPattern, $legacyData, $configMatch)) {
@@ -340,6 +344,9 @@ ROW;
 		?>
 		<button onclick='$(".hidden").toggle()'>Toggle all hidden</button>
 	<?php } ?>
+	<div class="footer">
+		<a href="/?id=<?php echo $_GET['id'] ?? 0 ?>&amp;raw=1">View raw</a>
+	</div>
 </div>
 
 <div style="display: none">

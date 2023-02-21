@@ -61,3 +61,7 @@ span.head {
     background: black;
     color: red;
 }
+.footer {
+    width: 100%;
+    text-align: center;
+}

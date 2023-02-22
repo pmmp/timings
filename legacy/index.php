@@ -535,7 +535,7 @@ function timeUnits(float $nanoseconds, int $precision = 2) : string{
 		1000 * 1000 => "ms",
 		1000 => "μs",
 	] as $factor => $unit){
-		if($nanoseconds > $factor){
+		if($nanoseconds >= $factor){
 			return number_format($nanoseconds / $factor, $precision) . " " . $unit;
 		}
 	}

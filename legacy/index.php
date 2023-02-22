@@ -258,7 +258,7 @@ HEADER;
 				$avg = $avg * $timesPerTick;
 			}
 
-			$countStr = number_format($time[1] / 1000, 1) . 'k';
+			$countStr = amountUnits($time[1], 1);
 
 			$pctTick = ($avg / 1000 / 1000 / 50) * 100;
 			$pctTickStyle = pct($pctTick, 1 /*$count * 1000 / $numTicks*/, 50, 20, 10);
@@ -306,14 +306,14 @@ HEADER;
 				$shown++;
 			}
 
-			$timesPerTick = number_format($timesPerTick, $timesPerTick > 10 ? 0 : 1);
+			$timesPerTickStr = amountUnits($timesPerTick, 1);
 			echo <<<ROW
 <tr class='event $disabled'>
 	<td class="metrics-column $pctTotalStyle">$pctTotalStr</td>
 	<td class="metrics-column $pctTickStyle">$pctTickStr</td>
 	<td class="metrics-column $pctTotalStyle">$timeStr</td>
 	<td class="metrics-column $pctTickStyle">$avgStr</td>
-	<td class="metrics-column">$timesPerTick</td>
+	<td class="metrics-column">$timesPerTickStr</td>
 	<td class="metrics-column">$countStr</td>
 	<td class="event-name-column">$sevent</td>
 </tr>
@@ -513,6 +513,19 @@ function pct($pct, $mod = 1, $high = 0, $med = 0, $low = 0) {
 	return '';
 }
 
+function amountUnits(float $amount, int $precision = 2) : string{
+	foreach([
+		1000 * 1000 * 1000 * 1000 => "T",
+		1000 * 1000 * 1000 => "B",
+		1000 * 1000 => "M",
+		1000 => "k",
+	] as $factor => $unit){
+		if($amount >= $factor){
+			return number_format($amount / $factor, $precision) . $unit;
+		}
+	}
+	return number_format($amount, $precision);
+}
 function timeUnits(float $nanoseconds, int $precision = 2) : string{
 	foreach([
 		1000 * 1000 * 1000 * 60 * 60 * 24 => "d",

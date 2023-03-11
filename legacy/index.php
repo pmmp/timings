@@ -19,8 +19,21 @@ if (preg_match($spigotConfigPattern, $legacyData, $configMatch)) {
 if (preg_match('/Sample time (.+?) \(/', $legacyData, $sampm)) {
 	$sample = $sampm[1];
 }
+
+class TimingResult{
+	public function __construct(
+		public string $name,
+		public int $count,
+		public int $timeNs,
+		public float $avgNs,
+		public int $violations,
+	){}
+}
+
 $subkey = 'Minecraft - Breakdown (counted by other timings, not included in total)  ';
-$report = array($subkey => array('Total' => 0), 'Minecraft' => array('Total' => 0));
+$report = [];
+$reportTotals = [$subkey => 0, 'Minecraft' => 0];
+
 $current = null;
 $version = '';
 if (preg_match('/# PocketMine-MP (.*)/i', $legacyData, $m)) {
@@ -29,6 +42,8 @@ if (preg_match('/# PocketMine-MP (.*)/i', $legacyData, $m)) {
 // legacy
 $exclude = array('entityAIJump', 'entityAILoot', 'entityAIMove',
 	'entityTickRest', 'entityAI', 'entityBaseTick');
+
+$plugin = 'Minecraft';
 foreach (explode("\n", $legacyData) as $line) {
 	if (empty($line)) continue;
 	if ($line[0] != " " && $line[0] != "#") {
@@ -36,65 +51,67 @@ foreach (explode("\n", $legacyData) as $line) {
 		if ($plugin == 'Custom Timings' || $plugin == "Minecraft - ** indicates it&#39;s already counted by another timing") {
 			$plugin = 'Minecraft';
 		}
-		$report[$plugin] = array();
-		$current =& $report[$plugin];
+		$report[$plugin] = [];
 	} else if ($line[0] == " ") {
-		if (preg_match("/(.+?) Time: (\\d+) Count: (\\d+) Avg: /", $line, $m)) {
-			array_shift($m);
+		if (preg_match('/(*ANYCRLF)^(.+?) Time: (\d+) Count: (\d+) Avg: ([\d\.]+) Violations: (\d+)/', $line, $m)) {
 
-			[$timingName, $timeNs, $count] = $m;
-			$active =& $current;
+
+			[, $timingName, $timeNs, $count, $avg, $violations] = $m;
 			$timingName = trim($timingName);
+			$data = new TimingResult($timingName, (int) $count, (int) $timeNs, (float) $avg, (int) $violations, null);
 			if ($timingName == 'Player Tick' || $timingName == 'Connection Handler') {
 				$timingName = '** Connection Handler';
 			}
 			if (isset($_GET['dev'])) {
 				//print_r($m);
 			}
+			$pluginKey = $plugin;
 			if (preg_match("/Plugin: (.*) Event:(.*)/", $timingName, $eventmatch)) {
 				$xplugin = $eventmatch[1];
 				$timingName = trim($eventmatch[2]);
-				$active =& $report[trim($xplugin)];
+				$pluginKey = trim($xplugin);
 			}
 			if (preg_match("/Task: (.*) Runnable: (.*)/", $timingName, $taskmatch)) {
 				$xplugin = $taskmatch[1];
 				$timingName = 'Task: ' . str_replace(':', ' ', preg_replace('/.*? Id\:\((.*)\)/', '\1', $taskmatch[2]));
 
-				$active =& $report[trim($xplugin)];
+				$pluginKey = trim($xplugin);
 			}
 
-			$data = array(@$timeNs, $count);
 			if (!in_array($timingName, $exclude) && substr($timingName, 0, 2) != "**") {
-				if (!isset($current[@$timingName])) {
-					$active[$timingName] = $data;
+				if (!isset($report[$pluginKey][$timingName])) {
+					$report[$pluginKey][$timingName] = $data;
 				} else {
-					$active[$timingName][0] += $timeNs;
-					$active[$timingName][1] += $count;
+					$report[$pluginKey][$timingName]->timeNs += $data->timeNs;
+					$report[$pluginKey][$timingName]->count += $data->count;
 				}
 				$tasks = '** Tasks';
 				if (substr($timingName, 0, 5) == "Task:") {
 					if (!isset($report[$subkey][$tasks])) {
 						$report[$subkey][$tasks] = $data;
 					} else {
-						$report[$subkey][$tasks][0] += $timeNs;
-						$report[$subkey][$tasks][1] += $count;
+						$report[$subkey][$tasks]->timeNs += $data->timeNs;
+						$report[$subkey][$tasks]->timeNs += $data->count;
 					}
 				}
 				if (!empty($timeNs)) {
-					@$active['Total'] += $timeNs;
+					if(!isset($reportTotals[$pluginKey])){
+						$reportTotals[$pluginKey] = 0;
+					}
+					$reportTotals[$pluginKey] += $data->timeNs;
 				}
 			} else {
 				if (!isset($report[$subkey][$timingName])) {
 					$report[$subkey][$timingName] = $data;
 				} else {
-					$report[$subkey][$timingName][0] += $timeNs;
-					$report[$subkey][$timingName][1] += $count;
+					$report[$subkey][$timingName]->timeNs += $data->timeNs;
+					$report[$subkey][$timingName]->timeNs += $data->count;
 				}
 			}
 		}
 	}
 }
-$report[$subkey]['Total'] = intval(@$report['Minecraft']['Total']) - 1;
+$reportTotals[$subkey] = $reportTotals['Minecraft'] - 1;
 
 
 $total = 0;
@@ -103,31 +120,32 @@ $entityTicks = 0;
 $playerTicks = 0;
 $totalTimings = 0;
 
-$report = array_sort($report, 'Total', SORT_DESC);
-foreach ($report as &$rep) {
-	arsort($rep);
-	array_walk($rep, function (&$ent, $k) use (&$totalTimings, &$total, &$entityTicks, &$numTicks, &$playerTicks) {
-		if ($k == 'Total') {
-			return;
-		}
-		$totalTimings += $ent[1];
+/** @var TimingResult[][] $report */
+$report = array_sort($report, $reportTotals, SORT_DESC);
+foreach ($report as $rep) {
+	uasort($rep, function(TimingResult $a, TimingResult $b) {
+		return $b->timeNs <=> $a->timeNs;
+	});
+	/** @var TimingResult[] $rep */
+	foreach($rep as $k => $ent) {
+		$totalTimings += $ent->count;
 
 		if($k === 'Full Server Tick') {
-			$total = $ent[0];
+			$total = $ent->timeNs;
 		}
 		if ($numTicks === 0 && (stristr($k, ' - entityBaseTick') || stristr($k, ' - entityTick') || $k == '** Full Server Tick') || $k == '** Server Tick Update Cycle') {
-			$numTicks = max($ent[1], $numTicks);
+			$numTicks = max($ent->count, $numTicks);
 		}
 		if ($k == '** entityBaseTick' || $k == 'entityBaseTick' || $k == '** tickEntity') {
-			$entityTicks = $ent[1];
+			$entityTicks = $ent->count;
 		}
 		if ($k == "** tickEntity - EntityPlayer") {
-			$playerTicks = $ent[1];
+			$playerTicks = $ent->count;
 		}
-	});
+	}
 }
 if ($total !== 0) {
-	$report["Minecraft"]["Total"] = $total;
+	$reportTotals["Minecraft"] = $total;
 }
 $recommendations = array();
 
@@ -195,7 +213,7 @@ if (!$legacyData) {
 <div id="reports">
 	<?php
 	foreach ($report as $plugin => $timings) {
-		$ptotal = $timings['Total'];
+		$ptotal = $reportTotals[$plugin];
 		$pctStyle = '';
 		$pct = 0;
 		$totals = 0;
@@ -210,7 +228,6 @@ if (!$legacyData) {
 			$pctStr = number_format($pct * 100, 2) . '%';
 			$totals = timeUnits($ptotal, 3);
 		}
-		unset($timings['Total']);
 		ob_start();
 		echo '<div>';
 		echo <<<TITLE
@@ -248,25 +265,25 @@ HEADER;
 		$hiddenelem = false;
 		$shown = 0;
 		foreach ($timings as $event => $time) {
-			if ($time[1]) {
-				$avg = round($time[0] / $time[1], 3);
+			if ($time) {
+				$avg = round($time->timeNs / $time->count, 3);
 			} else {
 				$avg = 0;
 			}
-			$timesPerTick = round($time[1] / $numTicks, 1);
+			$timesPerTick = round($time->count / $numTicks, 1);
 			if ($timesPerTick >= 1) {
 				$avg = $avg * $timesPerTick;
 			}
 
-			$countStr = amountUnits($time[1], 1);
+			$countStr = amountUnits($time->count, 1);
 
 			$pctTick = ($avg / 1000 / 1000 / 50) * 100;
 			$pctTickStyle = pct($pctTick, 1 /*$count * 1000 / $numTicks*/, 50, 20, 10);
 			$pctTickStr = number_format($pctTick, 2) . '%';
 			$avgStr = timeUnits($avg);
 
-			$timeStr = timeUnits($time[0]);
-			$pctTotal = ($time[0] / ($sample ? $sample : $total)) * 100;
+			$timeStr = timeUnits($time->timeNs);
+			$pctTotal = ($time->timeNs / ($sample ? $sample : $total)) * 100;
 			$pctTotalStyle = pct($pctTotal, 1, 50, 20, 10);
 			$pctTotalStr = number_format($pctTotal, 2) . '%';
 			$origevent = $event;
@@ -546,35 +563,20 @@ function pad($string, $len, $right = false) {
 	return str_pad($string, $len, ' ', $right ? STR_PAD_RIGHT : STR_PAD_LEFT);
 }
 
-function array_sort($array, $on, $order = SORT_ASC) {
+function array_sort(array $array, array $sortable_array, $order = SORT_ASC) {
 	$new_array = array();
-	$sortable_array = array();
 
-	if (count($array) > 0) {
-		foreach ($array as $k => $v) {
-			if (is_array($v)) {
-				foreach ($v as $k2 => $v2) {
-					if ($k2 == $on) {
-						$sortable_array[$k] = $v2;
-					}
-				}
-			} else {
-				$sortable_array[$k] = $v;
-			}
-		}
+	switch ($order) {
+		case SORT_ASC:
+			asort($sortable_array);
+			break;
+		case SORT_DESC:
+			arsort($sortable_array);
+			break;
+	}
 
-		switch ($order) {
-			case SORT_ASC:
-				asort($sortable_array);
-				break;
-			case SORT_DESC:
-				arsort($sortable_array);
-				break;
-		}
-
-		foreach ($sortable_array as $k => $v) {
-			$new_array[$k] = $array[$k];
-		}
+	foreach ($sortable_array as $k => $v) {
+		$new_array[$k] = $array[$k];
 	}
 
 	return $new_array;

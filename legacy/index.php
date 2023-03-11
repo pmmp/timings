@@ -258,6 +258,7 @@ TITLE;
 	<th class="metrics-column">Avg</th>
 	<th class="metrics-column">PerTick</th>
 	<th class="metrics-column">Count</th>
+	<th class="metrics-column">Violations</th>
 	<th class="event-name-column">Event</th>
 </tr>
 HEADER;
@@ -324,6 +325,9 @@ HEADER;
 			}
 
 			$timesPerTickStr = amountUnits($timesPerTick, 1);
+
+			$violationsStyle = pct($time->violations, 1, $numTicks / (5 * 20), $numTicks / (30 * 20), 0);
+			$violationsStr = amountUnits($time->violations, 1);
 			echo <<<ROW
 <tr class='event $disabled'>
 	<td class="metrics-column $pctTotalStyle">$pctTotalStr</td>
@@ -332,6 +336,7 @@ HEADER;
 	<td class="metrics-column $pctTickStyle">$avgStr</td>
 	<td class="metrics-column">$timesPerTickStr</td>
 	<td class="metrics-column">$countStr</td>
+	<td class="metrics-column $violationsStyle">$violationsStr</td>
 	<td class="event-name-column">$sevent</td>
 </tr>
 ROW;
@@ -518,12 +523,12 @@ if ($legacyData) {
 
 echo $buffer;
 
-function pct($pct, $mod = 1, $high = 0, $med = 0, $low = 0) {
-	if ($pct * $mod > $high && $high != 0) {
+function pct($pct, $mod = 1, $high = null, $med = null, $low = null) {
+	if ($high !== null && $pct * $mod > $high) {
 		return 'high-highlight';
-	} elseif ($pct * $mod > $med && $med != 0) {
+	} elseif ($med !== null && $pct * $mod > $med) {
 		return 'mid-highlight';
-	} else if ($pct * $mod > $low && $low != 0) {
+	} else if ($low !== null && $pct * $mod > $low) {
 		return 'low-highlight';
 	}
 

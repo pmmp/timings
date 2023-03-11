@@ -122,10 +122,11 @@ $totalTimings = 0;
 
 /** @var TimingResult[][] $report */
 $report = array_sort($report, $reportTotals, SORT_DESC);
-foreach ($report as $rep) {
+foreach ($report as $plugin => $rep) {
 	uasort($rep, function(TimingResult $a, TimingResult $b) {
 		return $b->timeNs <=> $a->timeNs;
 	});
+	$report[$plugin] = $rep;
 	/** @var TimingResult[] $rep */
 	foreach($rep as $k => $ent) {
 		$totalTimings += $ent->count;

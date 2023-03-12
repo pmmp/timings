@@ -11,15 +11,6 @@
 
 global $legacyData;
 
-$spigotConfigPattern = "/&amp;amp;lt;spigotConfig&amp;amp;gt;(.*)&amp;amp;lt;\\/spigotConfig&amp;amp;gt;/ms";
-if (preg_match($spigotConfigPattern, $legacyData, $configMatch)) {
-	$spigotConfig = $configMatch[1];
-	$legacyData = preg_replace($spigotConfigPattern, "", $legacyData);
-}
-if (preg_match('/Sample time (.+?) \(/', $legacyData, $sampm)) {
-	$sample = $sampm[1];
-}
-
 class TimingResult{
 	public function __construct(
 		public string $name,
@@ -30,127 +21,6 @@ class TimingResult{
 	){}
 }
 
-$subkey = 'Minecraft - Breakdown (counted by other timings, not included in total)  ';
-$report = [];
-$reportTotals = [$subkey => 0, 'Minecraft' => 0];
-
-$current = null;
-$version = '';
-if (preg_match('/# PocketMine-MP (.*)/i', $legacyData, $m)) {
-	$version = $m[1];
-}
-// legacy
-$exclude = array('entityAIJump', 'entityAILoot', 'entityAIMove',
-	'entityTickRest', 'entityAI', 'entityBaseTick');
-
-$plugin = 'Minecraft';
-foreach (explode("\n", $legacyData) as $line) {
-	if (empty($line)) continue;
-	if ($line[0] != " " && $line[0] != "#") {
-		$plugin = trim($line);
-		if ($plugin == 'Custom Timings' || $plugin == "Minecraft - ** indicates it&#39;s already counted by another timing") {
-			$plugin = 'Minecraft';
-		}
-		$report[$plugin] = [];
-	} else if ($line[0] == " ") {
-		if (preg_match('/(*ANYCRLF)^(.+?) Time: (\d+) Count: (\d+) Avg: ([\d\.]+) Violations: (\d+)/', $line, $m)) {
-
-
-			[, $timingName, $timeNs, $count, $avg, $violations] = $m;
-			$timingName = trim($timingName);
-			$data = new TimingResult($timingName, (int) $count, (int) $timeNs, (float) $avg, (int) $violations, null);
-			if ($timingName == 'Player Tick' || $timingName == 'Connection Handler') {
-				$timingName = '** Connection Handler';
-			}
-			if (isset($_GET['dev'])) {
-				//print_r($m);
-			}
-			$pluginKey = $plugin;
-			if (preg_match("/Plugin: (.*) Event:(.*)/", $timingName, $eventmatch)) {
-				$xplugin = $eventmatch[1];
-				$timingName = trim($eventmatch[2]);
-				$pluginKey = trim($xplugin);
-			}
-			if (preg_match("/Task: (.*) Runnable: (.*)/", $timingName, $taskmatch)) {
-				$xplugin = $taskmatch[1];
-				$timingName = 'Task: ' . str_replace(':', ' ', preg_replace('/.*? Id\:\((.*)\)/', '\1', $taskmatch[2]));
-
-				$pluginKey = trim($xplugin);
-			}
-
-			if (!in_array($timingName, $exclude) && substr($timingName, 0, 2) != "**") {
-				if (!isset($report[$pluginKey][$timingName])) {
-					$report[$pluginKey][$timingName] = $data;
-				} else {
-					$report[$pluginKey][$timingName]->timeNs += $data->timeNs;
-					$report[$pluginKey][$timingName]->count += $data->count;
-				}
-				$tasks = '** Tasks';
-				if (substr($timingName, 0, 5) == "Task:") {
-					if (!isset($report[$subkey][$tasks])) {
-						$report[$subkey][$tasks] = $data;
-					} else {
-						$report[$subkey][$tasks]->timeNs += $data->timeNs;
-						$report[$subkey][$tasks]->timeNs += $data->count;
-					}
-				}
-				if (!empty($timeNs)) {
-					if(!isset($reportTotals[$pluginKey])){
-						$reportTotals[$pluginKey] = 0;
-					}
-					$reportTotals[$pluginKey] += $data->timeNs;
-				}
-			} else {
-				if (!isset($report[$subkey][$timingName])) {
-					$report[$subkey][$timingName] = $data;
-				} else {
-					$report[$subkey][$timingName]->timeNs += $data->timeNs;
-					$report[$subkey][$timingName]->timeNs += $data->count;
-				}
-			}
-		}
-	}
-}
-$reportTotals[$subkey] = $reportTotals['Minecraft'] - 1;
-
-
-$total = 0;
-$numTicks = 0;
-$entityTicks = 0;
-$playerTicks = 0;
-$totalTimings = 0;
-
-/** @var TimingResult[][] $report */
-$report = array_sort($report, $reportTotals, SORT_DESC);
-foreach ($report as $plugin => $rep) {
-	uasort($rep, function(TimingResult $a, TimingResult $b) {
-		return $b->timeNs <=> $a->timeNs;
-	});
-	$report[$plugin] = $rep;
-	/** @var TimingResult[] $rep */
-	foreach($rep as $k => $ent) {
-		$totalTimings += $ent->count;
-
-		if($k === 'Full Server Tick') {
-			$total = $ent->timeNs;
-		}
-		if ($numTicks === 0 && (stristr($k, ' - entityBaseTick') || stristr($k, ' - entityTick') || $k == '** Full Server Tick') || $k == '** Server Tick Update Cycle') {
-			$numTicks = max($ent->count, $numTicks);
-		}
-		if ($k == '** entityBaseTick' || $k == 'entityBaseTick' || $k == '** tickEntity') {
-			$entityTicks = $ent->count;
-		}
-		if ($k == "** tickEntity - EntityPlayer") {
-			$playerTicks = $ent->count;
-		}
-	}
-}
-if ($total !== 0) {
-	$reportTotals["Minecraft"] = $total;
-}
-$recommendations = array();
-
-$numTicks = max(1, $numTicks);
 ob_start();
 ?>
 <!DOCTYPE html>
@@ -167,7 +37,6 @@ ob_start();
 	<meta name="robots" content="noindex">
 </head>
 <body>
-<?php echo '<!-- ' . $totalTimings . ' -->'; ?>
 <div style="text-align: center;margin: auto">
 	<div style="text-align:center;width: 310px;margin:auto;float: left">
 		<br/>
@@ -201,9 +70,10 @@ if (!$legacyData) {
 
 		<form id="paste" method='post' action="?upload=true">
 			<br/>
-			<textarea id="uploadbox" name='data' cols="100" rows="8"></textarea></br>
+			<textarea id="uploadbox" name='data' cols="100" rows="8"></textarea><br/>
 			<form type="hidden" name="browser" value="true">
-			<input type='submit' value='Paste'/>
+				<input type='submit' value='Paste'/>
+			</form>
 		</form>
 	</div>
 
@@ -213,6 +83,138 @@ if (!$legacyData) {
 ?>
 <div id="reports">
 	<?php
+
+	$spigotConfigPattern = "/&amp;amp;lt;spigotConfig&amp;amp;gt;(.*)&amp;amp;lt;\\/spigotConfig&amp;amp;gt;/ms";
+	if (preg_match($spigotConfigPattern, $legacyData, $configMatch)) {
+		$spigotConfig = $configMatch[1];
+		$legacyData = preg_replace($spigotConfigPattern, "", $legacyData);
+	}
+	if (preg_match('/Sample time (.+?) \(/', $legacyData, $sampm)) {
+		$sample = $sampm[1];
+	}
+
+	$subkey = 'Minecraft - Breakdown (counted by other timings, not included in total)  ';
+	$report = [];
+	$reportTotals = [$subkey => 0, 'Minecraft' => 0];
+
+	$current = null;
+	$version = '';
+	if (preg_match('/# PocketMine-MP (.*)/i', $legacyData, $m)) {
+		$version = $m[1];
+	}
+	// legacy
+	$exclude = array('entityAIJump', 'entityAILoot', 'entityAIMove',
+		'entityTickRest', 'entityAI', 'entityBaseTick');
+
+	$plugin = 'Minecraft';
+	foreach (explode("\n", $legacyData) as $line) {
+		if (empty($line)) continue;
+		if ($line[0] != " " && $line[0] != "#") {
+			$plugin = trim($line);
+			if ($plugin == 'Custom Timings' || $plugin == "Minecraft - ** indicates it&#39;s already counted by another timing") {
+				$plugin = 'Minecraft';
+			}
+			$report[$plugin] = [];
+		} else if ($line[0] == " ") {
+			if (preg_match('/(*ANYCRLF)^(.+?) Time: (\d+) Count: (\d+) Avg: ([\d\.]+) Violations: (\d+)/', $line, $m)) {
+
+
+				[, $timingName, $timeNs, $count, $avg, $violations] = $m;
+				$timingName = trim($timingName);
+				$data = new TimingResult($timingName, (int) $count, (int) $timeNs, (float) $avg, (int) $violations, null);
+				if ($timingName == 'Player Tick' || $timingName == 'Connection Handler') {
+					$timingName = '** Connection Handler';
+				}
+				if (isset($_GET['dev'])) {
+					//print_r($m);
+				}
+				$pluginKey = $plugin;
+				if (preg_match("/Plugin: (.*) Event:(.*)/", $timingName, $eventmatch)) {
+					$xplugin = $eventmatch[1];
+					$timingName = trim($eventmatch[2]);
+					$pluginKey = trim($xplugin);
+				}
+				if (preg_match("/Task: (.*) Runnable: (.*)/", $timingName, $taskmatch)) {
+					$xplugin = $taskmatch[1];
+					$timingName = 'Task: ' . str_replace(':', ' ', preg_replace('/.*? Id\:\((.*)\)/', '\1', $taskmatch[2]));
+
+					$pluginKey = trim($xplugin);
+				}
+
+				if (!in_array($timingName, $exclude) && substr($timingName, 0, 2) != "**") {
+					if (!isset($report[$pluginKey][$timingName])) {
+						$report[$pluginKey][$timingName] = $data;
+					} else {
+						$report[$pluginKey][$timingName]->timeNs += $data->timeNs;
+						$report[$pluginKey][$timingName]->count += $data->count;
+					}
+					$tasks = '** Tasks';
+					if (substr($timingName, 0, 5) == "Task:") {
+						if (!isset($report[$subkey][$tasks])) {
+							$report[$subkey][$tasks] = $data;
+						} else {
+							$report[$subkey][$tasks]->timeNs += $data->timeNs;
+							$report[$subkey][$tasks]->timeNs += $data->count;
+						}
+					}
+					if (!empty($timeNs)) {
+						if(!isset($reportTotals[$pluginKey])){
+							$reportTotals[$pluginKey] = 0;
+						}
+						$reportTotals[$pluginKey] += $data->timeNs;
+					}
+				} else {
+					if (!isset($report[$subkey][$timingName])) {
+						$report[$subkey][$timingName] = $data;
+					} else {
+						$report[$subkey][$timingName]->timeNs += $data->timeNs;
+						$report[$subkey][$timingName]->timeNs += $data->count;
+					}
+				}
+			}
+		}
+	}
+	$reportTotals[$subkey] = $reportTotals['Minecraft'] - 1;
+
+
+	$total = 0;
+	$numTicks = 0;
+	$entityTicks = 0;
+	$playerTicks = 0;
+	$totalTimings = 0;
+
+	/** @var TimingResult[][] $report */
+	$report = array_sort($report, $reportTotals, SORT_DESC);
+	foreach ($report as $plugin => $rep) {
+		uasort($rep, function(TimingResult $a, TimingResult $b) {
+			return $b->timeNs <=> $a->timeNs;
+		});
+		$report[$plugin] = $rep;
+		/** @var TimingResult[] $rep */
+		foreach($rep as $k => $ent) {
+			$totalTimings += $ent->count;
+
+			if($k === 'Full Server Tick') {
+				$total = $ent->timeNs;
+			}
+			if ($numTicks === 0 && (stristr($k, ' - entityBaseTick') || stristr($k, ' - entityTick') || $k == '** Full Server Tick') || $k == '** Server Tick Update Cycle') {
+				$numTicks = max($ent->count, $numTicks);
+			}
+			if ($k == '** entityBaseTick' || $k == 'entityBaseTick' || $k == '** tickEntity') {
+				$entityTicks = $ent->count;
+			}
+			if ($k == "** tickEntity - EntityPlayer") {
+				$playerTicks = $ent->count;
+			}
+		}
+	}
+	if ($total !== 0) {
+		$reportTotals["Minecraft"] = $total;
+	}
+	$recommendations = array();
+
+	$numTicks = max(1, $numTicks);
+
 	foreach ($report as $plugin => $timings) {
 		$ptotal = $reportTotals[$plugin];
 		$pctStyle = '';
@@ -357,14 +359,13 @@ ROW;
 		}
 
 	}
-	}
-	if ($legacyData) {
-		?>
-		<button onclick='$(".hidden").toggle()'>Toggle all hidden</button>
-		<div class="footer">
-			<a href="/?id=<?php echo $_GET['id'] ?? 0 ?>&amp;raw=1">View raw</a>
-		</div>
-	<?php } ?>
+	?>
+	<button onclick='$(".hidden").toggle()'>Toggle all hidden</button>
+	<div class="footer">
+		<a href="/?id=<?php echo $_GET['id'] ?? 0 ?>&amp;raw=1">View raw</a>
+	</div>
+	<?php
+} ?>
 </div>
 
 <div style="display: none">

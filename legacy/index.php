@@ -255,6 +255,7 @@ TITLE;
 		echo "<table>";
 		echo <<<HEADER
 <tr>
+	<th class="event-name-column">Event</th>
 	<th class="metrics-column">Pct Total</th>
 	<th class="metrics-column">Pct Tick</th>
 	<th class="metrics-column">Total</th>
@@ -262,7 +263,6 @@ TITLE;
 	<th class="metrics-column">PerTick</th>
 	<th class="metrics-column">Count</th>
 	<th class="metrics-column">Violations</th>
-	<th class="event-name-column">Event</th>
 </tr>
 HEADER;
 		$i = 0;
@@ -333,6 +333,7 @@ HEADER;
 			$violationsStr = amountUnits($time->violations, 1);
 			echo <<<ROW
 <tr class='event $disabled'>
+	<td class="event-name-column">$sevent</td>
 	<td class="metrics-column $pctTotalStyle">$pctTotalStr</td>
 	<td class="metrics-column $pctTickStyle">$pctTickStr</td>
 	<td class="metrics-column $pctTotalStyle">$timeStr</td>
@@ -340,7 +341,6 @@ HEADER;
 	<td class="metrics-column">$timesPerTickStr</td>
 	<td class="metrics-column">$countStr</td>
 	<td class="metrics-column $violationsStyle">$violationsStr</td>
-	<td class="event-name-column">$sevent</td>
 </tr>
 ROW;
 		}

@@ -22,6 +22,12 @@ div.pageHeader {
     padding-top: 10px;
 }
 
+div.pageHeader > img {
+    object-fit: contain;
+    max-width: 90%;
+    max-height: 50px;
+}
+
 .secondaryBar {
     position: relative;
 }

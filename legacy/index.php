@@ -221,12 +221,8 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 		$serverLoad = $pctTick;
 	}
 
-	if($event == "** Connection Handler"){
+	if($event == "Connection Handler"){
 		$sevent .= showInfo('connhandler', 'Connection Handler');
-	}
-
-	if($event == "** activatedTickEntity"){
-		$sevent .= showInfo('ate', 'Activated Entities');
 	}
 	if($event == "Scheduler"){
 		$sevent .= showInfo('sched', 'Plugin Scheduler');

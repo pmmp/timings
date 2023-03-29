@@ -19,7 +19,7 @@ html, body {
 div.pageHeader {
     text-align: center;
     margin: auto;
-    width: 310px;
+    padding-top: 10px;
 }
 
 .secondaryBar {

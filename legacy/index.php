@@ -299,7 +299,7 @@ ob_start();
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Aikar's Timings Viewer</title>
+	<title>PocketMine-MP Timings Viewer</title>
 	<link rel="stylesheet" href="legacy/timings.css"/>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css"/>
@@ -309,13 +309,13 @@ ob_start();
 </head>
 <body>
 <div class="pageHeader">
+	<img src="https://github.com/pmmp/PocketMine-MP/raw/stable/.github/readme/pocketmine.png" loading="eager" />
 	<br/>
-	&copy; Aikar of <a href='http://ref.emc.gs/?gas=timingsphp' rel="nofollow">Empire Minecraft</a><br/>
-	<a href="http://github.com/pmmp/timings" title="Source Code">[source]</a>
-		Has timings helped you solve issues with performance? Consider
-		<a
-		href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=payments%40starlis%2ecom&lc=US&item_name=Aikar%20Timings&no_note=0&currency_code=USD"><b>[donating]</b></a>
-	<br/>
+	<h1>Timings Viewer</h1>
+	&copy; Aikar of <a href='http://ref.emc.gs/?gas=timingsphp' rel="nofollow">Empire Minecraft</a> 2017<br/>
+	&copy; <a href="https://github.com/pmmp">PMMP Team</a> 2017-2023<br/>
+
+	<a href="http://github.com/pmmp/timings" title="Source Code">[source]</a><br/>
 </div>
 <hr style="clear:left"/>
 <?php

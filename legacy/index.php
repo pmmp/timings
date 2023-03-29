@@ -133,7 +133,7 @@ function generateTable(array $timings, string $plugin, float $ptotal, int $numTi
 	}
 
 	ob_start();
-	echo '<div class="timings-table-div">';
+	echo '<div class="timings-table-border">';
 	echo <<<TITLE
 <div class="title">
 		<span>$plugin</span>
@@ -150,7 +150,7 @@ TITLE;
 	echo <<<TITLE
 </div>
 TITLE;
-	echo "<table class='timings-table'>";
+	echo "<div class='timings-table-scroll'><table class='timings-table'>";
 	echo <<<HEADER
 <tr>
 	<th class="event-name-column"><span class="event-name">Event</span></th>
@@ -166,7 +166,7 @@ HEADER;
 	foreach($rows as $row){
 		echo $row;
 	}
-	echo "</table>";
+	echo "</table></div>";
 
 	echo '</div>';
 	return [ob_get_clean(), $shown];

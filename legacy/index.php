@@ -246,7 +246,7 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 	$children = count($time->children);
 	if($isTreeTable){
 		$indentSize = $depth;
-		$sevent = "<span class='triangle-icon'></span>" . $sevent;
+		$sevent = "<span class='triangle-icon'><div></div></span>" . $sevent;
 		if($children > 0){
 			if($hiddenelem || $depth >= $hideBeyondDepth){
 				$rowClasses .= " hidden-children children-hidden-by-default";

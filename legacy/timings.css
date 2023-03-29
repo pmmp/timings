@@ -99,7 +99,7 @@ span.triangle-icon {
     text-align: center;
 }
 .event.no-children span.triangle-icon::after {
-    content: "\00B7";
+    content: "-";
 }
 .event.hidden-children span.triangle-icon::after {
     content: "\1F782";

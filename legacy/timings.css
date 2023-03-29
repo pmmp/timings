@@ -148,9 +148,13 @@ span.triangle-icon {
 }
 
 .timings-table {
+    border-spacing: 0;
     width: 100%;
 }
 
+.timings-table > tbody > tr {
+    height: 2rem;
+}
 .timings-table > tbody > tr > td {
     border-bottom: 1px solid #dddddd;
 }

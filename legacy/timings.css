@@ -86,12 +86,8 @@ span.head > table td.metadataName {
     overflow-wrap: anywhere;
 }
 
-.hidden-children {
-    cursor: zoom-in;
-}
-
-.visible-children {
-    cursor: zoom-out;
+.hidden-children, .visible-children {
+    cursor: pointer;
 }
 
 span.indent {

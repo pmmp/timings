@@ -317,7 +317,6 @@ ob_start();
 
 	<a href="http://github.com/pmmp/timings" title="Source Code">[source]</a><br/>
 </div>
-<hr style="clear:left"/>
 <?php
 
 $head = ob_get_contents();
@@ -601,7 +600,7 @@ if ($legacyData) {
 		</tr>
 	</table>
 	<?php
-	echo '</span><hr />';
+	echo '</span>';
         if (preg_match("#[\\d,\\.]+#", $serverLoad, $m)) {
                 $serverLoad = str_replace(',', '', $m[0]);
                 $avgTPS = $numTicks / $desiredTicks * 20;
@@ -620,7 +619,7 @@ if ($legacyData) {
 	if (!empty($recommendations)) {
 		echo "<span style='color: red;display:block;margin: 5px 0'><br />";
 		echo implode("<br />\n", $recommendations);
-		echo "</span><br /><hr />";
+		echo "</span><br />";
 	}
 }
 

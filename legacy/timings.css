@@ -156,3 +156,8 @@ span.triangle-icon {
 .timings-table.force-display .event {
     display: table-row;
 }
+
+a.learnmore {
+    padding-left: 1em;
+    padding-right: 1em;
+}

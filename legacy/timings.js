@@ -57,6 +57,11 @@ function hideAll() {
     hideChildren($(this));
 }
 
+function learnMore(ev) {
+	ev.stopPropagation();
+	$("#info-" + $(this).data('info')).dialog({width: "80%", modal: true});
+}
+
 $(document).ready(function() {
     $('#paste_toggle').click(function() {
         $('#paste').toggle();
@@ -84,4 +89,5 @@ $(document).ready(function() {
     })
     $('.event.hidden-children').click(showMyChildren);
     $('.event.visible-children').click(hideMyChildren);
+    $('.learnmore').click(learnMore);
 });

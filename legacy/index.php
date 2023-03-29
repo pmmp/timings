@@ -571,12 +571,6 @@ if (!$legacyData) {
 		<br/><br/>
 		Async Tasks do not count on this entry. See all Task: Entries for your plugins to find a culprit.
 	</div>
-	<script type="text/javascript">
-		function showInfo(btn) {
-			$("#info-" + $(btn).attr('info')).dialog({width: "80%", modal: true});
-		}
-	</script>
-
 </body>
 </html>
 
@@ -584,7 +578,7 @@ if (!$legacyData) {
 <?php
 
 function showInfo($id, $title) {
-	return "<button class='learnmore' info='$id' onclick='showInfo(this)' title='$title'>Learn More</button></b>";
+	return "<a class='learnmore' data-info='$id' title='$title' href='#'>[Learn More]</a></b>";
 }
 
 $buffer = ob_get_contents();

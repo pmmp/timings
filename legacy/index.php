@@ -244,11 +244,9 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 		$hiddenelem = false;
 		$shown++;
 	}
-	$title = "title='$origevent'";
+	$title = $origevent;
 	$children = count($time->children);
 	if($isTreeTable){
-
-
 		$indentSize = $depth;
 		$sevent = "<span class='triangle-icon'></span>" . $sevent;
 		if($children > 0){
@@ -257,7 +255,7 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 			}else{
 				$rowClasses .= " visible-children";
 			}
-			$title = "title='$origevent ($children children)'";
+			$title = "$origevent ($children children)";
 		}else{
 			$rowClasses .= " no-children";
 		}
@@ -280,15 +278,15 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 
 	$result = [];
 	$result[] = <<<ROW
-<tr class='event $rowClasses' $title style="$rowStyle" data-depth="$depth">
-	<td class="event-name-column">$sevent</td>
-	<td class="metrics-column $pctTotalStyle">$pctTotalStr</td>
-	<td class="metrics-column $pctTickStyle">$pctTickStr</td>
-	<td class="metrics-column $pctTotalStyle">$timeStr</td>
-	<td class="metrics-column $pctTickStyle">$avgStr</td>
-	<td class="metrics-column">$timesPerTickStr</td>
-	<td class="metrics-column">$countStr</td>
-	<td class="metrics-column $violationsStyle">$violationsStr</td>
+<tr class='event $rowClasses' style="$rowStyle" data-depth="$depth">
+	<td class="event-name-column" title="$title">$sevent</td>
+	<td class="metrics-column $pctTotalStyle" title="% of the sample time spent (see also: Total)">$pctTotalStr</td>
+	<td class="metrics-column $pctTickStyle" title="Average % of a tick spent when activated (see also: Avg)">$pctTickStr</td>
+	<td class="metrics-column $pctTotalStyle" title="Total time spent">$timeStr</td>
+	<td class="metrics-column $pctTickStyle" title="Average time spent when activated">$avgStr</td>
+	<td class="metrics-column" title="Average number of occurrences per server tick">$timesPerTickStr</td>
+	<td class="metrics-column" title="Total number of occurrences">$countStr</td>
+	<td class="metrics-column $violationsStyle" title="Total number of ticks that took too long because of this event">$violationsStr</td>
 </tr>
 ROW;
 	foreach($time->children as $child){

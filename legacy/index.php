@@ -135,7 +135,6 @@ function generateTable(array $timings, string $plugin, float $ptotal, int $numTi
 	ob_start();
 	echo '<div class="timings-table-div">';
 	echo <<<TITLE
-<hr/>
 <div class="title">
 		<span>$plugin</span>
 TITLE;
@@ -150,7 +149,6 @@ TITLE;
 	}
 	echo <<<TITLE
 </div>
-<hr/>
 TITLE;
 	echo "<table class='timings-table'>";
 	echo <<<HEADER
@@ -317,17 +315,14 @@ ob_start();
 	<meta name="robots" content="noindex">
 </head>
 <body>
-<div style="text-align: center;margin: auto">
-	<div style="text-align:center;width: 310px;margin:auto;float: left">
-		<br/>
-		&copy; Aikar of <a href='http://ref.emc.gs/?gas=timingsphp' rel="nofollow">Empire Minecraft</a><br/>
-		<a href="http://github.com/pmmp/timings" title="Source Code">[source]</a>
-			Has timings helped you solve issues with performance? Consider
-			<a
-			href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=payments%40starlis%2ecom&lc=US&item_name=Aikar%20Timings&no_note=0&currency_code=USD"><b>[donating]</b></a>
-		<br/>
-
-	</div>
+<div class="pageHeader">
+	<br/>
+	&copy; Aikar of <a href='http://ref.emc.gs/?gas=timingsphp' rel="nofollow">Empire Minecraft</a><br/>
+	<a href="http://github.com/pmmp/timings" title="Source Code">[source]</a>
+		Has timings helped you solve issues with performance? Consider
+		<a
+		href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=payments%40starlis%2ecom&lc=US&item_name=Aikar%20Timings&no_note=0&currency_code=USD"><b>[donating]</b></a>
+	<br/>
 </div>
 <hr style="clear:left"/>
 <?php
@@ -361,7 +356,7 @@ if (!$legacyData) {
 
 } else {
 ?>
-<div id="reports">
+<div id="reports" class="reports">
 	<?php
 
 	$spigotConfigPattern = "/&amp;amp;lt;spigotConfig&amp;amp;gt;(.*)&amp;amp;lt;\\/spigotConfig&amp;amp;gt;/ms";
@@ -608,15 +603,15 @@ if ($legacyData) {
 	?>
 		<table>
 		<tr>
-			<td><b>PocketMine-MP Version</b></td>
+			<td class="metadataName">PocketMine-MP Version</td>
 			<td><?php echo $version ?></td>
 		</tr>
 		<tr>
-			<td><b>Sample time</b></td>
+			<td class="metadataName">Sample time</td>
 			<td><?php echo $sampleTimeS ?> s (Ticks: <?php echo $numTicks ?>)</td>
 		</tr>
 		<tr>
-			<td><b>Total CPU time spent</b></td>
+			<td class="metadataName">Total CPU time spent</td>
 			<td><?php echo $totalTimeS ?> s</td>
 		</tr>
 	<?php
@@ -624,7 +619,7 @@ if ($legacyData) {
 	if ($entityTicks && $numTicks) {
 		?>
 		<tr>
-			<td><b>Average Entities</b></td>
+			<td class="metadataName">Average Entities</td>
 			<td><?php echo number_format($entityTicks / $numTicks, 2) ?></td>
 		</tr>
 		<?php
@@ -632,7 +627,7 @@ if ($legacyData) {
 	if ($playerTicks && $numTicks) {
 		?>
 		<tr>
-			<td><b>Average Players</b></td>
+			<td class="metadataName">Average Players</td>
 			<td><?php echo number_format($playerTicks / $numTicks, 2) ?></td>
 		</tr>
 		<?php
@@ -641,14 +636,14 @@ if ($legacyData) {
 		$desiredTicks = $sample / 1000 / 1000 / 1000 * 20;
 		?>
 		<tr>
-			<td><b>Average TPS</b></td>
+			<td class="metadataName">Average TPS</td>
 			<td><?php echo number_format($numTicks / $desiredTicks * 20, 2) ?></td>
 		</tr>
 		<?php
 	}
 	?>
 		<tr>
-			<td><b>Server Load</b></td>
+			<td class="metadataName">Server Load</td>
 			<td><?php echo $serverLoadStr ?></td>
 		</tr>
 	</table>

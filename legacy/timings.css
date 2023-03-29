@@ -16,6 +16,12 @@ html, body {
     font-family: monospace;
 }
 
+div.pageHeader {
+    text-align: center;
+    margin: auto;
+    width: 310px;
+}
+
 .secondaryBar {
     position: relative;
 }
@@ -29,6 +35,12 @@ button {
 div.title {
     background: #CCC;
     padding: 3px;
+    border-bottom: 1px solid #000000;
+    height: 32px;
+    display: flex;
+}
+div.title > span {
+    margin: auto 0 auto 10px;
 }
 hr {
     margin: 0;
@@ -37,19 +49,36 @@ span.head {
     padding: 0;
     margin: 5px;
 }
+
+span.head > table {
+    margin: 0 auto;
+}
+
+span.head > table td {
+    width: 50%;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+span.head > table td.metadataName {
+    text-align: right;
+    font-weight: bold;
+}
+
 .sectionReport button {
     float: none;
 }
 
 .metrics-column {
     text-align: right;
-    min-width: 80px;
+    width: 80px;
+    min-width: 40px;
 }
 .event-name-column {
     text-align: left;
     padding-left: 5px;
     padding-right: 5px;
     width: 50%;
+    min-width: 200px;
 }
 .event-name {
     padding-left: 5px;
@@ -100,8 +129,20 @@ span.triangle-icon {
     text-align: center;
 }
 
-.timings-table {
+.reports {
+    margin: auto;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.timings-table-div {
     border-spacing: 0;
+    margin-bottom: 20px;
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+
+.timings-table {
     width: 100%;
 }
 

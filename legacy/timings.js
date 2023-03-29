@@ -14,7 +14,6 @@ function showMyChildren() {
 function showChildren(element) {
     $(element).show()
     if ($(element).hasClass('hidden-children')) {
-        console.log('showing children');
         $(element).click(hideMyChildren).addClass('visible-children').removeClass('hidden-children');
         var depth = $(element).data('depth');
         $(element).nextUntil(
@@ -35,7 +34,6 @@ function hideMyChildren() {
 
 function hideChildren(element) {
     if ($(element).hasClass('visible-children')) {
-        console.log('hiding children');
         var depth = $(element).data('depth');
         $(element).click(showMyChildren).addClass('hidden-children').removeClass('visible-children');
         $(element).nextUntil(function() {
@@ -46,9 +44,6 @@ function hideChildren(element) {
                 $(this).click(showMyChildren).addClass('hidden-children').removeClass('visible-children');
             }
         })
-    } else {
-        console.log('wtf?')
-        console.log(element);
     }
 }
 

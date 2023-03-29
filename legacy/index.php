@@ -155,7 +155,6 @@ TITLE;
 <tr>
 	<th class="event-name-column"><span class="event-name">Event</span></th>
 	<th class="metrics-column">Pct Total</th>
-	<th class="metrics-column">Pct Tick</th>
 	<th class="metrics-column">Total</th>
 	<th class="metrics-column">Avg</th>
 	<th class="metrics-column">PerTick</th>
@@ -195,7 +194,6 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 
 	$pctTick = ($avg / 1000 / 1000 / 50) * 100;
 	$pctTickStyle = pct($pctTick, 1 /*$count * 1000 / $numTicks*/, 50, 20, 10);
-	$pctTickStr = number_format($pctTick, 2) . '%';
 	$avgStr = timeUnits($avg);
 
 	$timeStr = timeUnits($time->timeNs);
@@ -219,7 +217,7 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 	if($event == "Full Server Tick"){
 		$sevent .= showInfo('fst', 'Full Server Tick');
 		global $serverLoad, $serverLoadStr;
-		$serverLoadStr = "<span class=\"$pctTickStyle\">$pctTickStr</span>";
+		$serverLoadStr = "<span class=\"$pctTickStyle\">" . number_format($pctTick, 2) . "%</span>";
 		$serverLoad = $pctTick;
 	}
 
@@ -281,7 +279,6 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 <tr class='event $rowClasses' style="$rowStyle" data-depth="$depth">
 	<td class="event-name-column" title="$title">$sevent</td>
 	<td class="metrics-column $pctTotalStyle" title="% of the sample time spent (see also: Total)">$pctTotalStr</td>
-	<td class="metrics-column $pctTickStyle" title="Average % of a tick spent when activated (see also: Avg)">$pctTickStr</td>
 	<td class="metrics-column $pctTotalStyle" title="Total time spent">$timeStr</td>
 	<td class="metrics-column $pctTickStyle" title="Average time spent when activated">$avgStr</td>
 	<td class="metrics-column" title="Average number of occurrences per server tick">$timesPerTickStr</td>

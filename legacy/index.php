@@ -11,14 +11,290 @@
 
 global $legacyData;
 
+const BREAKDOWN_SUBKEY = 'Minecraft - Breakdown (counted by other timings, not included in total)  ';
+global $buildTree;
+
 class TimingResult{
+	/**
+	 * @var self[]
+	 */
+	public array $children = [];
+
 	public function __construct(
 		public string $name,
+		public string $group,
 		public int $count,
 		public int $timeNs,
 		public float $avgNs,
 		public int $violations,
+		public ?int $parentId,
+		public int $timerId
 	){}
+}
+
+function sortTimings(array $timings) : array{
+	uasort($timings, function(TimingResult $a, TimingResult $b) : int{
+		return $b->timeNs <=> $a->timeNs;
+	});
+	foreach($timings as $timing){
+		$timing->children = sortTimings($timing->children);
+	}
+	return $timings;
+}
+
+/**
+ * @param string $legacyData
+ *
+ * @return TimingResult[]
+ * @phpstan-return array<int, TimingResult>
+ */
+function buildTree(string $legacyData) : array{
+	$orphans = [];
+	$parents = [];
+	$group = "";
+	foreach(explode("\n", $legacyData) as $line){
+		$line = trim($line, "\r\n");
+		if($line === ""){
+			continue;
+		}
+		if($line[0] !== " "){
+			if($line[0] === "#"){
+				//ignore comments
+				continue;
+			}
+			$group = trim($line);
+			continue;
+		}
+
+		if (preg_match('/(*ANYCRLF)^(.+?) Time: (\d+) Count: (\d+) Avg: ([\d\.]+) Violations: (\d+) RecordId: (\d+) ParentRecordId: (\d+|none)(?: TimerId: (\d+))?$/m', $line, $matches) === 1) {
+			[, $timingName, $timeNs, $count, $avg, $violations, $recordId, $parentRecordIdStr, $timerId] = $matches;
+			$timingName = trim($timingName);
+
+			$parentRecordId = $parentRecordIdStr === "none" ? null : (int) $parentRecordIdStr;
+			$result = new TimingResult($timingName, $group, (int) $count, (int) $timeNs, (float) $avg, (int) $violations, $parentRecordId, (int) $timerId);
+			if($parentRecordId === null){
+				$parents[(int) $recordId] = $result;
+			}else{
+				$orphans[(int) $recordId] = $result;
+			}
+		}
+	}
+	$roots = $parents;
+	while(true){
+
+		$newParents = [];
+		foreach($orphans as $recordId => $orphan){
+			if(isset($parents[$orphan->parentId])){
+				$parents[$orphan->parentId]->children[$recordId] = $orphan;
+				$newParents[$recordId] = $orphan;
+				unset($orphans[$recordId]);
+			}
+		}
+		if(count($newParents) === 0){
+			//we may have a circular reference or missing parent - or everything is fine, and we're done
+			break;
+		}
+		$parents = $newParents;
+
+	}
+
+	return sortTimings($roots);
+}
+
+/**
+ * @param int            $visibleRows
+ * @param TimingResult[] $timings
+ * @param string[]       $exclude
+ *
+ * @return mixed[]
+ * @phpstan-return array{string, int}
+ */
+function generateTable(array $timings, string $plugin, float $ptotal, int $numTicks, ?float $sample, float $total, array $exclude, int $visibleRows) : array{
+	$pctStyle = '';
+	$totals = 0;
+	$pctStr = '';
+	if ($sample) {
+		$pct = $ptotal / ($sample ? $sample : $total);
+		if ($plugin == 'Minecraft') {
+			$pctStyle = pct($pct, 1, 70, 40, 20);
+		} else {
+			$pctStyle = pct($pct, 1, 6, 3, 1);
+		}
+		$pctStr = number_format($pct * 100, 2) . '%';
+		$totals = timeUnits($ptotal, 3);
+	}
+	$i = 0;
+	$shown = 0;
+	$rows = [];
+	foreach ($timings as $time) {
+		foreach(generateTableRow($time, $numTicks, $sample, $total, $time->name, $exclude, $i, $shown, $plugin, 0, $visibleRows) as $row){
+			$rows[] = $row;
+		}
+	}
+
+	ob_start();
+	echo '<div class="timings-table-div">';
+	echo <<<TITLE
+<hr/>
+<div class="title">
+		<span>$plugin</span>
+TITLE;
+	if ($plugin != BREAKDOWN_SUBKEY){
+		echo <<<TITLE
+		<span>Total: $totals</span>
+		<span class="$pctStyle">Pct: $pctStr</span>
+TITLE;
+	}
+	if ($shown < $i) {
+		echo "<span><button class='show_rest'>Expand all</button></span>";
+	}
+	echo <<<TITLE
+</div>
+<hr/>
+TITLE;
+	echo "<table class='timings-table'>";
+	echo <<<HEADER
+<tr>
+	<th class="event-name-column"><span class="event-name">Event</span></th>
+	<th class="metrics-column">Pct Total</th>
+	<th class="metrics-column">Pct Tick</th>
+	<th class="metrics-column">Total</th>
+	<th class="metrics-column">Avg</th>
+	<th class="metrics-column">PerTick</th>
+	<th class="metrics-column">Count</th>
+	<th class="metrics-column">Violations</th>
+</tr>
+HEADER;
+
+	foreach($rows as $row){
+		echo $row;
+	}
+	echo "</table>";
+
+	echo '</div>';
+	return [ob_get_clean(), $shown];
+}
+
+/**
+ * @param int|null       $visibleRows
+ * @param TimingResult[] $timings
+ * @param string[]       $exclude
+ *
+ * @return string[]
+ */
+function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, float $total, string $event, array $exclude, int &$i, int &$shown, string $plugin, int $depth, int $visibleRows) : array{
+	$i++;
+
+	$isTreeTable = $depth > 0 || count($time->children) > 0;
+
+	$avg = round($time->timeNs / $time->count, 3);
+	$timesPerTick = round($time->count / $numTicks, 1);
+	if($timesPerTick >= 1){
+		$avg = $avg * $timesPerTick;
+	}
+
+	$countStr = amountUnits($time->count, 1);
+
+	$pctTick = ($avg / 1000 / 1000 / 50) * 100;
+	$pctTickStyle = pct($pctTick, 1 /*$count * 1000 / $numTicks*/, 50, 20, 10);
+	$pctTickStr = number_format($pctTick, 2) . '%';
+	$avgStr = timeUnits($avg);
+
+	$timeStr = timeUnits($time->timeNs);
+	$pctTotal = ($time->timeNs / ($sample ? $sample : $total)) * 100;
+	$pctTotalStyle = pct($pctTotal, 1, 50, 20, 10);
+	$pctTotalStr = number_format($pctTotal, 2) . '%';
+	$origevent = $event;
+	if(preg_match("/\.([a-zA-Z0-9\$_]+::.+)/s", $event, $em)){
+		$event = $em[1];
+	}
+	$event = trim($event);
+	$sevent = $event;
+	if(in_array($event, $exclude) || substr($event, 0, 2) == "**"){
+		$sevent = trim(substr($event, 2));
+	}
+
+	if($event == "Full Server Tick"){
+		$sevent .= showInfo('fst', 'Full Server Tick');
+		global $serverLoad, $serverLoadStr;
+		$serverLoadStr = "<span class=\"$pctTickStyle\">$pctTickStr</span>";
+		$serverLoad = $pctTick;
+	}
+
+	if($event == "** Connection Handler"){
+		$sevent .= showInfo('connhandler', 'Connection Handler');
+	}
+
+	if($event == "** activatedTickEntity"){
+		$sevent .= showInfo('ate', 'Activated Entities');
+	}
+	if($event == "Scheduler"){
+		$sevent .= showInfo('sched', 'Plugin Scheduler');
+	}
+	$sevent = "<span class='event-name'>$sevent</span>";
+
+	$hideBeyondDepth = 2;
+	if($depth > $hideBeyondDepth || $pctTotal < 0.0003 || $i > $visibleRows){
+		$hiddenelem = true;
+		$rowClasses = " hidden";
+	}else{
+		$rowClasses = "";
+		$hiddenelem = false;
+		$shown++;
+	}
+	$title = "title='$origevent'";
+	$children = count($time->children);
+	if($isTreeTable){
+
+
+		$indentSize = $depth;
+		$sevent = "<span class='triangle-icon'></span>" . $sevent;
+		if($children > 0){
+			if($hiddenelem || $depth >= $hideBeyondDepth){
+				$rowClasses .= " hidden-children children-hidden-by-default";
+			}else{
+				$rowClasses .= " visible-children";
+			}
+			$title = "title='$origevent ($children children)'";
+		}else{
+			$rowClasses .= " no-children";
+		}
+
+		if($indentSize > 0){
+			$sevent = "<span class='indent' style='width: " . $indentSize . "em'></span>" . $sevent;
+		}
+	}
+
+	if(($i & 1) === 1){
+		$rowStyle = "";//background-color: #dddddd;";
+	}else{
+		$rowStyle = "";
+	}
+
+	$timesPerTickStr = amountUnits($timesPerTick, 1);
+
+	$violationsStyle = pct($time->violations, 1, $numTicks / (5 * 20), $numTicks / (30 * 20), 0);
+	$violationsStr = amountUnits($time->violations, 1);
+
+	$result = [];
+	$result[] = <<<ROW
+<tr class='event $rowClasses' $title style="$rowStyle" data-depth="$depth">
+	<td class="event-name-column">$sevent</td>
+	<td class="metrics-column $pctTotalStyle">$pctTotalStr</td>
+	<td class="metrics-column $pctTickStyle">$pctTickStr</td>
+	<td class="metrics-column $pctTotalStyle">$timeStr</td>
+	<td class="metrics-column $pctTickStyle">$avgStr</td>
+	<td class="metrics-column">$timesPerTickStr</td>
+	<td class="metrics-column">$countStr</td>
+	<td class="metrics-column $violationsStyle">$violationsStr</td>
+</tr>
+ROW;
+	foreach($time->children as $child){
+		foreach(generateTableRow($child, $numTicks, $sample, $total, $child->name, $exclude, $i, $shown, $plugin, $depth + 1, $visibleRows) as $row){
+			$result[] = $row;
+		}
+	}
+	return $result;
 }
 
 ob_start();
@@ -90,12 +366,13 @@ if (!$legacyData) {
 		$legacyData = preg_replace($spigotConfigPattern, "", $legacyData);
 	}
 	if (preg_match('/Sample time (.+?) \(/', $legacyData, $sampm)) {
-		$sample = $sampm[1];
+		$sample = (float) $sampm[1];
+	}else{
+		$sample = null;
 	}
 
-	$subkey = 'Minecraft - Breakdown (counted by other timings, not included in total)  ';
 	$report = [];
-	$reportTotals = [$subkey => 0, 'Minecraft' => 0];
+	$reportTotals = [BREAKDOWN_SUBKEY => 0, 'Minecraft' => 0];
 
 	$current = null;
 	$version = '';
@@ -121,7 +398,7 @@ if (!$legacyData) {
 
 				[, $timingName, $timeNs, $count, $avg, $violations] = $m;
 				$timingName = trim($timingName);
-				$data = new TimingResult($timingName, (int) $count, (int) $timeNs, (float) $avg, (int) $violations, null);
+				$data = new TimingResult($timingName, (int) $count, (int) $count, (int) $timeNs, (float) $avg, (int) $violations, null, 0);
 				if ($timingName == 'Player Tick' || $timingName == 'Connection Handler') {
 					$timingName = '** Connection Handler';
 				}
@@ -150,11 +427,11 @@ if (!$legacyData) {
 					}
 					$tasks = '** Tasks';
 					if (substr($timingName, 0, 5) == "Task:") {
-						if (!isset($report[$subkey][$tasks])) {
-							$report[$subkey][$tasks] = $data;
+						if (!isset($report[BREAKDOWN_SUBKEY][$tasks])) {
+							$report[BREAKDOWN_SUBKEY][$tasks] = $data;
 						} else {
-							$report[$subkey][$tasks]->timeNs += $data->timeNs;
-							$report[$subkey][$tasks]->timeNs += $data->count;
+							$report[BREAKDOWN_SUBKEY][$tasks]->timeNs += $data->timeNs;
+							$report[BREAKDOWN_SUBKEY][$tasks]->timeNs += $data->count;
 						}
 					}
 					if (!empty($timeNs)) {
@@ -164,17 +441,17 @@ if (!$legacyData) {
 						$reportTotals[$pluginKey] += $data->timeNs;
 					}
 				} else {
-					if (!isset($report[$subkey][$timingName])) {
-						$report[$subkey][$timingName] = $data;
+					if (!isset($report[BREAKDOWN_SUBKEY][$timingName])) {
+						$report[BREAKDOWN_SUBKEY][$timingName] = $data;
 					} else {
-						$report[$subkey][$timingName]->timeNs += $data->timeNs;
-						$report[$subkey][$timingName]->timeNs += $data->count;
+						$report[BREAKDOWN_SUBKEY][$timingName]->timeNs += $data->timeNs;
+						$report[BREAKDOWN_SUBKEY][$timingName]->timeNs += $data->count;
 					}
 				}
 			}
 		}
 	}
-	$reportTotals[$subkey] = $reportTotals['Minecraft'] - 1;
+	$reportTotals[BREAKDOWN_SUBKEY] = $reportTotals['Minecraft'] - 1;
 
 
 	$total = 0;
@@ -186,9 +463,7 @@ if (!$legacyData) {
 	/** @var TimingResult[][] $report */
 	$report = array_sort($report, $reportTotals, SORT_DESC);
 	foreach ($report as $plugin => $rep) {
-		uasort($rep, function(TimingResult $a, TimingResult $b) {
-			return $b->timeNs <=> $a->timeNs;
-		});
+		$rep = sortTimings($rep);
 		$report[$plugin] = $rep;
 		/** @var TimingResult[] $rep */
 		foreach($rep as $k => $ent) {
@@ -215,152 +490,26 @@ if (!$legacyData) {
 
 	$numTicks = max(1, $numTicks);
 
-	foreach ($report as $plugin => $timings) {
-		$ptotal = $reportTotals[$plugin];
-		$pctStyle = '';
-		$pct = 0;
-		$totals = 0;
-		$pctStr = '';
-		if ($sample) {
-			$pct = $ptotal / ($sample ? $sample : $total);
-			if ($plugin == 'Minecraft') {
-				$pctStyle = pct($pct, 1, 70, 40, 20);
-			} else {
-				$pctStyle = pct($pct, 1, 6, 3, 1);
-			}
-			$pctStr = number_format($pct * 100, 2) . '%';
-			$totals = timeUnits($ptotal, 3);
+	global $serverLoad, $serverLoadStr, $buildTree;
+	$tree = buildTree($legacyData);
+	if(count($tree) > 0){
+		[$buffer, $shown] = generateTable($tree, "Minecraft (Tree View) - Click items to expand them", $reportTotals[$plugin], $numTicks, $sample, $total, $exclude, PHP_INT_MAX);
+		echo $buffer;
+	}
+	foreach($report as $plugin => $timings){
+		$visibleRows = 5;
+		if($plugin === "Minecraft"){
+			$visibleRows = 10;
 		}
-		ob_start();
-		echo '<div>';
-		echo <<<TITLE
-<hr/>
-<div class="title">
-<table>
-	<tr>
-		<td>$plugin</td>
-TITLE;
-		if ($plugin != $subkey){
-			echo <<<TITLE
-		<td>Total: $totals</td>
-		<td class="$pctStyle">Pct: $pctStr</td>
-TITLE;
-		}
-		echo <<<TITLE
-	</tr>
-</table>
-</div>
-<hr/>
-TITLE;
-		echo "<table>";
-		echo <<<HEADER
-<tr>
-	<th class="event-name-column">Event</th>
-	<th class="metrics-column">Pct Total</th>
-	<th class="metrics-column">Pct Tick</th>
-	<th class="metrics-column">Total</th>
-	<th class="metrics-column">Avg</th>
-	<th class="metrics-column">PerTick</th>
-	<th class="metrics-column">Count</th>
-	<th class="metrics-column">Violations</th>
-</tr>
-HEADER;
-		$i = 0;
-		$hiddenelem = false;
-		$shown = 0;
-		foreach ($timings as $event => $time) {
-			if ($time) {
-				$avg = round($time->timeNs / $time->count, 3);
-			} else {
-				$avg = 0;
-			}
-			$timesPerTick = round($time->count / $numTicks, 1);
-			if ($timesPerTick >= 1) {
-				$avg = $avg * $timesPerTick;
-			}
-
-			$countStr = amountUnits($time->count, 1);
-
-			$pctTick = ($avg / 1000 / 1000 / 50) * 100;
-			$pctTickStyle = pct($pctTick, 1 /*$count * 1000 / $numTicks*/, 50, 20, 10);
-			$pctTickStr = number_format($pctTick, 2) . '%';
-			$avgStr = timeUnits($avg);
-
-			$timeStr = timeUnits($time->timeNs);
-			$pctTotal = ($time->timeNs / ($sample ? $sample : $total)) * 100;
-			$pctTotalStyle = pct($pctTotal, 1, 50, 20, 10);
-			$pctTotalStr = number_format($pctTotal, 2) . '%';
-			$origevent = $event;
-			if (preg_match("/\.([a-zA-Z0-9\$_]+::.+)/s", $event, $em)) {
-				$event = $em[1];
-			}
-			$event = trim($event);
-
-			$sevent = "<b title='$origevent'>$event</b>";
-
-			if (in_array($event, $exclude) || substr($event, 0, 2) == "**") {
-				$sevent = "<b>" . trim(substr($event, 2)) . "</b>";
-			}
-
-			if ($event == "Full Server Tick") {
-				$sevent = showInfo('fst', 'Full Server Tick');
-				$serverLoadStr = "<span class=\"$pctTickStyle\">$pctTickStr</span>";
-				$serverLoad = $pctTick;
-			}
-
-			if ($event == "** Connection Handler") {
-				$sevent = showInfo('connhandler', 'Connection Handler');
-			}
-
-			if ($event == "** activatedTickEntity") {
-				$sevent = showInfo('ate', 'Activated Entities');
-			}
-			if ($event == "Scheduler") {
-				$sevent = showInfo('sched', 'Plugin Scheduler');
-			}
-			$i++;
-			if ((($plugin == "Minecraft" || $plugin == $subkey) && $i >= 11) || $pctTotal < 0.0003 || ($plugin != "Minecraft" && $i >= 6 && $plugin != $subkey)) {
-				$disabled = " hidden";
-				$hiddenelem = true;
-			} else {
-				$disabled = "";
-				$shown++;
-			}
-
-			$timesPerTickStr = amountUnits($timesPerTick, 1);
-
-			$violationsStyle = pct($time->violations, 1, $numTicks / (5 * 20), $numTicks / (30 * 20), 0);
-			$violationsStr = amountUnits($time->violations, 1);
-			echo <<<ROW
-<tr class='event $disabled'>
-	<td class="event-name-column">$sevent</td>
-	<td class="metrics-column $pctTotalStyle">$pctTotalStr</td>
-	<td class="metrics-column $pctTickStyle">$pctTickStr</td>
-	<td class="metrics-column $pctTotalStyle">$timeStr</td>
-	<td class="metrics-column $pctTickStyle">$avgStr</td>
-	<td class="metrics-column">$timesPerTickStr</td>
-	<td class="metrics-column">$countStr</td>
-	<td class="metrics-column $violationsStyle">$violationsStr</td>
-</tr>
-ROW;
-		}
-
-		echo "</table>";
-		if ($hiddenelem) {
-			echo "<button class='show_rest'>Show rest...</button><br />";
-		}
-		echo '</div>';
-		$buffer = ob_get_contents();
-		ob_end_clean();
-		if ($shown == 0) {
+		[$buffer, $shown] = generateTable($timings, $plugin, $reportTotals[$plugin], $numTicks, $sample, $total, $exclude, $visibleRows);
+		if($shown == 0){
 			echo "<div class='hidden'>$buffer</div>";
-		} else {
+		}else{
 			echo $buffer;
 		}
-
 	}
 	?>
-	<button onclick='$(".hidden").toggle()'>Toggle all hidden</button>
+	<button class="show_all">Toggle all hidden</button>
 	<div class="footer">
 		<a href="/?id=<?php echo $_GET['id'] ?? 0 ?>&amp;raw=1">View raw</a>
 	</div>
@@ -436,7 +585,7 @@ ROW;
 <?php
 
 function showInfo($id, $title) {
-	return "<b>$title</b><button class='learnmore' info='$id' onclick='showInfo(this)' title='$title'>Learn More</button></b>";
+	return "<button class='learnmore' info='$id' onclick='showInfo(this)' title='$title'>Learn More</button></b>";
 }
 
 $buffer = ob_get_contents();

@@ -47,8 +47,40 @@ span.head {
 }
 .event-name-column {
     text-align: left;
-    padding-left: 20px;
+    padding-left: 5px;
+    white-space: nowrap;
 }
+.event-name {
+    padding-left: 5px;
+    font-weight: bold;
+}
+
+.hidden-children {
+    cursor: zoom-in;
+}
+
+.visible-children {
+    cursor: zoom-out;
+}
+
+span.indent {
+    display: inline-block;
+}
+span.triangle-icon {
+    width: 1em;
+    display: inline-block;
+    text-align: center;
+}
+.event.no-children span.triangle-icon::after {
+    content: "\00B7";
+}
+.event.hidden-children span.triangle-icon::after {
+    content: "\1F782";
+}
+.event.visible-children span.triangle-icon::after {
+    content: "\1F783";
+}
+
 .low-highlight {
     background: black;
     color: yellow;
@@ -64,4 +96,19 @@ span.head {
 .footer {
     width: 100%;
     text-align: center;
+}
+
+.timings-table {
+    border-spacing: 0;
+}
+
+.timings-table > tbody > tr > td {
+    border-bottom: 1px solid #dddddd;
+}
+
+.timings-table > tbody > tr > th {
+    border-bottom: 1px solid #000000;
+}
+.timings-table.force-display .event {
+    display: table-row;
 }

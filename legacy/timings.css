@@ -101,24 +101,33 @@ span.triangle-icon {
 .event.no-children span.triangle-icon::after {
     content: "-";
 }
-.event.hidden-children span.triangle-icon::after {
-    content: "\1F782";
+
+.event.hidden-children span.triangle-icon > div {
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid black;
+    margin: auto;
 }
-.event.visible-children span.triangle-icon::after {
-    content: "\1F783";
+
+.event.visible-children span.triangle-icon > div {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid black;
+    margin: auto;
 }
 
 .low-highlight {
-    background: black;
-    color: yellow;
+    background: rgb(255, 227, 130);
 }
 .mid-highlight {
-    background: black;
-    color: orange;
+    background: rgb(252, 178, 121);
 }
 .high-highlight {
-    background: black;
-    color: red;
+    background: rgb(249, 105, 108);
 }
 .footer {
     width: 100%;

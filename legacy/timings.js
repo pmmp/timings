@@ -69,12 +69,12 @@ $(document).ready(function() {
     $('.show_rest').click(function() {
         if($(this).data('shown')) {
             $(this).data('shown', false);
-            var table = $(this).closest('.timings-table-div').find('.timings-table');
+            var table = $(this).closest('.timings-table-border').find('.timings-table');
             table.find('.children-hidden-by-default').each(hideMyChildren);
             table.find('.hidden').each(hideAll);
         }else{
             $(this).data('shown', true);
-            $(this).closest('.timings-table-div').find('.timings-table').find('.event').each(showMyChildren);
+            $(this).closest('.timings-table-border').find('.timings-table').find('.event').each(showMyChildren);
         }
     })
     $('.show_all').click(function() {

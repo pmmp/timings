@@ -136,16 +136,18 @@ function generateTable(array $timings, string $plugin, float $ptotal, int $numTi
 	echo '<div class="timings-table-border">';
 	echo <<<TITLE
 <div class="title">
+	<span>
 		<span>$plugin</span>
 TITLE;
 	if ($plugin != BREAKDOWN_SUBKEY){
 		echo <<<TITLE
 		<span>Total: $totals</span>
 		<span class="$pctStyle">Pct: $pctStr</span>
+	</span>
 TITLE;
 	}
 	if ($shown < $i) {
-		echo "<span><button class='show_rest'>Expand all</button></span>";
+		echo "<span class='show-rest-span'><button class='show_rest'>Expand all</button></span>";
 	}
 	echo <<<TITLE
 </div>

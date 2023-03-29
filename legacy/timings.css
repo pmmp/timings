@@ -34,13 +34,22 @@ button {
 }
 div.title {
     background: #CCC;
-    padding: 3px;
     border-bottom: 1px solid #000000;
     min-height: 32px;
+    display: table;
+    width: 100%;
 }
 div.title > span {
     margin: auto 0 auto 10px;
+    vertical-align: middle;
+    padding: 5px;
+    display: table-cell;
 }
+div.title > span.show-rest-span {
+    float: right;
+    margin: auto 0;
+}
+
 hr {
     margin: 0;
 }

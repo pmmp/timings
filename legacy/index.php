@@ -68,7 +68,7 @@ function buildTree(string $legacyData) : array{
 
 		if (preg_match('/(*ANYCRLF)^(.+?) Time: (\d+) Count: (\d+) Avg: ([\d\.]+) Violations: (\d+) RecordId: (\d+) ParentRecordId: (\d+|none)(?: TimerId: (\d+))?$/m', $line, $matches) === 1) {
 			[, $timingName, $timeNs, $count, $avg, $violations, $recordId, $parentRecordIdStr, $timerId] = $matches;
-			$timingName = trim($timingName);
+			$timingName = htmlspecialchars_decode(trim($timingName));
 
 			$parentRecordId = $parentRecordIdStr === "none" ? null : (int) $parentRecordIdStr;
 			$result = new TimingResult($timingName, $group, (int) $count, (int) $timeNs, (float) $avg, (int) $violations, $parentRecordId, (int) $timerId);
@@ -213,6 +213,10 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 	if(in_array($event, $exclude) || substr($event, 0, 2) == "**"){
 		$sevent = trim(substr($event, 2));
 	}
+	$sevent = preg_replace('/^Plugin: (.+) Event: (.+)$/', 'Event: $2', $sevent);
+	$sevent = preg_replace('/^Task: (.+) Runnable: (.+)$/', 'Task: $2', $sevent);
+	$sevent = htmlspecialchars($sevent);
+	$sevent = str_replace(["\\", "/", "-&gt;", "::"], ["<wbr>\\", "<wbr>/", "<wbr>&#8209;&gt;", "<wbr>::"], $sevent);
 
 	if($event == "Full Server Tick"){
 		$sevent .= showInfo('fst', 'Full Server Tick');
@@ -397,7 +401,7 @@ if (!$legacyData) {
 
 
 				[, $timingName, $timeNs, $count, $avg, $violations] = $m;
-				$timingName = trim($timingName);
+				$timingName = htmlspecialchars_decode(trim($timingName));
 				$data = new TimingResult($timingName, (int) $count, (int) $count, (int) $timeNs, (float) $avg, (int) $violations, null, 0);
 				if ($timingName == 'Player Tick' || $timingName == 'Connection Handler') {
 					$timingName = '** Connection Handler';

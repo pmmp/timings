@@ -479,7 +479,7 @@ if (!$legacyData) {
 			if ($k == '** entityBaseTick' || $k == 'entityBaseTick' || $k == '** tickEntity') {
 				$entityTicks = $ent->count;
 			}
-			if ($k == "** tickEntity - EntityPlayer") {
+			if ($k == "** tickEntity - EntityPlayer" || str_contains($k, "Entity Tick - Player")) {
 				$playerTicks = $ent->count;
 			}
 		}

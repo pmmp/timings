@@ -617,7 +617,7 @@ if ($legacyData) {
         }
 
 	if (!empty($recommendations)) {
-		echo "<span style='color: red;display:block;margin: 5px 0'><br />";
+		echo "<span style='color: red;display:block;margin: auto; text-align: center'><br />";
 		echo implode("<br />\n", $recommendations);
 		echo "</span><br />";
 	}

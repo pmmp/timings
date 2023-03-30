@@ -192,7 +192,7 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 		$avg = $avg * $timesPerTick;
 	}
 
-	$countStr = amountUnits($time->count, 1);
+	$countStr = amountUnits($time->count, 1, 0);
 
 	$pctTick = ($avg / 1000 / 1000 / 50) * 100;
 	$pctTickStyle = pct($pctTick, 1 /*$count * 1000 / $numTicks*/, 50, 20, 10);
@@ -267,14 +267,14 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 		$rowStyle = "";
 	}
 
-	$timesPerTickStr = amountUnits($timesPerTick, 1);
+	$timesPerTickStr = amountUnits($timesPerTick, 1, 1);
 
 	$violationsStyle = pct($time->violations, 1, $numTicks / (5 * 20), $numTicks / (30 * 20), 0);
-	$violationsStr = amountUnits($time->violations, 1);
+	$violationsStr = amountUnits($time->violations, 1, 0);
 
 	$result = [];
 	$result[] = <<<ROW
-<tr class='event $rowClasses' style="$rowStyle" data-depth="$depth">
+<tr class='event $rowClasses' style="$rowStyles" data-depth="$depth" data-sibling="$siblingIndex" data-total-siblings="$totalSiblings">
 	<td class="event-name-column" title="$title">$sevent</td>
 	<td class="metrics-column $pctTotalStyle" title="% of the sample time spent (see also: Total)">$pctTotalStr</td>
 	<td class="metrics-column $pctTotalStyle" title="Total time spent">$timeStr</td>
@@ -637,7 +637,7 @@ function pct($pct, $mod = 1, $high = null, $med = null, $low = null) {
 	return '';
 }
 
-function amountUnits(float $amount, int $precision = 2) : string{
+function amountUnits(float $amount, int $dividedPrecision = 2, int $unitPrecision = 2) : string{
 	foreach([
 		1000 * 1000 * 1000 * 1000 => "T",
 		1000 * 1000 * 1000 => "B",
@@ -645,10 +645,10 @@ function amountUnits(float $amount, int $precision = 2) : string{
 		1000 => "k",
 	] as $factor => $unit){
 		if($amount >= $factor){
-			return number_format($amount / $factor, $precision) . $unit;
+			return number_format($amount / $factor, $dividedPrecision) . $unit;
 		}
 	}
-	return number_format($amount, $precision);
+	return number_format($amount, $unitPrecision);
 }
 function timeUnits(float $nanoseconds, int $precision = 2) : string{
 	foreach([

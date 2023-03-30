@@ -174,6 +174,15 @@ HEADER;
 	return [ob_get_clean(), $shown];
 }
 
+function heatmapColor(float $amount, float $max) : string{
+	$percentage = $amount / $max;
+	if($percentage < 0.1){
+		return "";
+	}
+	$hue = max(0, 1 - $percentage) * 60;
+	return "hsl($hue, 90%, 70%);";
+}
+
 /**
  * @param int|null       $visibleRows
  * @param TimingResult[] $timings
@@ -195,12 +204,13 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 	$countStr = amountUnits($time->count, 1, 0);
 
 	$pctTick = ($avg / 1000 / 1000 / 50) * 100;
-	$pctTickStyle = pct($pctTick, 1 /*$count * 1000 / $numTicks*/, 50, 20, 10);
+
+	$pctTickStyle = "background-color: " . heatmapColor($avg, 1000 * 1000 * 50);
 	$avgStr = timeUnits($avg);
 
 	$timeStr = timeUnits($time->timeNs);
 	$pctTotal = ($time->timeNs / ($sample ? $sample : $total)) * 100;
-	$pctTotalStyle = pct($pctTotal, 1, 50, 20, 10);
+	$pctTotalStyle = "background-color: " . heatmapColor($pctTotal, 100);
 	$pctTotalStr = number_format($pctTotal, 2) . '%';
 	$origevent = $event;
 	if(preg_match("/\.([a-zA-Z0-9\$_]+::.+)/s", $event, $em)){
@@ -219,7 +229,7 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 	if($event == "Full Server Tick"){
 		$sevent .= showInfo('fst', 'Full Server Tick');
 		global $serverLoad, $serverLoadStr;
-		$serverLoadStr = "<span class=\"$pctTickStyle\">" . number_format($pctTick, 2) . "%</span>";
+		$serverLoadStr = "<span style=\"$pctTickStyle\">" . number_format($pctTick, 2) . "%</span>";
 		$serverLoad = $pctTick;
 	}
 
@@ -274,11 +284,11 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 
 	$result = [];
 	$result[] = <<<ROW
-<tr class='event $rowClasses' style="$rowStyles" data-depth="$depth" data-sibling="$siblingIndex" data-total-siblings="$totalSiblings">
+<tr class='event $rowClasses' data-depth="$depth" data-sibling="$siblingIndex" data-total-siblings="$totalSiblings">
 	<td class="event-name-column" title="$title">$sevent</td>
-	<td class="metrics-column $pctTotalStyle" title="% of the sample time spent (see also: Total)">$pctTotalStr</td>
-	<td class="metrics-column $pctTotalStyle" title="Total time spent">$timeStr</td>
-	<td class="metrics-column $pctTickStyle" title="Average time spent when activated">$avgStr</td>
+	<td class="metrics-column" style="$pctTotalStyle"title="% of the sample time spent (see also: Total)">$pctTotalStr</td>
+	<td class="metrics-column" style="$pctTotalStyle"title="Total time spent">$timeStr</td>
+	<td class="metrics-column" style="$pctTickStyle" title="Average time spent when activated">$avgStr</td>
 	<td class="metrics-column" title="Average number of occurrences per server tick">$timesPerTickStr</td>
 	<td class="metrics-column" title="Total number of occurrences">$countStr</td>
 	<td class="metrics-column $violationsStyle" title="Total number of ticks that took too long because of this event">$violationsStr</td>

@@ -484,7 +484,7 @@ if (!$legacyData) {
 	global $serverLoad, $serverLoadStr, $buildTree;
 	$tree = buildTree($legacyData);
 	if(count($tree) > 0){
-		[$buffer, $shown] = generateTable($tree, "Minecraft (Tree View) - Click items to expand them", $reportTotals[$plugin], $numTicks, $sample, $total, $exclude, PHP_INT_MAX);
+		[$buffer, $shown] = generateTable($tree, "Minecraft (Tree View)", $reportTotals["Minecraft"], $numTicks, $sample, $total, $exclude, PHP_INT_MAX);
 		echo $buffer;
 	}
 	foreach($report as $plugin => $timings){

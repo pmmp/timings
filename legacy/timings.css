@@ -59,21 +59,21 @@ div.title > span.show-rest-span {
 hr {
     margin: 0;
 }
-span.head {
+div.head {
     padding: 0;
-    margin: 5px;
+    margin: 10px;
 }
 
-span.head > table {
+div.head > table {
     margin: 0 auto;
 }
 
-span.head > table td {
+div.head > table td {
     width: 50%;
     padding-left: 5px;
     padding-right: 5px;
 }
-span.head > table td.metadataName {
+div.head > table td.metadataName {
     text-align: right;
     font-weight: bold;
 }
@@ -184,4 +184,12 @@ a.learnmore {
     padding-left: 1em;
     padding-right: 1em;
     color: blue;
+}
+.recommendation {
+    color: red;
+    display: block;
+    max-width: 1000px;
+    margin: auto;
+    text-align: center;
+    padding-bottom: 20px;
 }

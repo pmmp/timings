@@ -15,7 +15,7 @@ namespace Starlis\Timings;
  */
 class LegacyHandler {
 	public static function load($data) {
-		$GLOBALS['legacyData'] = $data;
+		$GLOBALS['reportData'] = $data;
 		require_once "legacy/index.php";
 	}
 }

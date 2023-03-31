@@ -169,6 +169,9 @@ span.triangle-icon {
 .timings-table > tbody > tr > td {
     border-bottom: 1px solid #dddddd;
 }
+.timings-table > tbody > tr:last-child > td {
+    border-bottom: 0;
+}
 
 .timings-table > tbody > tr > th {
     border-bottom: 1px solid #000000;

@@ -231,7 +231,6 @@ function buildTree(string $reportData) : TimingsReport{
 }
 
 /**
- * @param int            $visibleRows
  * @param TimingResult[] $timings
  * @param string[]       $exclude
  *
@@ -535,7 +534,6 @@ ROW;
 
 			$recommendations = [];
 
-			global $serverLoad, $serverLoadStr, $buildTree;
 			if($report->tree !== null){
 				[$buffer, $shown] = generateTable($report->tree, "Minecraft (Tree View)", $report->groupTotals["Minecraft"], $report->numTicks, $report->sampleTimeNs, $report->activeTimeNs, $exclude, PHP_INT_MAX, 1);
 				echo $buffer;

@@ -77,6 +77,10 @@ div.head > table td.metadataName {
     text-align: right;
     font-weight: bold;
 }
+div.head > div.links {
+    text-align: center;
+    margin: 10px;
+}
 
 .sectionReport button {
     float: none;
@@ -156,7 +160,7 @@ span.triangle-icon {
 
 .timings-table-border {
     border-spacing: 0;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
     border-top: 1px solid #000000;
     border-bottom: 1px solid #000000;
 }

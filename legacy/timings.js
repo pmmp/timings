@@ -78,12 +78,6 @@ $(document).ready(function() {
             border.find('.expand-all-text').text('Collapse all');
         }
     })
-    $('.show_all').click(function() {
-        $('.timings-table').each(function() {
-            $(this).data('expanded', true);
-            $(this).find('.event').each(showMyChildren);
-        })
-    })
     $('.event.hidden-children').click(showMyChildren);
     $('.event.visible-children').click(hideMyChildren);
     $('.learnmore').click(learnMore);

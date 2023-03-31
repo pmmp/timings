@@ -455,125 +455,117 @@ ROW;
 			<?php
 
 		} else {
-		$spigotConfigPattern = "/&amp;amp;lt;spigotConfig&amp;amp;gt;(.*)&amp;amp;lt;\\/spigotConfig&amp;amp;gt;/ms";
-		if(preg_match($spigotConfigPattern, $reportData, $configMatch)){
-			$spigotConfig = $configMatch[1];
-			$reportData = preg_replace($spigotConfigPattern, "", $reportData);
-		}
-		$report = buildTree($reportData);
-		?>
-		<div class="head">
-			<table>
-				<tr>
-					<td class="metadataName">PocketMine-MP Version</td>
-					<td><?php echo $report->serverVersion ?></td>
-				</tr>
-				<tr>
-					<td class="metadataName">Sample time</td>
-					<td><?php echo timeUnits($report->sampleTimeNs) ?> (Ticks: <?php echo $report->numTicks ?>)</td>
-				</tr>
-				<tr>
-					<td class="metadataName">Total CPU time spent</td>
-					<td><?php echo timeUnits($report->activeTimeNs) ?></td>
-				</tr>
-				<?php if($report->numTicks > 0){
-					if($report->entityTicks > 0){
-						?>
-						<tr>
-							<td class="metadataName">Average Entities</td>
-							<td><?php echo number_format($report->entityTicks / $report->numTicks, 2) ?></td>
-						</tr>
-						<?php
-					}
-					if($report->playerTicks > 0){
-						?>
-						<tr>
-							<td class="metadataName">Average Players</td>
-							<td><?php echo number_format($report->playerTicks / $report->numTicks, 2) ?></td>
-						</tr>
-						<?php
-					}
-					if($report->sampleTimeNs > 0){
-						$desiredTicks = $report->sampleTimeNs / 1000 / 1000 / 1000 * 20;
-						?>
-						<tr>
-							<td class="metadataName">Average TPS</td>
-							<td><?php echo number_format($report->getAverageTPS(), 2) ?></td>
-						</tr>
-						<?php
-					}
-				}
-				?>
-				<tr>
-					<td class="metadataName">Server Load</td>
-					<td>
-						<span style="background-color: <?php echo heatmapColor($report->getServerLoad(), 100) ?>"><?php echo number_format($report->getServerLoad(), 2) ?>%</span>
-					</td>
-				</tr>
-			</table>
-		</div>
-		<?php
-		$recommendations = [];
-		if($report->getServerLoad() < 95 && $report->getAverageTPS() < 19){
-			$recommendations[] = [
-				"<b>Notice: Your AVG TPS is less than 19 but server load is less than 95.</b><br/>",
-				"This means that something (not the server's main thread) is hogging the CPU.",
-				"This might be because of overloaded AsyncWorkers (plugins scheduling too many AsyncTasks or AsyncTasks running for too long),",
-				"too much activity on the network, or something else might be running on the machine and hogging the CPU.",
-				"You should check the machine's overall CPU usage to see if anything else might be using a lot of CPU."
-			];
-		}else if($report->getServerLoad() >= 97){
-			$recommendations[] = ["<b>Your server is lagging because it is overloaded (97%+ Server Load). Try reducing View Distance if it is above 4.</b>"];
-		}
-		foreach($recommendations as $recommendation){
+			$spigotConfigPattern = "/&amp;amp;lt;spigotConfig&amp;amp;gt;(.*)&amp;amp;lt;\\/spigotConfig&amp;amp;gt;/ms";
+			if(preg_match($spigotConfigPattern, $reportData, $configMatch)){
+				$spigotConfig = $configMatch[1];
+				$reportData = preg_replace($spigotConfigPattern, "", $reportData);
+			}
+			$report = buildTree($reportData);
 			?>
-			<span class="recommendation">
-				<?php
-				echo implode("\n", $recommendation);
-				?>
-			</span>
-			<?php
-		}
-		?>
-		<div id="reports" class="reports">
-			<?php
-
-			$exclude = ['entityAIJump', 'entityAILoot', 'entityAIMove',
-				'entityTickRest', 'entityAI', 'entityBaseTick'];
-
-			$recommendations = [];
-
-			if($report->tree !== null){
-				[$buffer, $shown] = generateTable($report->tree, "Minecraft (Tree View)", $report->groupTotals["Minecraft"], $report->numTicks, $report->sampleTimeNs, $report->activeTimeNs, $exclude, PHP_INT_MAX, 1);
-				echo $buffer;
-			}
-			$tableOrder = ["Minecraft" => true, BREAKDOWN_SUBKEY => true];
-			foreach($report->groupTotals as $groupName => $total){
-				if(!isset($tableOrder[$groupName])){
-					$tableOrder[$groupName] = true;
-				}
-			}
-			foreach($tableOrder as $groupName => $timings){
-				$visibleRows = 5;
-				$loadHeatmapFactor = 0.06;
-				if($groupName === "Minecraft"){
-					$visibleRows = 10;
-					$loadHeatmapFactor = 1.0;
-				}
-				[$buffer, $shown] = generateTable($report->groups[$groupName], $groupName, $report->groupTotals[$groupName] ?? null, $report->numTicks, $report->sampleTimeNs, $report->activeTimeNs, $exclude, $visibleRows, $loadHeatmapFactor);
-				if($shown == 0){
-					echo "<div class='hidden'>$buffer</div>";
-				}else{
-					echo $buffer;
-				}
-			}
-			?>
-			<button class="show_all">Toggle all hidden</button>
-			<div class="footer">
-				<a href="/?id=<?php echo $_GET['id'] ?? 0 ?>&amp;raw=1">View raw</a>
+			<div class="head">
+				<table>
+					<tr>
+						<td class="metadataName">PocketMine-MP Version</td>
+						<td><?php echo $report->serverVersion ?></td>
+					</tr>
+					<tr>
+						<td class="metadataName">Sample time</td>
+						<td><?php echo timeUnits($report->sampleTimeNs) ?> (Ticks: <?php echo $report->numTicks ?>)</td>
+					</tr>
+					<tr>
+						<td class="metadataName">Total CPU time spent</td>
+						<td><?php echo timeUnits($report->activeTimeNs) ?></td>
+					</tr>
+					<?php if($report->numTicks > 0){
+						if($report->entityTicks > 0){
+							?>
+							<tr>
+								<td class="metadataName">Average Entities</td>
+								<td><?php echo number_format($report->entityTicks / $report->numTicks, 2) ?></td>
+							</tr>
+							<?php
+						}
+						if($report->playerTicks > 0){
+							?>
+							<tr>
+								<td class="metadataName">Average Players</td>
+								<td><?php echo number_format($report->playerTicks / $report->numTicks, 2) ?></td>
+							</tr>
+							<?php
+						}
+						if($report->sampleTimeNs > 0){
+							$desiredTicks = $report->sampleTimeNs / 1000 / 1000 / 1000 * 20;
+							?>
+							<tr>
+								<td class="metadataName">Average TPS</td>
+								<td><?php echo number_format($report->getAverageTPS(), 2) ?></td>
+							</tr>
+							<?php
+						}
+					}
+					?>
+					<tr>
+						<td class="metadataName">Server Load</td>
+						<td>
+							<span style="background-color: <?php echo heatmapColor($report->getServerLoad(), 100) ?>"><?php echo number_format($report->getServerLoad(), 2) ?>%</span>
+						</td>
+					</tr>
+				</table>
+				<div class="links">
+					<a href="/?id=<?php echo $_GET['id'] ?? 0 ?>&amp;raw=1">View raw</a>
+				</div>
 			</div>
 			<?php
+			$recommendations = [];
+			if($report->getServerLoad() < 95 && $report->getAverageTPS() < 19){
+				$recommendations[] = [
+					"<b>Notice: Your AVG TPS is less than 19 but server load is less than 95.</b><br/>",
+					"This means that something (not the server's main thread) is hogging the CPU.",
+					"This might be because of overloaded AsyncWorkers (plugins scheduling too many AsyncTasks or AsyncTasks running for too long),",
+					"too much activity on the network, or something else might be running on the machine and hogging the CPU.",
+					"You should check the machine's overall CPU usage to see if anything else might be using a lot of CPU."
+				];
+			}else if($report->getServerLoad() >= 97){
+				$recommendations[] = ["<b>Your server is lagging because it is overloaded (97%+ Server Load). Try reducing View Distance if it is above 4.</b>"];
+			}
+			foreach($recommendations as $recommendation){
+				?>
+				<span class="recommendation">
+					<?php
+					echo implode("\n", $recommendation);
+					?>
+				</span>
+				<?php
+			}
+			?>
+			<div id="reports" class="reports">
+				<?php
 
+				$exclude = ['entityAIJump', 'entityAILoot', 'entityAIMove',
+					'entityTickRest', 'entityAI', 'entityBaseTick'];
+
+				$recommendations = [];
+
+				if($report->tree !== null){
+					[$buffer, $shown] = generateTable($report->tree, "Minecraft (Tree View)", $report->groupTotals["Minecraft"], $report->numTicks, $report->sampleTimeNs, $report->activeTimeNs, $exclude, PHP_INT_MAX, 1);
+					echo $buffer;
+				}
+				$tableOrder = ["Minecraft" => true, BREAKDOWN_SUBKEY => true];
+				foreach($report->groupTotals as $groupName => $total){
+					if(!isset($tableOrder[$groupName])){
+						$tableOrder[$groupName] = true;
+					}
+				}
+				foreach($tableOrder as $groupName => $timings){
+					$visibleRows = 5;
+					$loadHeatmapFactor = 0.06;
+					if($groupName === "Minecraft"){
+						$visibleRows = 10;
+						$loadHeatmapFactor = 1.0;
+					}
+					[$buffer, $shown] = generateTable($report->groups[$groupName], $groupName, $report->groupTotals[$groupName] ?? null, $report->numTicks, $report->sampleTimeNs, $report->activeTimeNs, $exclude, $visibleRows, $loadHeatmapFactor);
+					echo $buffer;
+				}
 			} ?>
 		</div>
 

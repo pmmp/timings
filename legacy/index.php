@@ -259,7 +259,7 @@ TITLE;
 
 		echo <<<TITLE
 		<span>Total: $totals</span>
-		<span style="background-color: $pctStyle">Pct: $pctStr</span>
+		<span>Pct: <span style="background-color: $pctStyle" class="highlighted-metric">$pctStr</span></span>
 TITLE;
 	}
 	echo "</span>";
@@ -486,11 +486,15 @@ ROW;
 							<?php
 						}
 						if($report->sampleTimeNs > 0){
-							$desiredTicks = $report->sampleTimeNs / 1000 / 1000 / 1000 * 20;
+							$tps = $report->getAverageTPS();
+							//10 TPS will be red, 20 will be normal
+							$tpsHighlight = heatmapColor(10 - ($tps - 10), 10);
 							?>
 							<tr>
 								<td class="metadataName">Average TPS</td>
-								<td><?php echo number_format($report->getAverageTPS(), 2) ?></td>
+								<td>
+									<span class="highlighted-metric" style="background-color: <?php echo $tpsHighlight ?>"><?php echo number_format($tps, 2) ?></span>
+								</td>
 							</tr>
 							<?php
 						}
@@ -499,7 +503,7 @@ ROW;
 					<tr>
 						<td class="metadataName">Server Load</td>
 						<td>
-							<span style="background-color: <?php echo heatmapColor($report->getServerLoad(), 100) ?>"><?php echo number_format($report->getServerLoad(), 2) ?>%</span>
+							<span class="highlighted-metric" style="background-color: <?php echo heatmapColor($report->getServerLoad(), 100) ?>"><?php echo number_format($report->getServerLoad(), 2) ?>%</span>
 						</td>
 					</tr>
 				</table>

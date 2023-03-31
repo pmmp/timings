@@ -210,3 +210,8 @@ a.learnmore {
     text-align: center;
     padding-bottom: 20px;
 }
+
+.highlighted-metric {
+    padding: 2px;
+    border-radius: 2px;
+}

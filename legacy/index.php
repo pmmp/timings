@@ -429,10 +429,6 @@ ROW;
 			<img src="https://github.com/pmmp/PocketMine-MP/raw/stable/.github/readme/pocketmine.png" loading="eager"/>
 			<br/>
 			<h1>Timings Viewer</h1>
-			&copy; Aikar of <a href='http://ref.emc.gs/?gas=timingsphp' rel="nofollow">Empire Minecraft</a> 2017<br/>
-			&copy; <a href="https://github.com/pmmp">PMMP Team</a> 2017-2023<br/>
-
-			<a href="http://github.com/pmmp/timings" title="Source Code">[source]</a><br/>
 		</div>
 		<?php
 
@@ -567,6 +563,12 @@ ROW;
 					echo $buffer;
 				}
 			} ?>
+		</div>
+		<div class="footer">
+			&copy; Aikar of <a href='http://ref.emc.gs/?gas=timingsphp' rel="nofollow">Empire Minecraft</a> 2017<br/>
+			&copy; <a href="https://github.com/pmmp">PMMP Team</a> 2017-2023<br/>
+
+			<a href="http://github.com/pmmp/timings" title="Source Code">[source]</a><br/>
 		</div>
 
 		<div style="display: none">

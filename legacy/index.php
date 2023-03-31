@@ -104,20 +104,6 @@ function sortTimings(array $timings) : array{
 	return $timings;
 }
 
-function cleanTimerName(string $name) : string{
-	return preg_replace(
-		[
-			'/^Plugin: (.+) Event: (.+)$/',
-			'/^Task: (.+) Runnable: (.+)$/'
-		],
-		[
-			'Event: $2',
-			'Task: $2'
-		],
-		$name
-	);
-}
-
 /**
  * @param string $reportData
  *
@@ -160,8 +146,13 @@ function buildTree(string $reportData) : TimingsReport{
 			if(str_starts_with($timingName, "** ")){
 				$timingName = substr($timingName, 3);
 				$overrideGroup = BREAKDOWN_SUBKEY;
+			}elseif(preg_match('/^Plugin: (.+) Event: (.+)$/', $timingName, $matches) === 1){
+				$overrideGroup = $matches[1];
+				$timingName = "Event: " . $matches[2];
+			}elseif(preg_match('/^Task: (.+) Runnable: (.+)$/', $timingName, $matches) === 1){
+				$overrideGroup = $matches[1];
+				$timingName = "Task: " . $matches[2];
 			}
-			$timingName = cleanTimerName($timingName);
 
 			$parentRecordId = $parentRecordIdStr === "none" ? null : (int) $parentRecordIdStr;
 			$result = new TimingResult($timingName, $overrideGroup ?? $group, (int) $count, (int) $timeNs, (float) $avg, (int) $violations, $parentRecordId, (int) $timerId);

@@ -273,9 +273,9 @@ TITLE;
 		echo <<<TITLE
 		<span>Total: $totals</span>
 		<span style="background-color: $pctStyle">Pct: $pctStr</span>
-	</span>
 TITLE;
 	}
+	echo "</span>";
 	if($shown < $i){
 		echo "<span class='show-rest-span'><button class='show_rest'>Expand all</button></span>";
 	}

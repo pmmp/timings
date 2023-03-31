@@ -116,9 +116,9 @@ function generateTable(array $timings, string $plugin, float $ptotal, int $numTi
 	if ($sample) {
 		$pct = $ptotal / ($sample ? $sample : $total);
 		if ($plugin == 'Minecraft') {
-			$pctStyle = pct($pct, 1, 70, 40, 20);
+			$pctStyle = heatmapColor($pct, 1);
 		} else {
-			$pctStyle = pct($pct, 1, 6, 3, 1);
+			$pctStyle = heatmapColor($pct, 6);
 		}
 		$pctStr = number_format($pct * 100, 2) . '%';
 		$totals = timeUnits($ptotal, 3);
@@ -142,7 +142,7 @@ TITLE;
 	if ($plugin != BREAKDOWN_SUBKEY){
 		echo <<<TITLE
 		<span>Total: $totals</span>
-		<span class="$pctStyle">Pct: $pctStr</span>
+		<span style="background-color: $pctStyle">Pct: $pctStr</span>
 	</span>
 TITLE;
 	}
@@ -279,7 +279,7 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 
 	$timesPerTickStr = amountUnits($timesPerTick, 1, 1);
 
-	$violationsStyle = pct($time->violations, 1, $numTicks / (5 * 20), $numTicks / (30 * 20), 0);
+	$violationsStyle = "background-color: " . heatmapColor($time->violations, $numTicks / (5 * 20));
 	$violationsStr = amountUnits($time->violations, 1, 0);
 
 	$result = [];
@@ -291,7 +291,7 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 	<td class="metrics-column" style="$pctTickStyle" title="Average time spent when activated">$avgStr</td>
 	<td class="metrics-column" title="Average number of occurrences per server tick">$timesPerTickStr</td>
 	<td class="metrics-column" title="Total number of occurrences">$countStr</td>
-	<td class="metrics-column $violationsStyle" title="Total number of ticks that took too long because of this event">$violationsStr</td>
+	<td class="metrics-column" style="$violationsStyle" title="Total number of ticks that took too long because of this event">$violationsStr</td>
 </tr>
 ROW;
 	foreach($time->children as $child){
@@ -635,18 +635,6 @@ if ($legacyData) {
 }
 
 echo $buffer;
-
-function pct($pct, $mod = 1, $high = null, $med = null, $low = null) {
-	if ($high !== null && $pct * $mod > $high) {
-		return 'high-highlight';
-	} elseif ($med !== null && $pct * $mod > $med) {
-		return 'mid-highlight';
-	} else if ($low !== null && $pct * $mod > $low) {
-		return 'low-highlight';
-	}
-
-	return '';
-}
 
 function amountUnits(float $amount, int $dividedPrecision = 2, int $unitPrecision = 2) : string{
 	foreach([

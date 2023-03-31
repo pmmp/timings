@@ -136,15 +136,6 @@ span.triangle-icon {
     margin: auto;
 }
 
-.low-highlight {
-    background: rgb(255, 227, 130);
-}
-.mid-highlight {
-    background: rgb(252, 178, 121);
-}
-.high-highlight {
-    background: rgb(249, 105, 108);
-}
 .footer {
     width: 100%;
     text-align: center;

@@ -86,6 +86,10 @@ div.head > div.links {
     float: none;
 }
 
+.event:hover {
+    background-color: #e6e6e6;
+}
+
 .metrics-column {
     text-align: right;
     width: 80px;

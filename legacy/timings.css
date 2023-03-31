@@ -215,3 +215,21 @@ a.learnmore {
     padding: 2px;
     border-radius: 2px;
 }
+
+.ui-dialog {
+    font-family: monospace;
+    max-width: 1000px;
+    line-height: 1.5rem;
+    padding: 0;
+    border: 1px solid gray;
+}
+.ui-dialog .ui-dialog-titlebar {
+    border-radius: 0;
+    border: 0;
+}
+.ui-dialog .ui-widget-header {
+    background: #ccc;
+}
+.ui-widget-overlay {
+    background: #000;
+}

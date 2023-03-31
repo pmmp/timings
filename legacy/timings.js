@@ -78,6 +78,21 @@ $(document).ready(function() {
             border.find('.expand-all-text').text('Collapse all');
         }
     })
+    $('.show-hot-path').click(function() {
+        var depth = 0;
+        var first = $(this).closest('.timings-table-border').find('.event').first();
+        showChildren(first);
+        first.nextUntil(function() {
+            var currentDepth = $(this).data('depth');
+            if (currentDepth >= depth) {
+                depth = currentDepth;
+                showChildren($(this));
+                return false;
+            } else {
+                return true;
+            }
+        })
+    })
     $('.event.hidden-children').click(showMyChildren);
     $('.event.visible-children').click(hideMyChildren);
     $('.learnmore').click(learnMore);

@@ -273,7 +273,12 @@ TITLE;
 	}
 	echo "</span>";
 	if($hidden > 0 && $visibleRows === PHP_INT_MAX){
-		echo "<span class='show-rest-span'><button class='show_rest'><span class='expand-all-text'>Expand all</span></button></span>";
+		echo <<<BUTTONS
+<span class='show-rest-span'>
+	<button class="show-hot-path">Expand hot path</button>
+	<button class='show_rest'><span class='expand-all-text'>Expand all</span></button>
+</span>
+BUTTONS;
 	}
 	echo <<<TITLE
 </div>

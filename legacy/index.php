@@ -476,11 +476,12 @@ if (!$legacyData) {
 			if ($numTicks === 0 && (stristr($k, ' - entityBaseTick') || stristr($k, ' - entityTick') || $k == '** Full Server Tick') || $k == '** Server Tick Update Cycle') {
 				$numTicks = max($ent->count, $numTicks);
 			}
-			if ($k == '** entityBaseTick' || $k == 'entityBaseTick' || $k == '** tickEntity') {
-				$entityTicks = $ent->count;
+			if ($k == '** entityBaseTick' || $k == 'entityBaseTick' || $k == '** tickEntity' || str_ends_with($k, "Entity Base Tick")) {
+				$entityTicks = max($ent->count, $entityTicks);
 			}
 			if ($k == "** tickEntity - EntityPlayer" || str_contains($k, "Entity Tick - Player")) {
-				$playerTicks = $ent->count;
+				$playerTicks = max($ent->count, $playerTicks);
+				$entityTicks = max($ent->count, $entityTicks);
 			}
 		}
 	}

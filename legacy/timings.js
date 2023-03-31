@@ -62,25 +62,27 @@ $(document).ready(function() {
         $('#paste').toggle();
     });
     $('.show_rest').click(function() {
-        if($(this).data('shown')) {
-            $(this).data('shown', false);
-            var table = $(this).closest('.timings-table-border').find('.timings-table');
-            table.find('.children-hidden-by-default').each(hideMyChildren);
-            table.find('.hidden').each(hideAll);
+        var border = $(this).closest('.timings-table-border');
+        var rows = border.data('hidden-rows');
+
+        if(border.data('expanded')) {
+            border.data('expanded', false);
+            border.find('.children-hidden-by-default').each(hideMyChildren);
+            border.find('.hidden').each(hideAll);
+            border.find('.show-rest-text').text('Show ' + rows + ' more rows');
+            border.find('.expand-all-text').text('Expand all');
         }else{
-            $(this).data('shown', true);
-            $(this).closest('.timings-table-border').find('.timings-table').find('.event').each(showMyChildren);
+            border.data('expanded', true);
+            border.find('.event').each(showMyChildren);
+            border.find('.show-rest-text').text('Hide ' + rows + ' rows');
+            border.find('.expand-all-text').text('Collapse all');
         }
     })
     $('.show_all').click(function() {
-        if($(this).data('shown')) {
-            $(this).data('shown', false);
-            $('.children-hidden-by-default').each(hideMyChildren);
-            $('.hidden').each(hideAll);
-        }else{
-            $(this).data('shown', true);
-            $('.event').each(showMyChildren);
-        }
+        $('.timings-table').each(function() {
+            $(this).data('expanded', true);
+            $(this).find('.event').each(showMyChildren);
+        })
     })
     $('.event.hidden-children').click(showMyChildren);
     $('.event.visible-children').click(hideMyChildren);

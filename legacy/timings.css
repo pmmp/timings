@@ -105,6 +105,13 @@ div.head > table td.metadataName {
 .hidden-children, .visible-children {
     cursor: pointer;
 }
+.show-rest-row {
+    cursor: pointer;
+    text-align: center;
+    font-style: italic;
+    font-weight: bold;
+    background-color: #dddddd;
+}
 
 span.indent {
     display: inline-block;

@@ -238,17 +238,18 @@ function buildTree(string $reportData) : TimingsReport{
  * @phpstan-return array{string, int}
  */
 function generateTable(array $timings, string $plugin, ?float $ptotal, int $numTicks, float $sample, float $total, array $exclude, int $visibleRows, float $ptotalHeatmapFactor) : array{
-	$i = 0;
+	$totalRows = 0;
 	$shown = 0;
 	$rows = [];
 	foreach($timings as $time){
-		foreach(generateTableRow($time, $numTicks, $sample, $total, $time->name, $exclude, $i, $shown, $plugin, 0, $visibleRows) as $row){
+		foreach(generateTableRow($time, $numTicks, $sample, $total, $time->name, $exclude, $totalRows, $shown, $plugin, 0, $visibleRows) as $row){
 			$rows[] = $row;
 		}
 	}
+	$hidden = $totalRows - $shown;
 
 	ob_start();
-	echo '<div class="timings-table-border">';
+	echo "<div class='timings-table-border' data-hidden-rows='$hidden' data-expanded='0'>";
 	echo <<<TITLE
 <div class="title">
 	<span>
@@ -271,8 +272,8 @@ TITLE;
 TITLE;
 	}
 	echo "</span>";
-	if($shown < $i){
-		echo "<span class='show-rest-span'><button class='show_rest'>Expand all</button></span>";
+	if($hidden > 0 && $visibleRows === PHP_INT_MAX){
+		echo "<span class='show-rest-span'><button class='show_rest'><span class='expand-all-text'>Expand all</span></button></span>";
 	}
 	echo <<<TITLE
 </div>
@@ -292,6 +293,14 @@ HEADER;
 
 	foreach($rows as $row){
 		echo $row;
+	}
+	if($hidden > 0 && $visibleRows !== PHP_INT_MAX){
+		echo <<<FOOTER
+<tr class="show-rest-row">
+	<td colspan="7" class="show_rest show-rest-text">Show $hidden more rows</td>
+</tr>
+FOOTER;
+
 	}
 	echo "</table></div>";
 

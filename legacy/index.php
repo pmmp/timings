@@ -238,7 +238,7 @@ function buildTree(string $reportData) : TimingsReport{
  * @return mixed[]
  * @phpstan-return array{string, int}
  */
-function generateTable(array $timings, string $plugin, ?float $ptotal, int $numTicks, float $sample, float $total, array $exclude, int $visibleRows) : array{
+function generateTable(array $timings, string $plugin, ?float $ptotal, int $numTicks, float $sample, float $total, array $exclude, int $visibleRows, float $ptotalHeatmapFactor) : array{
 	$i = 0;
 	$shown = 0;
 	$rows = [];
@@ -261,11 +261,7 @@ TITLE;
 		$pctStr = '';
 		if($sample > 0){
 			$pct = $ptotal / $sample;
-			if($plugin == 'Minecraft'){
-				$pctStyle = heatmapColor($pct, 1);
-			}else{
-				$pctStyle = heatmapColor($pct, 6);
-			}
+			$pctStyle = heatmapColor($pct, $ptotalHeatmapFactor);
 			$pctStr = number_format($pct * 100, 2) . '%';
 			$totals = timeUnits($ptotal, 3);
 		}
@@ -541,7 +537,7 @@ ROW;
 
 			global $serverLoad, $serverLoadStr, $buildTree;
 			if($report->tree !== null){
-				[$buffer, $shown] = generateTable($report->tree, "Minecraft (Tree View)", $report->groupTotals["Minecraft"], $report->numTicks, $report->sampleTimeNs, $report->activeTimeNs, $exclude, PHP_INT_MAX);
+				[$buffer, $shown] = generateTable($report->tree, "Minecraft (Tree View)", $report->groupTotals["Minecraft"], $report->numTicks, $report->sampleTimeNs, $report->activeTimeNs, $exclude, PHP_INT_MAX, 1);
 				echo $buffer;
 			}
 			$tableOrder = ["Minecraft" => true, BREAKDOWN_SUBKEY => true];
@@ -552,10 +548,12 @@ ROW;
 			}
 			foreach($tableOrder as $groupName => $timings){
 				$visibleRows = 5;
+				$loadHeatmapFactor = 0.06;
 				if($groupName === "Minecraft"){
 					$visibleRows = 10;
+					$loadHeatmapFactor = 1.0;
 				}
-				[$buffer, $shown] = generateTable($report->groups[$groupName], $groupName, $report->groupTotals[$groupName] ?? null, $report->numTicks, $report->sampleTimeNs, $report->activeTimeNs, $exclude, $visibleRows);
+				[$buffer, $shown] = generateTable($report->groups[$groupName], $groupName, $report->groupTotals[$groupName] ?? null, $report->numTicks, $report->sampleTimeNs, $report->activeTimeNs, $exclude, $visibleRows, $loadHeatmapFactor);
 				if($shown == 0){
 					echo "<div class='hidden'>$buffer</div>";
 				}else{

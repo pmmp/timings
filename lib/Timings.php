@@ -10,27 +10,8 @@
  */
 namespace Starlis\Timings;
 
-use Starlis\Timings\Json\TimingsMaster;
-
 class Timings {
-        use Singleton;
-        public $id;
-
-        /**
-         * @var StorageService
-         */
-        private $storage;
-
         public static function bootstrap() {
-                $timings = self::getInstance();
-                $timings->prepareData();
-        }
-
-        public function prepareData() {
-                /**
-                 * @var StorageService $storage
-                 */
-
                 $filterOptions = array(
                         'options' => array(
                                 'min_range' => 1
@@ -44,17 +25,9 @@ class Timings {
                 $mysqlUser = getenv('MYSQL_USER');
                 $mysqlPassword = getenv('MYSQL_PASSWORD');
 
-                if (!empty($_GET['url']) && strlen($_GET['url']) < 20 && preg_match('/[A-Za-z0-9+\/=]+/', $_GET['url'])) {
-                        $id = $_GET['url'];
-                        $storage = new LegacyStorageService();
-                        $this->id = $id;
-                        $this->storage = $storage;
-                        $timingData = trim($storage->get($id));
-                } else if(!empty($_GET['id']) && filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, $filterOptions)) {
+                if(!empty($_GET['id']) && filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, $filterOptions)) {
                         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, $filterOptions);
                         $storage = new MySqlStorageService($mysqlHost, $mysqlDatabase, $mysqlUser, $mysqlPassword);
-                        $this->id = $id ;
-                        $this->storage = $storage;
                         $timingData = trim($storage->get($id));
                 } else if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_GET['upload']) && $_GET['upload'] === 'true') {
                         $storage = new MySqlStorageService($mysqlHost, $mysqlDatabase, $mysqlUser, $mysqlPassword);
@@ -73,7 +46,9 @@ class Timings {
 		                echo $timingData;
 		                die();
                 }
-                LegacyHandler::load($timingData);
+
+                $GLOBALS['reportData'] = $timingData;
+                require_once "legacy/index.php";
                 exit;
         }
 }

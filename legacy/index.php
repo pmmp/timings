@@ -111,12 +111,6 @@ function sortTimings(array $timings) : array{
 	return $timings;
 }
 
-/**
- * @param string $reportData
- *
- * @return TimingResult[]
- * @phpstan-return array<int, TimingResult>
- */
 function buildTree(string $reportData) : TimingsReport{
 	$orphans = [];
 	$parents = [];
@@ -321,9 +315,7 @@ function heatmapColor(float $amount, float $max) : string{
 }
 
 /**
- * @param int|null       $visibleRows
- * @param TimingResult[] $timings
- * @param string[]       $exclude
+ * @param string[] $exclude
  *
  * @return string[]
  */

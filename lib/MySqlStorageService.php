@@ -2,7 +2,7 @@
 
 namespace Starlis\Timings;
 
-class MySqlStorageService extends StorageService {
+class MySqlStorageService{
 
     private $db;
 

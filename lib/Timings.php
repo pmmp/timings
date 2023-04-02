@@ -11,7 +11,19 @@
 
 namespace Starlis\Timings;
 
+use function filter_var;
+use function is_string;
+
 class Timings{
+
+	private static function getenv_string(string $name) : string{
+		$var = getenv($name);
+		if(!is_string($var)){
+			throw new \RuntimeException("Environment variable $name is not set correctly");
+		}
+		return $var;
+	}
+
 	public static function bootstrap() : never{
 		$filterOptions = [
 			'options' => [
@@ -21,15 +33,16 @@ class Timings{
 
 		$timingData = '';
 
-		$mysqlHost = getenv('MYSQL_HOST');
-		$mysqlDatabase = getenv('MYSQL_DATABASE');
-		$mysqlUser = getenv('MYSQL_USER');
-		$mysqlPassword = getenv('MYSQL_PASSWORD');
+		$mysqlHost = self::getenv_string('MYSQL_HOST');
+		$mysqlDatabase = self::getenv_string('MYSQL_DATABASE');
+		$mysqlUser = self::getenv_string('MYSQL_USER');
+		$mysqlPassword = self::getenv_string('MYSQL_PASSWORD');
 
-		if(!empty($_GET['id']) && filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, $filterOptions)){
-			$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, $filterOptions);
+		if(!empty($_GET['id']) && ($id = filter_var($_GET['id'], FILTER_VALIDATE_INT, $filterOptions)) !== false){
+			$id = (int) $id;
 			$storage = new MySqlStorageService($mysqlHost, $mysqlDatabase, $mysqlUser, $mysqlPassword);
-			$timingData = trim($storage->get($id));
+			$rawData = $storage->get($id);
+			$timingData = $rawData !== null ? trim($rawData) : null;
 		}else if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_GET['upload']) && $_GET['upload'] === 'true'){
 			$storage = new MySqlStorageService($mysqlHost, $mysqlDatabase, $mysqlUser, $mysqlPassword);
 			$id = $storage->set($_POST['data']);

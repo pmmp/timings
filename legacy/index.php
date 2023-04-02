@@ -96,7 +96,11 @@ FOOTER;
 	echo "</table></div>";
 
 	echo '</div>';
-	return [ob_get_clean(), $shown];
+	$buffer = ob_get_clean();
+	if($buffer === false){
+		throw new \LogicException("We enabled output buffering above, so this should never happen");
+	}
+	return [$buffer, $shown];
 }
 
 function heatmapColor(float $amount, float $max) : string{
@@ -112,6 +116,9 @@ function heatmapColor(float $amount, float $max) : string{
  * @param string[] $exclude
  *
  * @return string[]
+ *
+ * @phpstan-param-out int $i
+ * @phpstan-param-out int $shown
  */
 function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, float $total, string $event, array $exclude, int &$i, int &$shown, string $plugin, int $depth, int $visibleRows) : array{
 	$i++;

@@ -12,7 +12,7 @@
 namespace Starlis\Timings;
 
 class util{
-	public static function sanitize($inp){
+	public static function sanitize(string $inp) : string{
 		return htmlentities(strip_tags($inp));
 	}
 }

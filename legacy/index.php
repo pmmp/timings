@@ -394,7 +394,7 @@ ROW;
 
 <?php
 
-function showInfo($id, $title){
+function showInfo(string $id, string $title) : string{
 	return "<a class='learnmore' data-info='$id' title='$title' href='#'>[Learn More]</a></b>";
 }
 

@@ -12,7 +12,7 @@
 namespace Starlis\Timings;
 
 class Timings{
-	public static function bootstrap(){
+	public static function bootstrap() : never{
 		$filterOptions = [
 			'options' => [
 				'min_range' => 1

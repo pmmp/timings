@@ -15,6 +15,11 @@ use function uasort;
 use const BREAKDOWN_SUBKEY;
 
 class Parser{
+	/**
+	 * @param TimingResult[] $timings
+	 *
+	 * @return TimingResult[]
+	 */
 	private static function sortTimings(array $timings) : array{
 		uasort($timings, function(TimingResult $a, TimingResult $b) : int{
 			return $b->timeNs <=> $a->timeNs;

@@ -3,7 +3,9 @@
 namespace Starlis\Timings;
 
 use function assert;
+use function htmlentities;
 use function is_string;
+use function strip_tags;
 
 class MySqlStorageService{
 
@@ -22,7 +24,7 @@ class MySqlStorageService{
 		$data = $stmt->fetchColumn();
 		assert(is_string($data) || $data === false);
 
-		return is_string($data) ? util::sanitize($data) : null;
+		return is_string($data) ? htmlentities(strip_tags($data)) : null;
 	}
 
 	public function set(string $data) : int{

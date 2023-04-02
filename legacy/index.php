@@ -31,6 +31,10 @@ class TimingResult{
 	){}
 }
 
+class TimingsException extends \RuntimeException{
+
+}
+
 class TimingsReport{
 	public float $activeTimeNs;
 
@@ -72,8 +76,11 @@ class TimingsReport{
 				};
 			}
 		}
-		$this->numTicks = $serverTickUpdateCycle?->count ?? $fullServerTick?->count ?? 0;
-		$this->activeTimeNs = $fullServerTick?->timeNs ?? 0;
+		if($fullServerTick === null){
+			throw new TimingsException("Missing 'Full Server Tick' timing entry");
+		}
+		$this->numTicks = $serverTickUpdateCycle?->count ?? $fullServerTick->count;
+		$this->activeTimeNs = $fullServerTick->timeNs;
 		$this->entityTicks = $entityTicks?->count ?? 0;
 		$this->playerTicks = $playerTicks?->count ?? 0;
 		if($this->activeTimeNs !== 0){

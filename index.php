@@ -11,7 +11,6 @@
 
 namespace Starlis\Timings;
 
-require_once __DIR__ . "/lib/util.php";
 require_once __DIR__ . '/vendor/autoload.php';
 // To make it a little harder to try to exploit the uploader, implement a closed source version
 // of the security class if it exists, else fall back to the simple rules.

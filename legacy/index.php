@@ -19,11 +19,8 @@ const BREAKDOWN_SUBKEY = 'Minecraft - Breakdown (counted by other timings, not i
 /**
  * @param TimingResult[] $timings
  * @param string[]       $exclude
- *
- * @return mixed[]
- * @phpstan-return array{string, int}
  */
-function generateTable(array $timings, string $plugin, ?float $ptotal, int $numTicks, float $sample, float $total, array $exclude, int $visibleRows, float $ptotalHeatmapFactor) : array{
+function generateTable(array $timings, string $plugin, ?float $ptotal, int $numTicks, float $sample, float $total, array $exclude, int $visibleRows, float $ptotalHeatmapFactor) : string{
 	$totalRows = 0;
 	$shown = 0;
 	$rows = [];
@@ -100,7 +97,7 @@ FOOTER;
 	if($buffer === false){
 		throw new \LogicException("We enabled output buffering above, so this should never happen");
 	}
-	return [$buffer, $shown];
+	return $buffer;
 }
 
 function heatmapColor(float $amount, float $max) : string{
@@ -343,8 +340,7 @@ ROW;
 				$recommendations = [];
 
 				if($report->tree !== null){
-					[$buffer, $shown] = generateTable($report->tree, "Minecraft (Tree View)", $report->groupTotals["Minecraft"], $report->numTicks, $report->sampleTimeNs, $report->activeTimeNs, $exclude, PHP_INT_MAX, 1);
-					echo $buffer;
+					echo generateTable($report->tree, "Minecraft (Tree View)", $report->groupTotals["Minecraft"], $report->numTicks, $report->sampleTimeNs, $report->activeTimeNs, $exclude, PHP_INT_MAX, 1);
 				}
 				$tableOrder = ["Minecraft" => true, BREAKDOWN_SUBKEY => true];
 				foreach($report->groupTotals as $groupName => $total){
@@ -359,8 +355,7 @@ ROW;
 						$visibleRows = 10;
 						$loadHeatmapFactor = 1.0;
 					}
-					[$buffer, $shown] = generateTable($report->groups[$groupName], $groupName, $report->groupTotals[$groupName] ?? null, $report->numTicks, $report->sampleTimeNs, $report->activeTimeNs, $exclude, $visibleRows, $loadHeatmapFactor);
-					echo $buffer;
+					echo generateTable($report->groups[$groupName], $groupName, $report->groupTotals[$groupName] ?? null, $report->numTicks, $report->sampleTimeNs, $report->activeTimeNs, $exclude, $visibleRows, $loadHeatmapFactor);
 				}
 			} ?>
 		</div>

@@ -8,10 +8,11 @@
  *
  * @license MIT
  */
+
 namespace Starlis\Timings;
 
-class util {
-	public static function sanitize($inp) {
+class util{
+	public static function sanitize($inp){
 		return htmlentities(strip_tags($inp));
 	}
 }

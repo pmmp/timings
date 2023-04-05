@@ -14,7 +14,7 @@ global $reportData;
 use Starlis\Timings\Parser\Parser;
 use Starlis\Timings\TimingResult;
 
-const BREAKDOWN_SUBKEY = 'Minecraft - Breakdown (counted by other timings, not included in total)  ';
+const BREAKDOWN_SUBKEY = 'Minecraft - Breakdown';
 
 /**
  * @param TimingResult[] $timings
@@ -355,7 +355,11 @@ ROW;
 						$visibleRows = 10;
 						$loadHeatmapFactor = 1.0;
 					}
-					echo generateTable($report->groups[$groupName], $groupName, $report->groupTotals[$groupName] ?? null, $report->numTicks, $report->sampleTimeNs, $report->activeTimeNs, $exclude, $visibleRows, $loadHeatmapFactor);
+					$groupTotal = $report->groupTotals[$groupName] ?? null;
+					if($groupTotal === null){
+						$groupName .= " (counted by other timings)";
+					}
+					echo generateTable($report->groups[$groupName], $groupName, $groupTotal, $report->numTicks, $report->sampleTimeNs, $report->activeTimeNs, $exclude, $visibleRows, $loadHeatmapFactor);
 				}
 			} ?>
 		</div>

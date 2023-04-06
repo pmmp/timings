@@ -71,12 +71,11 @@ TITLE;
 <tr>
 	<th class="event-name-column"><span class="event-name">Event</span></th>
 	<th class="metrics-column">Pct Total</th>
-	<th class="metrics-column">Total</th>
 	<th class="metrics-column">Avg</th>
+	<th class="metrics-column">Violations</th>
 	<th class="metrics-column">Peak</th>
 	<th class="metrics-column">PerTick</th>
 	<th class="metrics-column">Count</th>
-	<th class="metrics-column">Violations</th>
 </tr>
 HEADER;
 
@@ -86,7 +85,7 @@ HEADER;
 	if($hidden > 0 && $visibleRows !== PHP_INT_MAX){
 		echo <<<FOOTER
 <tr class="show-rest-row">
-	<td colspan="8" class="show_rest show-rest-text">Show $hidden more rows</td>
+	<td colspan="7" class="show_rest show-rest-text">Show $hidden more rows</td>
 </tr>
 FOOTER;
 
@@ -196,13 +195,12 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 	$result[] = <<<ROW
 <tr class='event $rowClasses' data-depth="$depth">
 	<td class="event-name-column" title="$title">$eventNameCell</td>
-	<td class="metrics-column" style="$pctTotalStyle" title="% of the sample time spent (see also: Total)">$pctTotalStr</td>
-	<td class="metrics-column" style="$pctTotalStyle" title="Total time spent">$timeStr</td>
+	<td class="metrics-column" style="$pctTotalStyle" title="% of the sample time spent ($timeStr)">$pctTotalStr</td>
 	<td class="metrics-column" style="$pctTickStyle" title="Average time spent when activated">$avgStr</td>
+	<td class="metrics-column" style="$violationsStyle" title="Total number of ticks that took too long because of this event">$violationsStr</td>
 	<td class="metrics-column" style="$peakStyle" title="The longest time spent by this timer in a single activation">$peakStr</td>
 	<td class="metrics-column" title="Average number of occurrences per server tick">$timesPerTickStr</td>
 	<td class="metrics-column" title="Total number of occurrences">$countStr</td>
-	<td class="metrics-column" style="$violationsStyle" title="Total number of ticks that took too long because of this event">$violationsStr</td>
 </tr>
 ROW;
 	foreach($time->children as $child){

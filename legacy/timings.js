@@ -53,8 +53,8 @@ function hideAll() {
 }
 
 function learnMore(ev) {
-	ev.stopPropagation();
-	$("#info-" + $(this).data('info')).dialog({width: "80%", modal: true});
+    ev.stopPropagation();
+    $("#info-" + $(this).data('info')).dialog({width: "80%", modal: true});
 }
 
 $(document).ready(function() {

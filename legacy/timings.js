@@ -95,5 +95,26 @@ $(document).ready(function() {
     })
     $('.event.hidden-children').click(showMyChildren);
     $('.event.visible-children').click(hideMyChildren);
+    $('.event.hidden-children, .event.visible-children').mouseover(function() {
+        var depth = $(this).data('depth');
+        $(this).nextUntil(function() {
+            return $(this).data('depth') <= depth;
+        }).each(function() {
+            if ($(this).data('depth') == depth + 1) {
+                $(this).addClass('parent-hovered');
+            } else {
+                $(this).addClass('grandparent-hovered');
+            }
+        })
+    })
+    $('.event').mouseout(function() {
+        var depth = $(this).data('depth');
+        $(this).nextUntil(function() {
+            return $(this).data('depth') <= depth;
+        }).each(function() {
+            $(this).removeClass('parent-hovered');
+            $(this).removeClass('grandparent-hovered');
+        })
+    })
     $('.learnmore').click(learnMore);
 });

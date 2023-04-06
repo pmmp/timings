@@ -89,6 +89,15 @@ div.head > div.links {
 .event:hover {
     background-color: #e6e6e6;
 }
+.event.visible-children:hover {
+    background-color: #b0b0b0;
+}
+.parent-hovered {
+    background-color: #c8c8c8;
+}
+.grandparent-hovered {
+    background-color: #e0e0e0;
+}
 
 .metrics-column {
     text-align: right;

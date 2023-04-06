@@ -13,7 +13,6 @@ class TimingResult{
 		public string $group,
 		public int $count,
 		public int $timeNs,
-		public float $avgNs,
 		public int $violations,
 		public ?int $parentId,
 		public int $timerId

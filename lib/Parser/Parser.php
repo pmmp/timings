@@ -53,14 +53,15 @@ class Parser{
 			}
 
 			$overrideGroup = null;
-			if(preg_match('/(*ANYCRLF)^(.+?) Time: (\d+) Count: (\d+) Avg: ([\d\.]+) Violations: (\d+)(?: RecordId: (\d+) ParentRecordId: (\d+|none) TimerId: (\d+))?$/m', $line, $matches) === 1){
+			//average is unused (we calculate it by dividing time by count anyway) and may not be present in newer reports
+			if(preg_match('/(*ANYCRLF)^(.+?) Time: (\d+) Count: (\d+)(?: Avg: ([\d\.]+))? Violations: (\d+)(?: RecordId: (\d+) ParentRecordId: (\d+|none) TimerId: (\d+))?$/m', $line, $matches) === 1){
 				if(count($matches) === 6){
-					[, $timingName, $timeNs, $count, $avg, $violations] = $matches;
+					[, $timingName, $timeNs, $count, /* avg unused */, $violations] = $matches;
 					$parentRecordIdStr = "none";
 					$recordId = 0;
 					$timerId = 0;
 				}else{
-					[, $timingName, $timeNs, $count, $avg, $violations, $recordId, $parentRecordIdStr, $timerId] = $matches;
+					[, $timingName, $timeNs, $count, /* avg unused */, $violations, $recordId, $parentRecordIdStr, $timerId] = $matches;
 				}
 				$timingName = htmlspecialchars_decode(trim($timingName));
 				if(str_starts_with($timingName, "** ")){
@@ -75,7 +76,7 @@ class Parser{
 				}
 
 				$parentRecordId = $parentRecordIdStr === "none" ? null : (int) $parentRecordIdStr;
-				$result = new TimingResult($timingName, $overrideGroup ?? $group, (int) $count, (int) $timeNs, (float) $avg, (int) $violations, $parentRecordId, (int) $timerId);
+				$result = new TimingResult($timingName, $overrideGroup ?? $group, (int) $count, (int) $timeNs, (int) $violations, $parentRecordId, (int) $timerId);
 				if($parentRecordId === null){
 					$parents[(int) $recordId] = $result;
 				}else{

@@ -12,6 +12,7 @@
 global $reportData;
 
 use Starlis\Timings\Parser\Parser;
+use Starlis\Timings\Parser\ParserException;
 use Starlis\Timings\TimingResult;
 
 const BREAKDOWN_SUBKEY = 'Minecraft - Breakdown';
@@ -257,7 +258,18 @@ ROW;
 				$spigotConfig = $configMatch[1];
 				$reportData = preg_replace($spigotConfigPattern, "", $reportData);
 			}
-			$report = Parser::buildTree($reportData);
+			try{
+				$report = Parser::buildTree($reportData);
+			}catch(ParserException $e){
+				?>
+				<span class="recommendation">
+					Sorry, this timings report appears to be invalid: <?php echo $e->getMessage() ?><br/>
+					If this is incorrect, please submit an issue on our <a href="https://github.com/pmmp/timings/issues">Issues Page</a>.
+				</span>
+				<?php
+				$report = null;
+			}
+			if($report !== null){
 			?>
 			<div class="head">
 				<table>
@@ -369,9 +381,11 @@ ROW;
 						$groupTitle .= " (counted by other timings)";
 					}
 					echo generateTable($report->groups[$groupName], $groupTitle, $groupTotal, $report->numTicks, $report->sampleTimeNs, $report->activeTimeNs, $exclude, $visibleRows, $loadHeatmapFactor);
-				}
-			} ?>
-		</div>
+				} ?>
+			</div>
+				<?php
+			}
+		} ?>
 		<div class="footer">
 			&copy; Aikar of <a href='http://ref.emc.gs/?gas=timingsphp' rel="nofollow">Empire Minecraft</a> 2017<br/>
 			&copy; <a href="https://github.com/pmmp">PMMP Team</a> 2017-2023<br/>

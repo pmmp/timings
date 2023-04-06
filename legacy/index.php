@@ -355,11 +355,12 @@ ROW;
 						$visibleRows = 10;
 						$loadHeatmapFactor = 1.0;
 					}
+					$groupTitle = $groupName;
 					$groupTotal = $report->groupTotals[$groupName] ?? null;
 					if($groupTotal === null){
-						$groupName .= " (counted by other timings)";
+						$groupTitle .= " (counted by other timings)";
 					}
-					echo generateTable($report->groups[$groupName], $groupName, $groupTotal, $report->numTicks, $report->sampleTimeNs, $report->activeTimeNs, $exclude, $visibleRows, $loadHeatmapFactor);
+					echo generateTable($report->groups[$groupName], $groupTitle, $groupTotal, $report->numTicks, $report->sampleTimeNs, $report->activeTimeNs, $exclude, $visibleRows, $loadHeatmapFactor);
 				}
 			} ?>
 		</div>

@@ -15,6 +15,8 @@ class TimingResult{
 		public int $timeNs,
 		public int $violations,
 		public ?int $parentId,
-		public int $timerId
+		public int $timerId,
+		public ?int $ticks,
+		public ?int $peakNs
 	){}
 }

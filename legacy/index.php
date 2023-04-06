@@ -123,10 +123,18 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 
 	$isTreeTable = $depth > 0 || count($time->children) > 0;
 
-	$avg = round($time->timeNs / $time->count, 3);
 	$timesPerTick = round($time->count / $numTicks, 1);
-	if($timesPerTick >= 1){
-		$avg = $avg * $timesPerTick;
+
+	if($time->ticks !== null){
+		//If we have the active ticks information from a newer timings report, this allows us to calculate a better
+		//average time per tick for timers which don't activate every tick.
+		$avg = round($time->timeNs / $time->ticks, 3);
+	}else{
+		//Otherwise, approximate using the number of activations and the average activations per tick.
+		$avg = round($time->timeNs / $time->count, 3);
+		if($timesPerTick >= 1){
+			$avg = $avg * $timesPerTick;
+		}
 	}
 
 	$countStr = amountUnits($time->count, 1, 0);

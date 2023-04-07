@@ -202,7 +202,7 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 
 	$result = [];
 	$result[] = <<<ROW
-<tr class='event $rowClasses' data-depth="$depth">
+<tr class='event $rowClasses' data-depth="$depth" data-children="$children">
 	<td class="event-name-column" title="$title">$eventNameCell</td>
 	<td class="metrics-column" style="$pctTotalStyle" title="% of the sample time spent ($timeStr)">$pctTotalStr</td>
 	<td class="metrics-column" style="$pctTickStyle" title="Average time spent when activated">$avgStr</td>

@@ -16,13 +16,18 @@ function showChildren(element) {
     if ($(element).hasClass('hidden-children')) {
         $(element).click(hideMyChildren).addClass('visible-children').removeClass('hidden-children');
         var depth = $(element).data('depth');
+        var children = $(element).data('children');
         $(element).nextUntil(
             function() {
                 return $(this).data('depth') == depth;
             }
         ).each(function() {
             if ($(this).data('depth') == depth + 1){
-                $(this).show();
+                if (children == 1) { //this element is an only child, expand its children too
+                    showChildren($(this));
+                } else {
+                    $(this).show();
+                }
             }
         })
     }

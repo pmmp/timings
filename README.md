@@ -37,7 +37,7 @@ In addition, the Timings v2 format is specifically described as "proprietary" an
 Timings v1 can be altered to support being displayed as a tree with minimal changes to the timings format, allowing us to develop a version of Timings which accepts both legacy v1 reports and newer reports with tree metadata. Newer reports can also be displayed by a legacy v1 viewer with no changes.
 
 ## File format
-Coming soon: documentation. Watch this space...
+The PocketMine-MP tree-view style timings report format is described in [docs/FILE_FORMAT.md](/docs/FILE_FORMAT.md).
 
 ## License
 Timings v1 (c) Daniel Ennis (Aikar) 2014-2017

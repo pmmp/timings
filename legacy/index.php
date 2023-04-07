@@ -125,7 +125,7 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 
 	$timesPerTick = round($time->count / $numTicks, 1);
 
-	if($time->ticks !== null){
+	if($time->ticks !== null && $time->ticks > 0){
 		//If we have the active ticks information from a newer timings report, this allows us to calculate a better
 		//average time per tick for timers which don't activate every tick.
 		$avg = round($time->timeNs / $time->ticks, 3);

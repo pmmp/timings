@@ -24,10 +24,10 @@ function showChildren(element) {
         ).each(function() {
             if ($(this).data('depth') == depth + 1){
                 if (children == 1) { //this element is an only child, expand its children too
-                    showChildren($(this));
-                } else {
-                    $(this).show();
+                    children = $(this).data('children');
+                    depth++;
                 }
+                $(this).show();
             }
         })
     }

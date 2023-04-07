@@ -1,0 +1,332 @@
+Minecraft
+    Connection Handler Time: 34500 Count: 1 Avg: 34500 Violations: 0 RecordId: 322066 ParentRecordId: none TimerId: 19 Ticks: 1 Peak: 34500
+    Player Network Send Time: 34500 Count: 1 Avg: 34500 Violations: 0 RecordId: 317867 ParentRecordId: 322066 TimerId: 20 Ticks: 1 Peak: 34500
+    Full Server Tick Time: 6352548400 Count: 4865 Avg: 1305765.344296 Violations: 5 RecordId: 293264 ParentRecordId: none TimerId: 13 Ticks: 1232 Peak: 70335100
+    Connection Handler Time: 209863600 Count: 1422 Avg: 147583.40365682 Violations: 0 RecordId: 289366 ParentRecordId: 315956 TimerId: 19 Ticks: 1108 Peak: 1964800
+    Player Network Receive Time: 187820000 Count: 1285 Avg: 146163.42412451 Violations: 0 RecordId: 179300 ParentRecordId: 289366 TimerId: 27 Ticks: 1098 Peak: 1773000
+    Scheduler Time: 16240000 Count: 1233 Avg: 13171.127331711 Violations: 0 RecordId: 271903 ParentRecordId: 248499 TimerId: 34 Ticks: 1232 Peak: 294500
+    1.6.1 - World Tick Time: 16978400 Count: 1233 Avg: 13769.9918897 Violations: 0 RecordId: 288944 ParentRecordId: 248499 TimerId: 24700 Ticks: 1232 Peak: 131000
+    1.8.1 - World Tick Time: 7760600 Count: 1233 Avg: 6294.0794809408 Violations: 0 RecordId: 271269 ParentRecordId: 248499 TimerId: 24835 Ticks: 1232 Peak: 56700
+    1.9.0 - World Tick Time: 6866300 Count: 1233 Avg: 5568.7753446878 Violations: 0 RecordId: 167819 ParentRecordId: 248499 TimerId: 24976 Ticks: 1232 Peak: 100400
+    flat - World Tick Time: 5793676200 Count: 1233 Avg: 4698845.2554745 Violations: 4 RecordId: 312663 ParentRecordId: 248499 TimerId: 25037 Ticks: 1232 Peak: 66745300
+    Player Movement Time: 24016400 Count: 1233 Avg: 19478.02108678 Violations: 0 RecordId: 291731 ParentRecordId: 177158 TimerId: 31 Ticks: 1232 Peak: 281000
+    Connection Handler Time: 110945400 Count: 1233 Avg: 89980.0486618 Violations: 0 RecordId: 230920 ParentRecordId: 248499 TimerId: 19 Ticks: 1232 Peak: 2586900
+    Player Network Send Time: 54323000 Count: 1601 Avg: 33930.668332292 Violations: 0 RecordId: 343468 ParentRecordId: 230920 TimerId: 20 Ticks: 1232 Peak: 732400
+    Memory Manager Time: 1190100 Count: 1233 Avg: 965.20681265207 Violations: 0 RecordId: 311178 ParentRecordId: 248499 TimerId: 16 Ticks: 1232 Peak: 22400
+    Server Command Time: 21684900 Count: 1232 Avg: 17601.37987013 Violations: 0 RecordId: 226553 ParentRecordId: 248499 TimerId: 35 Ticks: 1232 Peak: 2185300
+    Console Title Tick Time: 5563000 Count: 62 Avg: 89725.806451613 Violations: 0 RecordId: 308562 ParentRecordId: 248499 TimerId: 18 Ticks: 62 Peak: 179500
+    Connection Handler Time: 12710100 Count: 193 Avg: 65855.440414508 Violations: 0 RecordId: 218774 ParentRecordId: 312663 TimerId: 19 Ticks: 137 Peak: 1223300
+    Player Network Send Time: 12710100 Count: 193 Avg: 65855.440414508 Violations: 0 RecordId: 265470 ParentRecordId: 218774 TimerId: 20 Ticks: 137 Peak: 1223300
+    Player Movement Time: 30576600 Count: 448 Avg: 68251.339285714 Violations: 0 RecordId: 345465 ParentRecordId: 299892 TimerId: 31 Ticks: 402 Peak: 751800
+    Connection Handler Time: 2062100 Count: 631 Avg: 3267.9873217116 Violations: 0 RecordId: 316593 ParentRecordId: 291731 TimerId: 19 Ticks: 631 Peak: 28600
+    Player Network Send Time: 2062100 Count: 631 Avg: 3267.9873217116 Violations: 0 RecordId: 185054 ParentRecordId: 316593 TimerId: 20 Ticks: 631 Peak: 28600
+    Connection Handler Time: 100900 Count: 8 Avg: 12612.5 Violations: 0 RecordId: 310796 ParentRecordId: 309897 TimerId: 19 Ticks: 8 Peak: 15000
+    Player Network Send Time: 100900 Count: 8 Avg: 12612.5 Violations: 0 RecordId: 312322 ParentRecordId: 310796 TimerId: 20 Ticks: 8 Peak: 15000
+    Player Order Chunks Time: 41042900 Count: 27 Avg: 1520107.4074074 Violations: 0 RecordId: 347833 ParentRecordId: 230920 TimerId: 32 Ticks: 27 Peak: 2487700
+    Player Network Send Time: 121200 Count: 6 Avg: 20200 Violations: 0 RecordId: 236233 ParentRecordId: 347833 TimerId: 20 Ticks: 6 Peak: 22700
+    Player Network Send Time: 14800 Count: 1 Avg: 14800 Violations: 0 RecordId: 326166 ParentRecordId: 313525 TimerId: 20 Ticks: 1 Peak: 14800
+    Player Network Send Time: 718700 Count: 158 Avg: 4548.7341772152 Violations: 0 RecordId: 203803 ParentRecordId: 311799 TimerId: 20 Ticks: 72 Peak: 99400
+    Player Network Send Time: 204500 Count: 9 Avg: 22722.222222222 Violations: 0 RecordId: 242154 ParentRecordId: 320088 TimerId: 20 Ticks: 7 Peak: 48700
+    Connection Handler Time: 29100 Count: 1 Avg: 29100 Violations: 0 RecordId: 287769 ParentRecordId: 300844 TimerId: 19 Ticks: 1 Peak: 29100
+    Player Network Send Time: 29100 Count: 1 Avg: 29100 Violations: 0 RecordId: 232190 ParentRecordId: 287769 TimerId: 20 Ticks: 1 Peak: 29100
+    Player Network Send Time: 25900 Count: 3 Avg: 8633.3333333333 Violations: 0 RecordId: 309569 ParentRecordId: 299892 TimerId: 20 Ticks: 1 Peak: 25900
+    Player Network Send Time: 12600 Count: 1 Avg: 12600 Violations: 0 RecordId: 340363 ParentRecordId: 306263 TimerId: 20 Ticks: 1 Peak: 12600
+    Connection Handler Time: 43285300 Count: 5089 Avg: 8505.6592650815 Violations: 0 RecordId: 341739 ParentRecordId: 222095 TimerId: 19 Ticks: 79 Peak: 2267300
+    Player Network Send Time: 43285300 Count: 5089 Avg: 8505.6592650815 Violations: 0 RecordId: 308435 ParentRecordId: 341739 TimerId: 20 Ticks: 79 Peak: 2267300
+    Connection Handler Time: 4388800 Count: 601 Avg: 7302.4958402662 Violations: 0 RecordId: 177940 ParentRecordId: 314362 TimerId: 19 Ticks: 54 Peak: 507300
+    Player Network Send Time: 4388800 Count: 601 Avg: 7302.4958402662 Violations: 0 RecordId: 267374 ParentRecordId: 177940 TimerId: 20 Ticks: 54 Peak: 507300
+    Connection Handler Time: 17876300 Count: 2094 Avg: 8536.9149952245 Violations: 0 RecordId: 325394 ParentRecordId: 178004 TimerId: 19 Ticks: 39 Peak: 1104300
+    Player Network Send Time: 17876300 Count: 2094 Avg: 8536.9149952245 Violations: 0 RecordId: 337504 ParentRecordId: 325394 TimerId: 20 Ticks: 39 Peak: 1104300
+    Connection Handler Time: 21788500 Count: 3004 Avg: 7253.1624500666 Violations: 0 RecordId: 311135 ParentRecordId: 172301 TimerId: 19 Ticks: 110 Peak: 2453600
+    Player Network Send Time: 21788500 Count: 3004 Avg: 7253.1624500666 Violations: 0 RecordId: 320550 ParentRecordId: 311135 TimerId: 20 Ticks: 110 Peak: 2453600
+    World Load Time: 403100 Count: 129 Avg: 3124.8062015504 Violations: 0 RecordId: 296384 ParentRecordId: 317353 TimerId: 36 Ticks: 22 Peak: 106200
+    World Population Time: 8194100 Count: 111 Avg: 73820.720720721 Violations: 0 RecordId: 329220 ParentRecordId: 317353 TimerId: 38 Ticks: 33 Peak: 393500
+    World Load Time: 920300 Count: 412 Avg: 2233.7378640777 Violations: 0 RecordId: 340224 ParentRecordId: 329220 TimerId: 36 Ticks: 33 Peak: 59400
+    World Generation Callback Time: 14115200 Count: 111 Avg: 127163.96396396 Violations: 0 RecordId: 208884 ParentRecordId: 315956 TimerId: 39 Ticks: 33 Peak: 1126500
+    World Load Time: 932100 Count: 305 Avg: 3056.0655737705 Violations: 0 RecordId: 240776 ParentRecordId: 208884 TimerId: 36 Ticks: 33 Peak: 88700
+    Connection Handler Time: 3112100 Count: 111 Avg: 28036.936936937 Violations: 0 RecordId: 325189 ParentRecordId: 208884 TimerId: 19 Ticks: 33 Peak: 144000
+    Player Network Send Time: 3112100 Count: 111 Avg: 28036.936936937 Violations: 0 RecordId: 177959 ParentRecordId: 325189 TimerId: 20 Ticks: 33 Peak: 144000
+    World Population Time: 2465600 Count: 46 Avg: 53600 Violations: 0 RecordId: 290819 ParentRecordId: 208884 TimerId: 38 Ticks: 17 Peak: 235800
+    World Load Time: 242300 Count: 114 Avg: 2125.4385964912 Violations: 0 RecordId: 297911 ParentRecordId: 290819 TimerId: 36 Ticks: 17 Peak: 28500
+    Player Network Send Time: 2865700 Count: 110 Avg: 26051.818181818 Violations: 0 RecordId: 332044 ParentRecordId: 289366 TimerId: 20 Ticks: 32 Peak: 170700
+    Connection Handler Time: 927000 Count: 466 Avg: 1989.2703862661 Violations: 0 RecordId: 222541 ParentRecordId: 261956 TimerId: 19 Ticks: 38 Peak: 77300
+    Player Network Send Time: 927000 Count: 466 Avg: 1989.2703862661 Violations: 0 RecordId: 296362 ParentRecordId: 222541 TimerId: 20 Ticks: 38 Peak: 77300
+    Connection Handler Time: 19800 Count: 1 Avg: 19800 Violations: 0 RecordId: 321324 ParentRecordId: 299024 TimerId: 19 Ticks: 1 Peak: 19800
+    Player Network Send Time: 19800 Count: 1 Avg: 19800 Violations: 0 RecordId: 193304 ParentRecordId: 321324 TimerId: 20 Ticks: 1 Peak: 19800
+Minecraft - Breakdown
+    Send - TextPacket Time: 34500 Count: 1 Avg: 34500 Violations: 0 RecordId: 309507 ParentRecordId: 317867 TimerId: 149972 Ticks: 1 Peak: 34500
+    Encode - TextPacket Time: 9000 Count: 1 Avg: 9000 Violations: 0 RecordId: 222528 ParentRecordId: 309507 TimerId: 150278 Ticks: 1 Peak: 9000
+    Server Mid-Tick Processing Time: 286785600 Count: 3633 Avg: 78939.058629232 Violations: 0 RecordId: 315956 ParentRecordId: 293264 TimerId: 15 Ticks: 1232 Peak: 2624400
+    Player Network Receive - Decryption Time: 35856100 Count: 1285 Avg: 27903.579766537 Violations: 0 RecordId: 303748 ParentRecordId: 179300 TimerId: 29 Ticks: 1098 Peak: 685600
+    Player Network Receive - Decompression Time: 8334000 Count: 1285 Avg: 6485.6031128405 Violations: 0 RecordId: 184349 ParentRecordId: 179300 TimerId: 28 Ticks: 1098 Peak: 71300
+    Receive - PlayerAuthInputPacket Time: 84545100 Count: 1233 Avg: 68568.613138686 Violations: 0 RecordId: 195189 ParentRecordId: 179300 TimerId: 27554 Ticks: 1093 Peak: 1720300
+    Decode - PlayerAuthInputPacket Time: 19593600 Count: 1233 Avg: 15890.99756691 Violations: 0 RecordId: 201919 ParentRecordId: 195189 TimerId: 131712 Ticks: 1093 Peak: 161300
+    Handler - PlayerAuthInputPacket Time: 49389300 Count: 1233 Avg: 40056.204379562 Violations: 0 RecordId: 299892 ParentRecordId: 195189 TimerId: 26668 Ticks: 1093 Peak: 1690400
+    Server Tick Update Cycle Time: 6065762800 Count: 1232 Avg: 4923508.7662338 Violations: 5 RecordId: 248499 ParentRecordId: 293264 TimerId: 14 Ticks: 1232 Peak: 67710700
+    Scheduler - Async Tasks Time: 6715900 Count: 1233 Avg: 5446.796431468 Violations: 0 RecordId: 299024 ParentRecordId: 248499 TimerId: 56 Ticks: 1232 Peak: 130200
+    1.6.1 - Scheduled Block Updates Time: 2285000 Count: 1233 Avg: 1853.203568532 Violations: 0 RecordId: 307472 ParentRecordId: 288944 TimerId: 24687 Ticks: 1232 Peak: 115200
+    1.6.1 - Tick Entities Time: 2702200 Count: 1233 Avg: 2191.5652879157 Violations: 0 RecordId: 182034 ParentRecordId: 288944 TimerId: 24691 Ticks: 1232 Peak: 28800
+    Entity Tick Time: 1126000 Count: 1233 Avg: 913.2197891322 Violations: 0 RecordId: 219110 ParentRecordId: 182034 TimerId: 50 Ticks: 1232 Peak: 26100
+    1.6.1 - Random Chunk Updates Time: 1347700 Count: 1233 Avg: 1093.0251419303 Violations: 0 RecordId: 245408 ParentRecordId: 288944 TimerId: 24688 Ticks: 1232 Peak: 34600
+    1.8.1 - Scheduled Block Updates Time: 1329000 Count: 1233 Avg: 1077.8588807786 Violations: 0 RecordId: 189072 ParentRecordId: 271269 TimerId: 24822 Ticks: 1232 Peak: 25900
+    1.8.1 - Tick Entities Time: 1729800 Count: 1233 Avg: 1402.9197080292 Violations: 0 RecordId: 226122 ParentRecordId: 271269 TimerId: 24826 Ticks: 1232 Peak: 26700
+    Entity Tick Time: 477100 Count: 1233 Avg: 386.94241686942 Violations: 0 RecordId: 149634 ParentRecordId: 226122 TimerId: 50 Ticks: 1232 Peak: 13800
+    1.8.1 - Random Chunk Updates Time: 1072800 Count: 1233 Avg: 870.07299270073 Violations: 0 RecordId: 304611 ParentRecordId: 271269 TimerId: 24823 Ticks: 1232 Peak: 46900
+    1.9.0 - Scheduled Block Updates Time: 1140000 Count: 1233 Avg: 924.57420924574 Violations: 0 RecordId: 285838 ParentRecordId: 167819 TimerId: 24963 Ticks: 1232 Peak: 89400
+    1.9.0 - Tick Entities Time: 1635100 Count: 1233 Avg: 1326.1151662612 Violations: 0 RecordId: 193529 ParentRecordId: 167819 TimerId: 24967 Ticks: 1232 Peak: 27700
+    Entity Tick Time: 401600 Count: 1233 Avg: 325.7096512571 Violations: 0 RecordId: 304455 ParentRecordId: 193529 TimerId: 50 Ticks: 1232 Peak: 4600
+    1.9.0 - Random Chunk Updates Time: 922700 Count: 1233 Avg: 748.33738848337 Violations: 0 RecordId: 312678 ParentRecordId: 167819 TimerId: 24964 Ticks: 1232 Peak: 19600
+    flat - Scheduled Block Updates Time: 52522000 Count: 1233 Avg: 42596.918085969 Violations: 0 RecordId: 312680 ParentRecordId: 312663 TimerId: 25024 Ticks: 1232 Peak: 6673100
+    flat - Tick Entities Time: 1931360900 Count: 1233 Avg: 1566391.6463909 Violations: 2 RecordId: 312673 ParentRecordId: 312663 TimerId: 25028 Ticks: 1232 Peak: 59064300
+    Entity Tick Time: 1929908700 Count: 1233 Avg: 1565213.8686131 Violations: 2 RecordId: 261956 ParentRecordId: 312673 TimerId: 50 Ticks: 1232 Peak: 59063000
+    Entity Tick - Player Time: 101101000 Count: 1233 Avg: 81995.944849959 Violations: 0 RecordId: 177158 ParentRecordId: 261956 TimerId: 26759 Ticks: 1232 Peak: 391800
+    Entity Base Tick Time: 54714200 Count: 1233 Avg: 44374.858069749 Violations: 0 RecordId: 283267 ParentRecordId: 177158 TimerId: 52 Ticks: 1232 Peak: 346100
+    Entity Base Tick - Living Time: 43383800 Count: 1233 Avg: 35185.563665856 Violations: 0 RecordId: 309897 ParentRecordId: 283267 TimerId: 53 Ticks: 1232 Peak: 334200
+    checkNearEntities Time: 17015700 Count: 1233 Avg: 13800.243309002 Violations: 0 RecordId: 287395 ParentRecordId: 177158 TimerId: 49 Ticks: 1232 Peak: 252200
+    Entity Tick - ItemEntity Time: 1044617200 Count: 220856 Avg: 4729.8565581193 Violations: 0 RecordId: 222095 ParentRecordId: 261956 TimerId: 161891 Ticks: 1232 Peak: 12971700
+    Entity Base Tick Time: 408501900 Count: 220856 Avg: 1849.6300757054 Violations: 0 RecordId: 195181 ParentRecordId: 222095 TimerId: 52 Ticks: 1232 Peak: 2602600
+    Entity Base Tick - ItemEntity Time: 257934100 Count: 220856 Avg: 1167.8835983627 Violations: 0 RecordId: 314362 ParentRecordId: 195181 TimerId: 54 Ticks: 1232 Peak: 2404800
+    flat - Random Chunk Updates Time: 3741099600 Count: 1233 Avg: 3034144.0389294 Violations: 0 RecordId: 224117 ParentRecordId: 312663 TimerId: 25025 Ticks: 1232 Peak: 8863300
+    flat - Random Chunk Updates - Chunk Selection Time: 791164900 Count: 1233 Avg: 641658.47526358 Violations: 0 RecordId: 226789 ParentRecordId: 224117 TimerId: 25026 Ticks: 1232 Peak: 2746800
+    Player Network Send - Inventory Sync Time: 3459800 Count: 1233 Avg: 2806.00162206 Violations: 0 RecordId: 337537 ParentRecordId: 343468 TimerId: 25 Ticks: 1232 Peak: 183700
+    Player Network Send - Compression Time: 7074000 Count: 259 Avg: 27312.741312741 Violations: 0 RecordId: 301694 ParentRecordId: 343468 TimerId: 21 Ticks: 259 Peak: 128600
+    Player Network Send - Compression (Session Buffer) Time: 7074000 Count: 259 Avg: 27312.741312741 Violations: 0 RecordId: 313330 ParentRecordId: 301694 TimerId: 23 Ticks: 259 Peak: 128600
+    Player Network Send - Encryption Time: 6282400 Count: 259 Avg: 24256.370656371 Violations: 0 RecordId: 223019 ParentRecordId: 343468 TimerId: 24 Ticks: 259 Peak: 186100
+    flat - setBlock Time: 924000 Count: 53 Avg: 17433.962264151 Violations: 0 RecordId: 296536 ParentRecordId: 224117 TimerId: 25020 Ticks: 51 Peak: 154000
+    Broadcast Packets Time: 12571200 Count: 187 Avg: 67225.668449198 Violations: 0 RecordId: 247504 ParentRecordId: 265470 TimerId: 30 Ticks: 132 Peak: 1223300
+    Send - UpdateBlockPacket Time: 4829900 Count: 2304 Avg: 2096.3107638889 Violations: 0 RecordId: 278890 ParentRecordId: 247504 TimerId: 231850 Ticks: 131 Peak: 695700
+    Encode - UpdateBlockPacket Time: 4829900 Count: 2304 Avg: 2096.3107638889 Violations: 0 RecordId: 237146 ParentRecordId: 278890 TimerId: 231852 Ticks: 131 Peak: 695700
+    Send - SetTimePacket Time: 138900 Count: 6 Avg: 23150 Violations: 0 RecordId: 282271 ParentRecordId: 265470 TimerId: 176193 Ticks: 6 Peak: 29400
+    Encode - SetTimePacket Time: 44600 Count: 6 Avg: 7433.3333333333 Violations: 0 RecordId: 306394 ParentRecordId: 282271 TimerId: 176197 Ticks: 6 Peak: 11800
+    Entity Movement Time: 27138700 Count: 448 Avg: 60577.455357143 Violations: 0 RecordId: 320088 ParentRecordId: 345465 TimerId: 45 Ticks: 402 Peak: 744700
+    Entity Movement - Collision Checks Time: 751600 Count: 448 Avg: 1677.6785714286 Violations: 0 RecordId: 318283 ParentRecordId: 320088 TimerId: 46 Ticks: 402 Peak: 7100
+    Broadcast Packets Time: 2062100 Count: 631 Avg: 3267.9873217116 Violations: 0 RecordId: 344783 ParentRecordId: 185054 TimerId: 30 Ticks: 631 Peak: 28600
+    Send - SetActorDataPacket Time: 100900 Count: 8 Avg: 12612.5 Violations: 0 RecordId: 247323 ParentRecordId: 312322 TimerId: 30336 Ticks: 8 Peak: 15000
+    Encode - SetActorDataPacket Time: 100900 Count: 8 Avg: 12612.5 Violations: 0 RecordId: 324041 ParentRecordId: 247323 TimerId: 30338 Ticks: 8 Peak: 15000
+    Send - UpdateAttributesPacket Time: 98600 Count: 10 Avg: 9860 Violations: 0 RecordId: 324037 ParentRecordId: 343468 TimerId: 30273 Ticks: 10 Peak: 12100
+    Encode - UpdateAttributesPacket Time: 98600 Count: 10 Avg: 9860 Violations: 0 RecordId: 288872 ParentRecordId: 324037 TimerId: 30272 Ticks: 10 Peak: 12100
+    Send - NetworkChunkPublisherUpdatePacket Time: 121200 Count: 6 Avg: 20200 Violations: 0 RecordId: 218354 ParentRecordId: 236233 TimerId: 131741 Ticks: 6 Peak: 22700
+    Encode - NetworkChunkPublisherUpdatePacket Time: 50000 Count: 6 Avg: 8333.3333333333 Violations: 0 RecordId: 296236 ParentRecordId: 218354 TimerId: 26672 Ticks: 6 Peak: 9900
+    Player Network Send - Chunks Time: 27006800 Count: 99 Avg: 272795.95959596 Violations: 0 RecordId: 317353 ParentRecordId: 343468 TimerId: 33 Ticks: 99 Peak: 730500
+    flat - Player Send Chunks Time: 9127800 Count: 273 Avg: 33435.164835165 Violations: 0 RecordId: 215464 ParentRecordId: 317353 TimerId: 25029 Ticks: 77 Peak: 411800
+    Player Network Send - Compression Time: 1403800 Count: 23 Avg: 61034.782608696 Violations: 0 RecordId: 295206 ParentRecordId: 215464 TimerId: 21 Ticks: 23 Peak: 265900
+    Player Network Send - Compression (Session Buffer) Time: 1403800 Count: 23 Avg: 61034.782608696 Violations: 0 RecordId: 233912 ParentRecordId: 295206 TimerId: 23 Ticks: 23 Peak: 265900
+    Player Network Send - Encryption Time: 2526800 Count: 296 Avg: 8536.4864864865 Violations: 0 RecordId: 307469 ParentRecordId: 215464 TimerId: 24 Ticks: 77 Peak: 142000
+    flat - Unload Chunks Time: 2084800 Count: 392 Avg: 5318.3673469388 Violations: 0 RecordId: 276854 ParentRecordId: 312663 TimerId: 25023 Ticks: 59 Peak: 319200
+    Receive - CommandRequestPacket Time: 378300 Count: 1 Avg: 378300 Violations: 0 RecordId: 291982 ParentRecordId: 179300 TimerId: 190078 Ticks: 1 Peak: 378300
+    Decode - CommandRequestPacket Time: 19400 Count: 1 Avg: 19400 Violations: 0 RecordId: 279681 ParentRecordId: 291982 TimerId: 190081 Ticks: 1 Peak: 19400
+    Handler - CommandRequestPacket Time: 346400 Count: 1 Avg: 346400 Violations: 0 RecordId: 185607 ParentRecordId: 291982 TimerId: 164073 Ticks: 1 Peak: 346400
+    Player Command Time: 327500 Count: 1 Avg: 327500 Violations: 0 RecordId: 330702 ParentRecordId: 185607 TimerId: 57 Ticks: 1 Peak: 327500
+    Command: give Time: 313100 Count: 1 Avg: 313100 Violations: 0 RecordId: 313525 ParentRecordId: 330702 TimerId: 231 Ticks: 1 Peak: 313100
+    Send - TextPacket Time: 14800 Count: 1 Avg: 14800 Violations: 0 RecordId: 168557 ParentRecordId: 326166 TimerId: 149972 Ticks: 1 Peak: 14800
+    Encode - TextPacket Time: 6600 Count: 1 Avg: 6600 Violations: 0 RecordId: 290395 ParentRecordId: 168557 TimerId: 150278 Ticks: 1 Peak: 6600
+    Send - InventorySlotPacket Time: 33100 Count: 1 Avg: 33100 Violations: 0 RecordId: 232633 ParentRecordId: 337537 TimerId: 148151 Ticks: 1 Peak: 33100
+    Encode - InventorySlotPacket Time: 17200 Count: 1 Avg: 17200 Violations: 0 RecordId: 269700 ParentRecordId: 232633 TimerId: 148149 Ticks: 1 Peak: 17200
+    Receive - InteractPacket Time: 737000 Count: 26 Avg: 28346.153846154 Violations: 0 RecordId: 262160 ParentRecordId: 179300 TimerId: 127390 Ticks: 24 Peak: 57800
+    Decode - InteractPacket Time: 323900 Count: 26 Avg: 12457.692307692 Violations: 0 RecordId: 152367 ParentRecordId: 262160 TimerId: 127388 Ticks: 24 Peak: 25400
+    Handler - InteractPacket Time: 52100 Count: 26 Avg: 2003.8461538462 Violations: 0 RecordId: 341676 ParentRecordId: 262160 TimerId: 127389 Ticks: 24 Peak: 4200
+    Receive - MobEquipmentPacket Time: 2915900 Count: 81 Avg: 35998.765432099 Violations: 0 RecordId: 327851 ParentRecordId: 179300 TimerId: 127386 Ticks: 80 Peak: 97700
+    Decode - MobEquipmentPacket Time: 1546100 Count: 81 Avg: 19087.654320988 Violations: 0 RecordId: 228867 ParentRecordId: 327851 TimerId: 127375 Ticks: 80 Peak: 41200
+    Handler - MobEquipmentPacket Time: 577400 Count: 81 Avg: 7128.3950617284 Violations: 0 RecordId: 322624 ParentRecordId: 327851 TimerId: 127355 Ticks: 80 Peak: 49400
+    Receive - PlayerActionPacket Time: 4041200 Count: 130 Avg: 31086.153846154 Violations: 0 RecordId: 291844 ParentRecordId: 179300 TimerId: 220768 Ticks: 130 Peak: 103700
+    Decode - PlayerActionPacket Time: 1764400 Count: 130 Avg: 13572.307692308 Violations: 0 RecordId: 328317 ParentRecordId: 291844 TimerId: 220761 Ticks: 130 Peak: 45300
+    Handler - PlayerActionPacket Time: 603700 Count: 130 Avg: 4643.8461538462 Violations: 0 RecordId: 299534 ParentRecordId: 291844 TimerId: 220765 Ticks: 130 Peak: 14700
+    Receive - AnimatePacket Time: 600100 Count: 71 Avg: 8452.1126760563 Violations: 0 RecordId: 308280 ParentRecordId: 179300 TimerId: 220770 Ticks: 66 Peak: 66200
+    Decode - AnimatePacket Time: 204100 Count: 71 Avg: 2874.6478873239 Violations: 0 RecordId: 287815 ParentRecordId: 308280 TimerId: 231143 Ticks: 66 Peak: 24100
+    Handler - AnimatePacket Time: 69300 Count: 71 Avg: 976.05633802817 Violations: 0 RecordId: 256063 ParentRecordId: 308280 TimerId: 220766 Ticks: 66 Peak: 4500
+    Receive - InventoryTransactionPacket Time: 24056900 Count: 152 Avg: 158269.07894737 Violations: 0 RecordId: 249935 ParentRecordId: 179300 TimerId: 220762 Ticks: 75 Peak: 713800
+    Decode - InventoryTransactionPacket Time: 4152600 Count: 152 Avg: 27319.736842105 Violations: 0 RecordId: 290871 ParentRecordId: 249935 TimerId: 231144 Ticks: 75 Peak: 192200
+    Handler - InventoryTransactionPacket Time: 18958000 Count: 152 Avg: 124723.68421053 Violations: 0 RecordId: 311799 ParentRecordId: 249935 TimerId: 231141 Ticks: 75 Peak: 620100
+    Broadcast Packets Time: 167400 Count: 73 Avg: 2293.1506849315 Violations: 0 RecordId: 224535 ParentRecordId: 203803 TimerId: 30 Ticks: 72 Peak: 31700
+    flat - setBlock Time: 2514400 Count: 65 Avg: 38683.076923077 Violations: 0 RecordId: 311296 ParentRecordId: 311799 TimerId: 25020 Ticks: 65 Peak: 85200
+    flat - Sky Light Updates Time: 569800 Count: 65 Avg: 8766.1538461538 Violations: 0 RecordId: 130467 ParentRecordId: 311296 TimerId: 25022 Ticks: 65 Peak: 23100
+    flat - Block Light Updates Time: 500500 Count: 65 Avg: 7700 Violations: 0 RecordId: 279692 ParentRecordId: 311296 TimerId: 25021 Ticks: 65 Peak: 13200
+    flat - Block Light Updates Time: 1629900 Count: 86 Avg: 18952.325581395 Violations: 0 RecordId: 334598 ParentRecordId: 312663 TimerId: 25021 Ticks: 86 Peak: 170600
+    flat - Sky Light Updates Time: 9110100 Count: 86 Avg: 105931.39534884 Violations: 0 RecordId: 229415 ParentRecordId: 312663 TimerId: 25022 Ticks: 86 Peak: 1036400
+    Send - LevelSoundEventPacket Time: 781400 Count: 127 Avg: 6152.7559055118 Violations: 0 RecordId: 317066 ParentRecordId: 247504 TimerId: 232618 Ticks: 85 Peak: 22000
+    Encode - LevelSoundEventPacket Time: 781400 Count: 127 Avg: 6152.7559055118 Violations: 0 RecordId: 312594 ParentRecordId: 317066 TimerId: 206692 Ticks: 85 Peak: 22000
+    Receive - LevelSoundEventPacket Time: 233200 Count: 8 Avg: 29150 Violations: 0 RecordId: 227326 ParentRecordId: 179300 TimerId: 211223 Ticks: 7 Peak: 46900
+    Decode - LevelSoundEventPacket Time: 110500 Count: 8 Avg: 13812.5 Violations: 0 RecordId: 301625 ParentRecordId: 227326 TimerId: 211726 Ticks: 7 Peak: 23100
+    Handler - LevelSoundEventPacket Time: 11600 Count: 8 Avg: 1450 Violations: 0 RecordId: 185046 ParentRecordId: 227326 TimerId: 209724 Ticks: 7 Peak: 1900
+    Receive - MovePlayerPacket Time: 92400 Count: 7 Avg: 13200 Violations: 0 RecordId: 341538 ParentRecordId: 179300 TimerId: 127046 Ticks: 7 Peak: 18400
+    Decode - MovePlayerPacket Time: 49100 Count: 7 Avg: 7014.2857142857 Violations: 0 RecordId: 312441 ParentRecordId: 341538 TimerId: 127080 Ticks: 7 Peak: 10900
+    Handler - MovePlayerPacket Time: 7300 Count: 7 Avg: 1042.8571428571 Violations: 0 RecordId: 310196 ParentRecordId: 341538 TimerId: 127396 Ticks: 7 Peak: 1200
+    Broadcast Packets Time: 204500 Count: 9 Avg: 22722.222222222 Violations: 0 RecordId: 304962 ParentRecordId: 242154 TimerId: 30 Ticks: 7 Peak: 48700
+    Send - LevelSoundEventPacket Time: 58600 Count: 8 Avg: 7325 Violations: 0 RecordId: 227400 ParentRecordId: 304962 TimerId: 232618 Ticks: 7 Peak: 15000
+    Encode - LevelSoundEventPacket Time: 58600 Count: 8 Avg: 7325 Violations: 0 RecordId: 298462 ParentRecordId: 227400 TimerId: 206692 Ticks: 7 Peak: 15000
+    Send - UpdateBlockPacket Time: 502600 Count: 84 Avg: 5983.3333333333 Violations: 0 RecordId: 346844 ParentRecordId: 203803 TimerId: 231850 Ticks: 7 Peak: 97000
+    Encode - UpdateBlockPacket Time: 245700 Count: 84 Avg: 2925 Violations: 0 RecordId: 341608 ParentRecordId: 346844 TimerId: 231852 Ticks: 7 Peak: 54000
+    Scheduler - Sync Tasks Time: 51900 Count: 1 Avg: 51900 Violations: 0 RecordId: 346314 ParentRecordId: 271903 TimerId: 55 Ticks: 1 Peak: 51900
+    Send - TextPacket Time: 29100 Count: 1 Avg: 29100 Violations: 0 RecordId: 258442 ParentRecordId: 232190 TimerId: 149972 Ticks: 1 Peak: 29100
+    Encode - TextPacket Time: 10500 Count: 1 Avg: 10500 Violations: 0 RecordId: 341899 ParentRecordId: 258442 TimerId: 150278 Ticks: 1 Peak: 10500
+    Broadcast Packets Time: 2900 Count: 2 Avg: 1450 Violations: 0 RecordId: 326425 ParentRecordId: 309569 TimerId: 30 Ticks: 1 Peak: 2900
+    Send - TextPacket Time: 12600 Count: 1 Avg: 12600 Violations: 0 RecordId: 327316 ParentRecordId: 340363 TimerId: 149972 Ticks: 1 Peak: 12600
+    Encode - TextPacket Time: 5400 Count: 1 Avg: 5400 Violations: 0 RecordId: 310687 ParentRecordId: 327316 TimerId: 150278 Ticks: 1 Peak: 5400
+    flat - setBlock Time: 42200 Count: 1 Avg: 42200 Violations: 0 RecordId: 202530 ParentRecordId: 299892 TimerId: 25020 Ticks: 1 Peak: 42200
+    flat - Sky Light Updates Time: 11900 Count: 1 Avg: 11900 Violations: 0 RecordId: 340817 ParentRecordId: 202530 TimerId: 25022 Ticks: 1 Peak: 11900
+    flat - Block Light Updates Time: 8000 Count: 1 Avg: 8000 Violations: 0 RecordId: 298375 ParentRecordId: 202530 TimerId: 25021 Ticks: 1 Peak: 8000
+    Send - AddItemActorPacket Time: 23000 Count: 1 Avg: 23000 Violations: 0 RecordId: 338381 ParentRecordId: 309569 TimerId: 196060 Ticks: 1 Peak: 23000
+    Encode - AddItemActorPacket Time: 16300 Count: 1 Avg: 16300 Violations: 0 RecordId: 242481 ParentRecordId: 338381 TimerId: 197517 Ticks: 1 Peak: 16300
+    Entity Movement Time: 118169100 Count: 4704 Avg: 25120.982142857 Violations: 0 RecordId: 332632 ParentRecordId: 222095 TimerId: 45 Ticks: 93 Peak: 5451200
+    Entity Movement - Collision Checks Time: 90967600 Count: 4704 Avg: 19338.350340136 Violations: 0 RecordId: 327950 ParentRecordId: 332632 TimerId: 46 Ticks: 93 Peak: 4683500
+    Broadcast Packets Time: 43285300 Count: 5089 Avg: 8505.6592650815 Violations: 0 RecordId: 319867 ParentRecordId: 308435 TimerId: 30 Ticks: 79 Peak: 2267300
+    Send - MoveActorAbsolutePacket Time: 9588700 Count: 3339 Avg: 2871.7280622941 Violations: 0 RecordId: 193391 ParentRecordId: 319867 TimerId: 247340 Ticks: 79 Peak: 486100
+    Encode - MoveActorAbsolutePacket Time: 9588700 Count: 3339 Avg: 2871.7280622941 Violations: 0 RecordId: 287853 ParentRecordId: 193391 TimerId: 253835 Ticks: 79 Peak: 486100
+    Send - SetActorMotionPacket Time: 3132800 Count: 1750 Avg: 1790.1714285714 Violations: 0 RecordId: 264238 ParentRecordId: 319867 TimerId: 247338 Ticks: 70 Peak: 190300
+    Encode - SetActorMotionPacket Time: 3132800 Count: 1750 Avg: 1790.1714285714 Violations: 0 RecordId: 229131 ParentRecordId: 264238 TimerId: 247343 Ticks: 70 Peak: 190300
+    Send - SetActorDataPacket Time: 3612100 Count: 509 Avg: 7096.463654224 Violations: 0 RecordId: 196836 ParentRecordId: 267374 TimerId: 30336 Ticks: 49 Peak: 493200
+    Encode - SetActorDataPacket Time: 3612100 Count: 509 Avg: 7096.463654224 Violations: 0 RecordId: 348018 ParentRecordId: 196836 TimerId: 30338 Ticks: 49 Peak: 493200
+    Send - LevelEventPacket Time: 212500 Count: 66 Avg: 3219.696969697 Violations: 0 RecordId: 185482 ParentRecordId: 247504 TimerId: 240691 Ticks: 22 Peak: 14800
+    Encode - LevelEventPacket Time: 212500 Count: 66 Avg: 3219.696969697 Violations: 0 RecordId: 235446 ParentRecordId: 185482 TimerId: 253553 Ticks: 22 Peak: 14800
+    Send - AddActorPacket Time: 48700 Count: 1 Avg: 48700 Violations: 0 RecordId: 331806 ParentRecordId: 203803 TimerId: 303510 Ticks: 1 Peak: 48700
+    Encode - AddActorPacket Time: 33100 Count: 1 Avg: 33100 Violations: 0 RecordId: 248249 ParentRecordId: 331806 TimerId: 286100 Ticks: 1 Peak: 33100
+    Send - LevelEventPacket Time: 6800 Count: 1 Avg: 6800 Violations: 0 RecordId: 343200 ParentRecordId: 224535 TimerId: 240691 Ticks: 1 Peak: 6800
+    Encode - LevelEventPacket Time: 6800 Count: 1 Avg: 6800 Violations: 0 RecordId: 252329 ParentRecordId: 343200 TimerId: 253553 Ticks: 1 Peak: 6800
+    Entity Tick - PrimedTNT Time: 600143200 Count: 1343 Avg: 446867.60982874 Violations: 2 RecordId: 178004 ParentRecordId: 261956 TimerId: 223595 Ticks: 110 Peak: 53698100
+    Entity Movement Time: 61906500 Count: 1265 Avg: 48937.944664032 Violations: 0 RecordId: 200720 ParentRecordId: 178004 TimerId: 45 Ticks: 39 Peak: 3883500
+    Entity Movement - Collision Checks Time: 52156600 Count: 1265 Avg: 41230.513833992 Violations: 0 RecordId: 196986 ParentRecordId: 200720 TimerId: 46 Ticks: 39 Peak: 3465200
+    Broadcast Packets Time: 17876300 Count: 2094 Avg: 8536.9149952245 Violations: 0 RecordId: 283031 ParentRecordId: 337504 TimerId: 30 Ticks: 39 Peak: 1104300
+    Send - MoveActorAbsolutePacket Time: 3598100 Count: 1261 Avg: 2853.3703409992 Violations: 0 RecordId: 231889 ParentRecordId: 283031 TimerId: 247340 Ticks: 38 Peak: 197000
+    Encode - MoveActorAbsolutePacket Time: 3598100 Count: 1261 Avg: 2853.3703409992 Violations: 0 RecordId: 274865 ParentRecordId: 231889 TimerId: 253835 Ticks: 38 Peak: 197000
+    Send - SetActorMotionPacket Time: 1330800 Count: 833 Avg: 1597.5990396158 Violations: 0 RecordId: 342574 ParentRecordId: 283031 TimerId: 247338 Ticks: 31 Peak: 96100
+    Encode - SetActorMotionPacket Time: 1330800 Count: 833 Avg: 1597.5990396158 Violations: 0 RecordId: 261185 ParentRecordId: 342574 TimerId: 247343 Ticks: 31 Peak: 96100
+    Entity Base Tick Time: 509750700 Count: 1343 Avg: 379561.20625465 Violations: 0 RecordId: 172301 ParentRecordId: 178004 TimerId: 52 Ticks: 110 Peak: 49330000
+    Send - SetActorDataPacket Time: 5465800 Count: 1343 Avg: 4069.843633656 Violations: 0 RecordId: 214588 ParentRecordId: 320550 TimerId: 30336 Ticks: 110 Peak: 537500
+    Encode - SetActorDataPacket Time: 5465800 Count: 1343 Avg: 4069.843633656 Violations: 0 RecordId: 311679 ParentRecordId: 214588 TimerId: 30338 Ticks: 110 Peak: 537500
+    Send - ActorEventPacket Time: 6000 Count: 1 Avg: 6000 Violations: 0 RecordId: 338026 ParentRecordId: 304962 TimerId: 185037 Ticks: 1 Peak: 6000
+    Encode - ActorEventPacket Time: 6000 Count: 1 Avg: 6000 Violations: 0 RecordId: 327613 ParentRecordId: 338026 TimerId: 273579 Ticks: 1 Peak: 6000
+    flat - Chunk Load Time: 403100 Count: 129 Avg: 3124.8062015504 Violations: 0 RecordId: 314744 ParentRecordId: 296384 TimerId: 25031 Ticks: 22 Peak: 106200
+    flat - Chunk Load - Data Time: 279700 Count: 129 Avg: 2168.2170542636 Violations: 0 RecordId: 346040 ParentRecordId: 314744 TimerId: 25032 Ticks: 22 Peak: 98600
+    flat - Chunk Load Time: 920300 Count: 412 Avg: 2233.7378640777 Violations: 0 RecordId: 342687 ParentRecordId: 340224 TimerId: 25031 Ticks: 33 Peak: 59400
+    flat - Chunk Load - Data Time: 569300 Count: 412 Avg: 1381.7961165049 Violations: 0 RecordId: 334739 ParentRecordId: 342687 TimerId: 25032 Ticks: 33 Peak: 34100
+    flat - Chunk Load Time: 932100 Count: 305 Avg: 3056.0655737705 Violations: 0 RecordId: 342474 ParentRecordId: 240776 TimerId: 25031 Ticks: 33 Peak: 88700
+    flat - Chunk Load - Data Time: 567900 Count: 305 Avg: 1861.9672131148 Violations: 0 RecordId: 321920 ParentRecordId: 342474 TimerId: 25032 Ticks: 33 Peak: 70900
+    Player Network Send - Chunks Time: 3112100 Count: 111 Avg: 28036.936936937 Violations: 0 RecordId: 233849 ParentRecordId: 177959 TimerId: 33 Ticks: 33 Peak: 144000
+    flat - Player Send Chunk Prepare Time: 3112100 Count: 111 Avg: 28036.936936937 Violations: 0 RecordId: 244104 ParentRecordId: 233849 TimerId: 25030 Ticks: 33 Peak: 144000
+    flat - Chunk Load Time: 242300 Count: 114 Avg: 2125.4385964912 Violations: 0 RecordId: 275400 ParentRecordId: 297911 TimerId: 25031 Ticks: 17 Peak: 28500
+    flat - Chunk Load - Data Time: 145600 Count: 114 Avg: 1277.1929824561 Violations: 0 RecordId: 321926 ParentRecordId: 275400 TimerId: 25032 Ticks: 17 Peak: 18100
+    Player Network Send - Chunks Time: 2865700 Count: 110 Avg: 26051.818181818 Violations: 0 RecordId: 212756 ParentRecordId: 332044 TimerId: 33 Ticks: 32 Peak: 170700
+    flat - Player Send Chunks Time: 2865700 Count: 110 Avg: 26051.818181818 Violations: 0 RecordId: 321202 ParentRecordId: 212756 TimerId: 25029 Ticks: 32 Peak: 170700
+    Player Network Send - Encryption Time: 760700 Count: 110 Avg: 6915.4545454545 Violations: 0 RecordId: 320608 ParentRecordId: 321202 TimerId: 24 Ticks: 32 Peak: 45700
+    Broadcast Packets Time: 6969800 Count: 1091 Avg: 6388.4509624198 Violations: 0 RecordId: 348048 ParentRecordId: 320550 TimerId: 30 Ticks: 20 Peak: 1566700
+    Send - SetActorMotionPacket Time: 1603800 Count: 1024 Avg: 1566.2109375 Violations: 0 RecordId: 332263 ParentRecordId: 348048 TimerId: 247338 Ticks: 20 Peak: 402800
+    Encode - SetActorMotionPacket Time: 1603800 Count: 1024 Avg: 1566.2109375 Violations: 0 RecordId: 165686 ParentRecordId: 332263 TimerId: 247343 Ticks: 20 Peak: 402800
+    flat - setBlock Time: 36494900 Count: 2185 Avg: 16702.471395881 Violations: 0 RecordId: 275219 ParentRecordId: 172301 TimerId: 25020 Ticks: 20 Peak: 6745500
+    flat - Sky Light Updates Time: 9030000 Count: 2185 Avg: 4132.7231121281 Violations: 0 RecordId: 328827 ParentRecordId: 275219 TimerId: 25022 Ticks: 20 Peak: 1292300
+    flat - Block Light Updates Time: 6873300 Count: 2185 Avg: 3145.6750572082 Violations: 0 RecordId: 277819 ParentRecordId: 275219 TimerId: 25021 Ticks: 20 Peak: 924800
+    Send - AddActorPacket Time: 995800 Count: 62 Avg: 16061.290322581 Violations: 0 RecordId: 339369 ParentRecordId: 320550 TimerId: 303510 Ticks: 1 Peak: 995800
+    Encode - AddActorPacket Time: 724500 Count: 62 Avg: 11685.483870968 Violations: 0 RecordId: 215496 ParentRecordId: 339369 TimerId: 286100 Ticks: 1 Peak: 724500
+    Send - LevelEventPacket Time: 254300 Count: 62 Avg: 4101.6129032258 Violations: 0 RecordId: 191429 ParentRecordId: 348048 TimerId: 240691 Ticks: 1 Peak: 254300
+    Encode - LevelEventPacket Time: 254300 Count: 62 Avg: 4101.6129032258 Violations: 0 RecordId: 310581 ParentRecordId: 191429 TimerId: 253553 Ticks: 1 Peak: 254300
+    Send - AddItemActorPacket Time: 8290600 Count: 503 Avg: 16482.306163022 Violations: 0 RecordId: 309919 ParentRecordId: 320550 TimerId: 196060 Ticks: 20 Peak: 2118600
+    Encode - AddItemActorPacket Time: 5749400 Count: 503 Avg: 11430.218687873 Violations: 0 RecordId: 216673 ParentRecordId: 309919 TimerId: 197517 Ticks: 20 Peak: 1890300
+    Send - RemoveActorPacket Time: 927000 Count: 466 Avg: 1989.2703862661 Violations: 0 RecordId: 320074 ParentRecordId: 296362 TimerId: 273570 Ticks: 38 Peak: 77300
+    Encode - RemoveActorPacket Time: 927000 Count: 466 Avg: 1989.2703862661 Violations: 0 RecordId: 292955 ParentRecordId: 320074 TimerId: 217691 Ticks: 38 Peak: 77300
+    Broadcast Packets Time: 776700 Count: 92 Avg: 8442.3913043478 Violations: 0 RecordId: 287345 ParentRecordId: 267374 TimerId: 30 Ticks: 31 Peak: 72500
+    Send - ActorEventPacket Time: 228500 Count: 92 Avg: 2483.6956521739 Violations: 0 RecordId: 212960 ParentRecordId: 287345 TimerId: 185037 Ticks: 31 Peak: 20600
+    Encode - ActorEventPacket Time: 228500 Count: 92 Avg: 2483.6956521739 Violations: 0 RecordId: 312133 ParentRecordId: 212960 TimerId: 273579 Ticks: 31 Peak: 20600
+    Send - SetActorMotionPacket Time: 31800 Count: 4 Avg: 7950 Violations: 0 RecordId: 313132 ParentRecordId: 320550 TimerId: 247338 Ticks: 3 Peak: 13700
+    Encode - SetActorMotionPacket Time: 11800 Count: 4 Avg: 2950 Violations: 0 RecordId: 188397 ParentRecordId: 313132 TimerId: 247343 Ticks: 3 Peak: 5800
+    Send - InventoryContentPacket Time: 34700 Count: 1 Avg: 34700 Violations: 0 RecordId: 285275 ParentRecordId: 320550 TimerId: 30260 Ticks: 1 Peak: 34700
+    Encode - InventoryContentPacket Time: 22900 Count: 1 Avg: 22900 Violations: 0 RecordId: 219602 ParentRecordId: 285275 TimerId: 30277 Ticks: 1 Peak: 22900
+    Send - ActorEventPacket Time: 3600 Count: 1 Avg: 3600 Violations: 0 RecordId: 315393 ParentRecordId: 348048 TimerId: 185037 Ticks: 1 Peak: 3600
+    Encode - ActorEventPacket Time: 3600 Count: 1 Avg: 3600 Violations: 0 RecordId: 342758 ParentRecordId: 315393 TimerId: 273579 Ticks: 1 Peak: 3600
+    Player Network Send - Chunks Time: 19800 Count: 1 Avg: 19800 Violations: 0 RecordId: 321266 ParentRecordId: 193304 TimerId: 33 Ticks: 1 Peak: 19800
+    flat - Player Send Chunks Time: 19800 Count: 1 Avg: 19800 Violations: 0 RecordId: 291399 ParentRecordId: 321266 TimerId: 25029 Ticks: 1 Peak: 19800
+    Player Network Send - Encryption Time: 4800 Count: 1 Avg: 4800 Violations: 0 RecordId: 256487 ParentRecordId: 291399 TimerId: 24 Ticks: 1 Peak: 4800
+Events
+    DataPacketSendEvent Time: 3500 Count: 1 Avg: 3500 Violations: 0 RecordId: 296324 ParentRecordId: 309507 TimerId: 26528 Ticks: 1 Peak: 3500
+    DataPacketDecodeEvent Time: 3345500 Count: 1233 Avg: 2713.300892133 Violations: 0 RecordId: 158540 ParentRecordId: 195189 TimerId: 26516 Ticks: 1093 Peak: 34500
+    DataPacketReceiveEvent Time: 1325000 Count: 1233 Avg: 1074.6147607461 Violations: 0 RecordId: 281642 ParentRecordId: 195189 TimerId: 26515 Ticks: 1093 Peak: 14600
+    QueryRegenerateEvent Time: 184000 Count: 62 Avg: 2967.7419354839 Violations: 0 RecordId: 197678 ParentRecordId: 248499 TimerId: 21911 Ticks: 62 Peak: 6100
+    BlockSpreadEvent Time: 160600 Count: 53 Avg: 3030.1886792453 Violations: 0 RecordId: 290880 ParentRecordId: 224117 TimerId: 209362 Ticks: 51 Peak: 15100
+    DataPacketSendEvent Time: 293100 Count: 187 Avg: 1567.3796791444 Violations: 0 RecordId: 176746 ParentRecordId: 247504 TimerId: 26528 Ticks: 132 Peak: 4600
+    DataPacketSendEvent Time: 15900 Count: 6 Avg: 2650 Violations: 0 RecordId: 344884 ParentRecordId: 282271 TimerId: 26528 Ticks: 6 Peak: 3700
+    PlayerMoveEvent Time: 1751700 Count: 631 Avg: 2776.0697305864 Violations: 0 RecordId: 272574 ParentRecordId: 291731 TimerId: 149971 Ticks: 631 Peak: 37100
+    PlayerExhaustEvent Time: 478100 Count: 360 Avg: 1328.0555555556 Violations: 0 RecordId: 296229 ParentRecordId: 291731 TimerId: 200675 Ticks: 360 Peak: 26300
+    PlayerToggleSprintEvent Time: 12000 Count: 8 Avg: 1500 Violations: 0 RecordId: 177152 ParentRecordId: 299892 TimerId: 202697 Ticks: 8 Peak: 2100
+    DataPacketSendEvent Time: 15600 Count: 8 Avg: 1950 Violations: 0 RecordId: 244846 ParentRecordId: 309897 TimerId: 26528 Ticks: 8 Peak: 3600
+    DataPacketSendEvent Time: 20100 Count: 10 Avg: 2010 Violations: 0 RecordId: 314867 ParentRecordId: 230920 TimerId: 26528 Ticks: 10 Peak: 3300
+    DataPacketSendEvent Time: 12300 Count: 6 Avg: 2050 Violations: 0 RecordId: 307605 ParentRecordId: 218354 TimerId: 26528 Ticks: 6 Peak: 2600
+    PlayerPostChunkSendEvent Time: 298200 Count: 273 Avg: 1092.3076923077 Violations: 0 RecordId: 258180 ParentRecordId: 215464 TimerId: 26653 Ticks: 77 Peak: 10400
+    ChunkUnloadEvent Time: 353800 Count: 392 Avg: 902.55102040816 Violations: 0 RecordId: 326855 ParentRecordId: 276854 TimerId: 201588 Ticks: 59 Peak: 41800
+    DataPacketDecodeEvent Time: 2300 Count: 1 Avg: 2300 Violations: 0 RecordId: 259778 ParentRecordId: 291982 TimerId: 26516 Ticks: 1 Peak: 2300
+    DataPacketReceiveEvent Time: 1100 Count: 1 Avg: 1100 Violations: 0 RecordId: 213487 ParentRecordId: 291982 TimerId: 26515 Ticks: 1 Peak: 1100
+    PlayerCommandPreprocessEvent Time: 1200 Count: 1 Avg: 1200 Violations: 0 RecordId: 278069 ParentRecordId: 185607 TimerId: 190088 Ticks: 1 Peak: 1200
+    CommandEvent Time: 800 Count: 1 Avg: 800 Violations: 0 RecordId: 343039 ParentRecordId: 330702 TimerId: 190092 Ticks: 1 Peak: 800
+    DataPacketSendEvent Time: 1700 Count: 1 Avg: 1700 Violations: 0 RecordId: 238219 ParentRecordId: 168557 TimerId: 26528 Ticks: 1 Peak: 1700
+    DataPacketSendEvent Time: 2800 Count: 1 Avg: 2800 Violations: 0 RecordId: 328962 ParentRecordId: 232633 TimerId: 26528 Ticks: 1 Peak: 2800
+    DataPacketDecodeEvent Time: 79100 Count: 26 Avg: 3042.3076923077 Violations: 0 RecordId: 265375 ParentRecordId: 262160 TimerId: 26516 Ticks: 24 Peak: 6400
+    DataPacketReceiveEvent Time: 27700 Count: 26 Avg: 1065.3846153846 Violations: 0 RecordId: 190483 ParentRecordId: 262160 TimerId: 26515 Ticks: 24 Peak: 2100
+    DataPacketDecodeEvent Time: 139100 Count: 81 Avg: 1717.2839506173 Violations: 0 RecordId: 220780 ParentRecordId: 327851 TimerId: 26516 Ticks: 80 Peak: 4000
+    DataPacketReceiveEvent Time: 78900 Count: 81 Avg: 974.07407407407 Violations: 0 RecordId: 189716 ParentRecordId: 327851 TimerId: 26515 Ticks: 80 Peak: 2700
+    PlayerItemHeldEvent Time: 19900 Count: 16 Avg: 1243.75 Violations: 0 RecordId: 341749 ParentRecordId: 322624 TimerId: 161939 Ticks: 15 Peak: 2200
+    DataPacketDecodeEvent Time: 359400 Count: 130 Avg: 2764.6153846154 Violations: 0 RecordId: 299930 ParentRecordId: 291844 TimerId: 26516 Ticks: 130 Peak: 9600
+    DataPacketReceiveEvent Time: 146900 Count: 130 Avg: 1130 Violations: 0 RecordId: 331669 ParentRecordId: 291844 TimerId: 26515 Ticks: 130 Peak: 3800
+    DataPacketDecodeEvent Time: 41600 Count: 71 Avg: 585.91549295775 Violations: 0 RecordId: 292138 ParentRecordId: 308280 TimerId: 26516 Ticks: 66 Peak: 7600
+    DataPacketReceiveEvent Time: 33500 Count: 71 Avg: 471.83098591549 Violations: 0 RecordId: 204654 ParentRecordId: 308280 TimerId: 26515 Ticks: 66 Peak: 3800
+    DataPacketDecodeEvent Time: 112600 Count: 152 Avg: 740.78947368421 Violations: 0 RecordId: 290336 ParentRecordId: 249935 TimerId: 26516 Ticks: 75 Peak: 4800
+    DataPacketReceiveEvent Time: 106200 Count: 152 Avg: 698.68421052632 Violations: 0 RecordId: 209285 ParentRecordId: 249935 TimerId: 26515 Ticks: 75 Peak: 7500
+    PlayerInteractEvent Time: 309200 Count: 72 Avg: 4294.4444444444 Violations: 0 RecordId: 236388 ParentRecordId: 311799 TimerId: 220760 Ticks: 72 Peak: 18100
+    BlockPlaceEvent Time: 89400 Count: 64 Avg: 1396.875 Violations: 0 RecordId: 202022 ParentRecordId: 311799 TimerId: 220757 Ticks: 64 Peak: 3300
+    WorldSoundEvent Time: 90200 Count: 64 Avg: 1409.375 Violations: 0 RecordId: 214108 ParentRecordId: 311799 TimerId: 233567 Ticks: 64 Peak: 3500
+    PlayerItemHeldEvent Time: 94700 Count: 65 Avg: 1456.9230769231 Violations: 0 RecordId: 181691 ParentRecordId: 311799 TimerId: 161939 Ticks: 65 Peak: 4300
+    PlayerItemUseEvent Time: 74200 Count: 69 Avg: 1075.3623188406 Violations: 0 RecordId: 307641 ParentRecordId: 311799 TimerId: 190102 Ticks: 69 Peak: 2100
+    BlockUpdateEvent Time: 3245800 Count: 6740 Avg: 481.57270029674 Violations: 0 RecordId: 232711 ParentRecordId: 312680 TimerId: 217663 Ticks: 86 Peak: 393800
+    PlayerJumpEvent Time: 8400 Count: 5 Avg: 1680 Violations: 0 RecordId: 279500 ParentRecordId: 299892 TimerId: 186524 Ticks: 5 Peak: 3000
+    PlayerExhaustEvent Time: 8100 Count: 6 Avg: 1350 Violations: 0 RecordId: 288679 ParentRecordId: 299892 TimerId: 200675 Ticks: 6 Peak: 1700
+    DataPacketDecodeEvent Time: 21200 Count: 8 Avg: 2650 Violations: 0 RecordId: 278123 ParentRecordId: 227326 TimerId: 26516 Ticks: 7 Peak: 3700
+    DataPacketReceiveEvent Time: 11300 Count: 8 Avg: 1412.5 Violations: 0 RecordId: 283763 ParentRecordId: 227326 TimerId: 26515 Ticks: 7 Peak: 2700
+    DataPacketDecodeEvent Time: 4200 Count: 7 Avg: 600 Violations: 0 RecordId: 315178 ParentRecordId: 341538 TimerId: 26516 Ticks: 7 Peak: 1000
+    DataPacketReceiveEvent Time: 3500 Count: 7 Avg: 500 Violations: 0 RecordId: 189669 ParentRecordId: 341538 TimerId: 26515 Ticks: 7 Peak: 700
+    DataPacketSendEvent Time: 9900 Count: 9 Avg: 1100 Violations: 0 RecordId: 264775 ParentRecordId: 304962 TimerId: 26528 Ticks: 7 Peak: 2500
+    DataPacketSendEvent Time: 41600 Count: 84 Avg: 495.2380952381 Violations: 0 RecordId: 214134 ParentRecordId: 346844 TimerId: 26528 Ticks: 7 Peak: 7800
+    DataPacketSendEvent Time: 3500 Count: 1 Avg: 3500 Violations: 0 RecordId: 308698 ParentRecordId: 258442 TimerId: 26528 Ticks: 1 Peak: 3500
+    PlayerInteractEvent Time: 7400 Count: 1 Avg: 7400 Violations: 0 RecordId: 179315 ParentRecordId: 299892 TimerId: 220760 Ticks: 1 Peak: 7400
+    BlockBreakEvent Time: 32200 Count: 1 Avg: 32200 Violations: 0 RecordId: 276358 ParentRecordId: 299892 TimerId: 257713 Ticks: 1 Peak: 32200
+    DataPacketSendEvent Time: 1400 Count: 1 Avg: 1400 Violations: 0 RecordId: 210843 ParentRecordId: 327316 TimerId: 26528 Ticks: 1 Peak: 1400
+    WorldParticleEvent Time: 2000 Count: 1 Avg: 2000 Violations: 0 RecordId: 213971 ParentRecordId: 299892 TimerId: 257716 Ticks: 1 Peak: 2000
+    DataPacketSendEvent Time: 1200 Count: 1 Avg: 1200 Violations: 0 RecordId: 344473 ParentRecordId: 338381 TimerId: 26528 Ticks: 1 Peak: 1200
+    ItemSpawnEvent Time: 241500 Count: 498 Avg: 484.93975903614 Violations: 0 RecordId: 304026 ParentRecordId: 261956 TimerId: 248922 Ticks: 21 Peak: 35600
+    EntitySpawnEvent Time: 217900 Count: 561 Avg: 388.41354723708 Violations: 0 RecordId: 255926 ParentRecordId: 261956 TimerId: 26510 Ticks: 22 Peak: 40100
+    DataPacketSendEvent Time: 3060700 Count: 5089 Avg: 601.43446649636 Violations: 0 RecordId: 304234 ParentRecordId: 319867 TimerId: 26528 Ticks: 79 Peak: 159800
+    DataPacketSendEvent Time: 285100 Count: 509 Avg: 560.11787819253 Violations: 0 RecordId: 171117 ParentRecordId: 314362 TimerId: 26528 Ticks: 49 Peak: 35600
+    DataPacketSendEvent Time: 2900 Count: 1 Avg: 2900 Violations: 0 RecordId: 239879 ParentRecordId: 331806 TimerId: 26528 Ticks: 1 Peak: 2900
+    DataPacketSendEvent Time: 2300 Count: 1 Avg: 2300 Violations: 0 RecordId: 171166 ParentRecordId: 224535 TimerId: 26528 Ticks: 1 Peak: 2300
+    DataPacketSendEvent Time: 1203100 Count: 2094 Avg: 574.54632282713 Violations: 0 RecordId: 195572 ParentRecordId: 283031 TimerId: 26528 Ticks: 39 Peak: 77900
+    DataPacketSendEvent Time: 1011200 Count: 1343 Avg: 752.94117647059 Violations: 0 RecordId: 237747 ParentRecordId: 172301 TimerId: 26528 Ticks: 110 Peak: 167400
+    EntityDamageEvent Time: 2500 Count: 1 Avg: 2500 Violations: 0 RecordId: 310086 ParentRecordId: 320088 TimerId: 289500 Ticks: 1 Peak: 2500
+    PlayerExhaustEvent Time: 1500 Count: 1 Avg: 1500 Violations: 0 RecordId: 249109 ParentRecordId: 320088 TimerId: 200675 Ticks: 1 Peak: 1500
+    ChunkLoadEvent Time: 178300 Count: 263 Avg: 677.94676806084 Violations: 0 RecordId: 271527 ParentRecordId: 208884 TimerId: 131733 Ticks: 33 Peak: 9900
+    ChunkPopulateEvent Time: 70900 Count: 111 Avg: 638.73873873874 Violations: 0 RecordId: 240396 ParentRecordId: 208884 TimerId: 131507 Ticks: 33 Peak: 2800
+    PlayerPostChunkSendEvent Time: 110500 Count: 110 Avg: 1004.5454545455 Violations: 0 RecordId: 311210 ParentRecordId: 321202 TimerId: 26653 Ticks: 32 Peak: 6800
+    ExplosionPrimeEvent Time: 60100 Count: 63 Avg: 953.96825396825 Violations: 0 RecordId: 327347 ParentRecordId: 172301 TimerId: 243630 Ticks: 21 Peak: 5400
+    EntityExplodeEvent Time: 220300 Count: 63 Avg: 3496.8253968254 Violations: 0 RecordId: 305250 ParentRecordId: 172301 TimerId: 308170 Ticks: 21 Peak: 22500
+    EntityDamageByEntityEvent Time: 370400 Count: 861 Avg: 430.19744483159 Violations: 0 RecordId: 325383 ParentRecordId: 172301 TimerId: 202521 Ticks: 20 Peak: 80900
+    EntityMotionEvent Time: 471000 Count: 1082 Avg: 435.30499075786 Violations: 0 RecordId: 302629 ParentRecordId: 172301 TimerId: 308167 Ticks: 20 Peak: 120900
+    DataPacketSendEvent Time: 439700 Count: 1087 Avg: 404.50781968721 Violations: 0 RecordId: 320046 ParentRecordId: 348048 TimerId: 26528 Ticks: 20 Peak: 108700
+    DataPacketSendEvent Time: 40500 Count: 62 Avg: 653.22580645161 Violations: 0 RecordId: 228865 ParentRecordId: 339369 TimerId: 26528 Ticks: 1 Peak: 40500
+    DataPacketSendEvent Time: 362300 Count: 503 Avg: 720.27833001988 Violations: 0 RecordId: 179907 ParentRecordId: 309919 TimerId: 26528 Ticks: 20 Peak: 54200
+    WorldParticleEvent Time: 71400 Count: 63 Avg: 1133.3333333333 Violations: 0 RecordId: 338181 ParentRecordId: 172301 TimerId: 257716 Ticks: 21 Peak: 7000
+    WorldSoundEvent Time: 65100 Count: 63 Avg: 1033.3333333333 Violations: 0 RecordId: 318778 ParentRecordId: 172301 TimerId: 233567 Ticks: 21 Peak: 7300
+    EntityDespawnEvent Time: 292200 Count: 466 Avg: 627.03862660944 Violations: 0 RecordId: 313219 ParentRecordId: 261956 TimerId: 189758 Ticks: 38 Peak: 31800
+    DataPacketSendEvent Time: 221100 Count: 466 Avg: 474.4635193133 Violations: 0 RecordId: 274806 ParentRecordId: 261956 TimerId: 26528 Ticks: 38 Peak: 26900
+    ItemMergeEvent Time: 85400 Count: 92 Avg: 928.26086956522 Violations: 0 RecordId: 282462 ParentRecordId: 314362 TimerId: 234142 Ticks: 31 Peak: 7300
+    DataPacketSendEvent Time: 44000 Count: 92 Avg: 478.26086956522 Violations: 0 RecordId: 266288 ParentRecordId: 287345 TimerId: 26528 Ticks: 31 Peak: 4300
+    DataPacketSendEvent Time: 2800 Count: 4 Avg: 700 Violations: 0 RecordId: 195988 ParentRecordId: 313132 TimerId: 26528 Ticks: 3 Peak: 1400
+    DataPacketSendEvent Time: 1900 Count: 1 Avg: 1900 Violations: 0 RecordId: 296672 ParentRecordId: 285275 TimerId: 26528 Ticks: 1 Peak: 1900
+    PlayerExhaustEvent Time: 1700 Count: 1 Avg: 1700 Violations: 0 RecordId: 275463 ParentRecordId: 172301 TimerId: 200675 Ticks: 1 Peak: 1700
+    PlayerPostChunkSendEvent Time: 1000 Count: 1 Avg: 1000 Violations: 0 RecordId: 295265 ParentRecordId: 291399 TimerId: 26653 Ticks: 1 Peak: 1000
+    CommandEvent Time: 4200 Count: 1 Avg: 4200 Violations: 0 RecordId: 248862 ParentRecordId: 226553 TimerId: 190092 Ticks: 0 Peak: 0
+HardnessCalculator v0.0.1
+    dktapps\HardnessCalculator\Main->onPlayerInteract(PlayerInteractEvent) Time: 93500 Count: 72 Avg: 1298.6111111111 Violations: 0 RecordId: 300623 ParentRecordId: 236388 TimerId: 25065 Ticks: 72 Peak: 12400
+    dktapps\HardnessCalculator\Main->onPlayerInteract(PlayerInteractEvent) Time: 3100 Count: 1 Avg: 3100 Violations: 0 RecordId: 327842 ParentRecordId: 179315 TimerId: 25065 Ticks: 1 Peak: 3100
+    dktapps\HardnessCalculator\Main->onBlockBreak(BlockBreakEvent) Time: 29000 Count: 1 Avg: 29000 Violations: 0 RecordId: 306263 ParentRecordId: 276358 TimerId: 25073 Ticks: 1 Peak: 29000
+test v0.0.1
+    Task: closure@plugins/test/src/Main#L39(interval:1200) Time: 51900 Count: 1 Avg: 51900 Violations: 0 RecordId: 300844 ParentRecordId: 346314 TimerId: 25040 Ticks: 1 Peak: 51900
+# Version v1.19.70
+# PocketMine-MP 4.18.4+dev
+# Entities 265
+# LivingEntities 1
+# FormatVersion 1
+Sample time 61662563000 (61.662563s)

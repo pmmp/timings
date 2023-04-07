@@ -1,0 +1,186 @@
+Minecraft
+    ** Server Mid-Tick Processing Time: 1783246100 Count: 5777 Avg: 308680.30119439 Violations: 22
+    Full Server Tick Time: 6167470700 Count: 7491 Avg: 823317.40755573 Violations: 25
+    ** Server Tick Update Cycle Time: 4384224600 Count: 1714 Avg: 2557890.6651109 Violations: 3
+    Scheduler Time: 34247300 Count: 1714 Avg: 19980.921820303 Violations: 0
+    ** Scheduler - Async Tasks Time: 30439300 Count: 1714 Avg: 17759.218203034 Violations: 0
+    LSHK4 - World Tick Time: 1349008200 Count: 1714 Avg: 787052.62543757 Violations: 3
+    ** LSHK4 - Scheduled Block Updates Time: 72432300 Count: 1714 Avg: 42259.218203034 Violations: 0
+    ** LSHK4 - Tick Entities Time: 1083215300 Count: 1714 Avg: 631980.9218203 Violations: 2
+    ** Entity Tick Time: 1081821400 Count: 1714 Avg: 631167.67794632 Violations: 2
+    ** LSHK4 - Random Chunk Updates Time: 142549800 Count: 1714 Avg: 83167.911318553 Violations: 0
+    Connection Handler Time: 4589103000 Count: 19858 Avg: 231095.93111089 Violations: 22
+    Memory Manager Time: 1366400 Count: 1714 Avg: 797.19953325554 Violations: 0
+    Server Command Time: 30503900 Count: 1714 Avg: 17796.90781797 Violations: 0
+    Console Title Tick Time: 10289500 Count: 86 Avg: 119645.34883721 Violations: 0
+    Player Network Receive Time: 687155600 Count: 1628 Avg: 422085.74938575 Violations: 7
+    ** Receive - RequestNetworkSettingsPacket Time: 2799900 Count: 1 Avg: 2799900 Violations: 0
+    ** Decode - RequestNetworkSettingsPacket Time: 1239600 Count: 1 Avg: 1239600 Violations: 0
+    ** Handler - RequestNetworkSettingsPacket Time: 1160700 Count: 1 Avg: 1160700 Violations: 0
+    ** Send - NetworkSettingsPacket Time: 164300 Count: 1 Avg: 164300 Violations: 0
+    Player Network Send Time: 3035754700 Count: 19878 Avg: 152719.3228695 Violations: 0
+    ** Encode - NetworkSettingsPacket Time: 7900 Count: 1 Avg: 7900 Violations: 0
+    ** Player Network Receive - Decompression Time: 10352800 Count: 1628 Avg: 6359.2137592138 Violations: 0
+    ** Receive - LoginPacket Time: 7293000 Count: 1 Avg: 7293000 Violations: 0
+    ** Decode - LoginPacket Time: 1872400 Count: 1 Avg: 1872400 Violations: 0
+    ** Handler - LoginPacket Time: 5383400 Count: 1 Avg: 5383400 Violations: 0
+    ** Player Network Send - Inventory Sync Time: 4005700 Count: 1612 Avg: 2484.9255583127 Violations: 0
+    Player Data Load Time: 12565400 Count: 1 Avg: 12565400 Violations: 0
+    ** Send - ServerToClientHandshakePacket Time: 98600 Count: 1 Avg: 98600 Violations: 0
+    ** Encode - ServerToClientHandshakePacket Time: 5300 Count: 1 Avg: 5300 Violations: 0
+    ** Player Network Send - Compression (Session Buffer) Time: 15708800 Count: 316 Avg: 49711.392405063 Violations: 0
+    ** Player Network Send - Compression Time: 15708800 Count: 316 Avg: 49711.392405063 Violations: 0
+    ** Player Network Receive - Decryption Time: 41279600 Count: 1627 Avg: 25371.604179471 Violations: 0
+    ** Receive - ClientToServerHandshakePacket Time: 1064000 Count: 1 Avg: 1064000 Violations: 0
+    ** Decode - ClientToServerHandshakePacket Time: 7700 Count: 1 Avg: 7700 Violations: 0
+    ** Handler - ClientToServerHandshakePacket Time: 1040400 Count: 1 Avg: 1040400 Violations: 0
+    ** Send - PlayStatusPacket Time: 24100 Count: 2 Avg: 12050 Violations: 0
+    ** Encode - PlayStatusPacket Time: 8100 Count: 2 Avg: 4050 Violations: 0
+    ** Send - ResourcePacksInfoPacket Time: 18000 Count: 1 Avg: 18000 Violations: 0
+    ** Encode - ResourcePacksInfoPacket Time: 6100 Count: 1 Avg: 6100 Violations: 0
+    ** Player Network Send - Encryption Time: 49642800 Count: 5567 Avg: 8917.3342913598 Violations: 0
+    ** Receive - ClientCacheStatusPacket Time: 239900 Count: 1 Avg: 239900 Violations: 0
+    ** Decode - ClientCacheStatusPacket Time: 11300 Count: 1 Avg: 11300 Violations: 0
+    ** Handler - ClientCacheStatusPacket Time: 206600 Count: 1 Avg: 206600 Violations: 0
+    ** Receive - ResourcePackClientResponsePacket Time: 395745900 Count: 2 Avg: 197872950 Violations: 7
+    ** Decode - ResourcePackClientResponsePacket Time: 30900 Count: 2 Avg: 15450 Violations: 0
+    ** Handler - ResourcePackClientResponsePacket Time: 395670700 Count: 2 Avg: 197835350 Violations: 7
+    ** Send - ResourcePackStackPacket Time: 52900 Count: 1 Avg: 52900 Violations: 0
+    ** Encode - ResourcePackStackPacket Time: 23100 Count: 1 Avg: 23100 Violations: 0
+    Permissible Calculation Time: 154100 Count: 1 Avg: 154100 Violations: 0
+    ** Permissible Calculation - Diff Time: 40600 Count: 1 Avg: 40600 Violations: 0
+    ** Permissible Calculation - Callbacks Time: 5600 Count: 1 Avg: 5600 Violations: 0
+    ** LSHK4 - Chunk Load Time: 2245485700 Count: 5252 Avg: 427548.68621478 Violations: 0
+    World Load Time: 2245485700 Count: 5252 Avg: 427548.68621478 Violations: 0
+    ** LSHK4 - Chunk Load - Data Time: 2158100300 Count: 5252 Avg: 410910.18659558 Violations: 0
+    ** LSHK4 - Chunk Load - Fix Invalid Blocks Time: 36655400 Count: 5252 Avg: 6979.3221629855 Violations: 0
+    ** Send - StartGamePacket Time: 13811500 Count: 1 Avg: 13811500 Violations: 0
+    ** Encode - StartGamePacket Time: 13793400 Count: 1 Avg: 13793400 Violations: 0
+    ** Send - AvailableActorIdentifiersPacket Time: 548700 Count: 1 Avg: 548700 Violations: 0
+    ** Encode - AvailableActorIdentifiersPacket Time: 530000 Count: 1 Avg: 530000 Violations: 0
+    ** Send - BiomeDefinitionListPacket Time: 1007000 Count: 1 Avg: 1007000 Violations: 0
+    ** Encode - BiomeDefinitionListPacket Time: 991200 Count: 1 Avg: 991200 Violations: 0
+    ** Encode - UpdateAttributesPacket Time: 67300 Count: 6 Avg: 11216.666666667 Violations: 0
+    ** Send - UpdateAttributesPacket Time: 67300 Count: 6 Avg: 11216.666666667 Violations: 0
+    ** Send - AvailableCommandsPacket Time: 120900 Count: 1 Avg: 120900 Violations: 0
+    ** Encode - AvailableCommandsPacket Time: 111300 Count: 1 Avg: 111300 Violations: 0
+    ** Send - UpdateAbilitiesPacket Time: 143800 Count: 1 Avg: 143800 Violations: 0
+    ** Encode - UpdateAbilitiesPacket Time: 132800 Count: 1 Avg: 132800 Violations: 0
+    ** Send - UpdateAdventureSettingsPacket Time: 7600 Count: 1 Avg: 7600 Violations: 0
+    ** Encode - UpdateAdventureSettingsPacket Time: 2400 Count: 1 Avg: 2400 Violations: 0
+    ** Encode - SetActorDataPacket Time: 7922900 Count: 1754 Avg: 4517.0467502851 Violations: 0
+    ** Send - SetActorDataPacket Time: 7922900 Count: 1754 Avg: 4517.0467502851 Violations: 0
+    ** Send - InventoryContentPacket Time: 68700 Count: 3 Avg: 22900 Violations: 0
+    ** Encode - InventoryContentPacket Time: 49800 Count: 3 Avg: 16600 Violations: 0
+    ** Send - InventorySlotPacket Time: 116100 Count: 9 Avg: 12900 Violations: 0
+    ** Encode - InventorySlotPacket Time: 59800 Count: 9 Avg: 6644.4444444444 Violations: 0
+    ** Send - MobEquipmentPacket Time: 5500 Count: 1 Avg: 5500 Violations: 0
+    ** Encode - MobEquipmentPacket Time: 2900 Count: 1 Avg: 2900 Violations: 0
+    ** Send - CreativeContentPacket Time: 2465000 Count: 1 Avg: 2465000 Violations: 0
+    ** Encode - CreativeContentPacket Time: 2452500 Count: 1 Avg: 2452500 Violations: 0
+    ** Build CraftingDataPacket Cache Time: 28395800 Count: 1 Avg: 28395800 Violations: 0
+    ** Send - CraftingDataPacket Time: 9251400 Count: 1 Avg: 9251400 Violations: 0
+    ** Encode - CraftingDataPacket Time: 9235900 Count: 1 Avg: 9235900 Violations: 0
+    ** Send - PlayerListPacket Time: 32900 Count: 1 Avg: 32900 Violations: 0
+    ** Encode - PlayerListPacket Time: 19800 Count: 1 Avg: 19800 Violations: 0
+    ** Entity Tick - Player Time: 170824500 Count: 1602 Avg: 106632.02247191 Violations: 0
+    ** LSHK4 - Random Chunk Updates - Chunk Selection Time: 44529000 Count: 1602 Avg: 27795.880149813 Violations: 0
+    ** Send - SetTimePacket Time: 188900 Count: 9 Avg: 20988.888888889 Violations: 0
+    ** Encode - SetTimePacket Time: 60100 Count: 9 Avg: 6677.7777777778 Violations: 0
+    ** Receive - RequestChunkRadiusPacket Time: 433000 Count: 1 Avg: 433000 Violations: 0
+    ** Decode - RequestChunkRadiusPacket Time: 8500 Count: 1 Avg: 8500 Violations: 0
+    ** Handler - RequestChunkRadiusPacket Time: 412600 Count: 1 Avg: 412600 Violations: 0
+    ** Send - ChunkRadiusUpdatedPacket Time: 13800 Count: 1 Avg: 13800 Violations: 0
+    ** Encode - ChunkRadiusUpdatedPacket Time: 4800 Count: 1 Avg: 4800 Violations: 0
+    ** Receive - TickSyncPacket Time: 89900 Count: 1 Avg: 89900 Violations: 0
+    ** Decode - TickSyncPacket Time: 8200 Count: 1 Avg: 8200 Violations: 0
+    ** Handler - TickSyncPacket Time: 72000 Count: 1 Avg: 72000 Violations: 0
+    ** Receive - PlayerAuthInputPacket Time: 131765700 Count: 1575 Avg: 83660.761904762 Violations: 0
+    ** Decode - PlayerAuthInputPacket Time: 37728200 Count: 1575 Avg: 23954.412698413 Violations: 0
+    ** Handler - PlayerAuthInputPacket Time: 76487300 Count: 1575 Avg: 48563.365079365 Violations: 0
+    Player Order Chunks Time: 95102800 Count: 45 Avg: 2113395.5555556 Violations: 0
+    ** Send - NetworkChunkPublisherUpdatePacket Time: 732800 Count: 39 Avg: 18789.743589744 Violations: 0
+    ** Encode - NetworkChunkPublisherUpdatePacket Time: 312900 Count: 39 Avg: 8023.0769230769 Violations: 0
+    ** Player Network Send - Chunks Time: 2887490800 Count: 6565 Avg: 439831.04341203 Violations: 0
+    ** LSHK4 - Player Send Chunk Prepare Time: 275331100 Count: 5252 Avg: 52424.047981721 Violations: 0
+    ** LSHK4 - Player Send Chunks Time: 136094500 Count: 5252 Avg: 25912.890327494 Violations: 0
+    ** Receive - InteractPacket Time: 599900 Count: 13 Avg: 46146.153846154 Violations: 0
+    ** Decode - InteractPacket Time: 199900 Count: 13 Avg: 15376.923076923 Violations: 0
+    ** Handler - InteractPacket Time: 213400 Count: 13 Avg: 16415.384615385 Violations: 0
+    ** Receive - MobEquipmentPacket Time: 2517800 Count: 75 Avg: 33570.666666667 Violations: 0
+    ** Decode - MobEquipmentPacket Time: 1353700 Count: 75 Avg: 18049.333333333 Violations: 0
+    ** Handler - MobEquipmentPacket Time: 585400 Count: 75 Avg: 7805.3333333333 Violations: 0
+    ** Receive - MovePlayerPacket Time: 388900 Count: 21 Avg: 18519.047619048 Violations: 0
+    ** Decode - MovePlayerPacket Time: 171500 Count: 21 Avg: 8166.6666666667 Violations: 0
+    ** Handler - MovePlayerPacket Time: 123200 Count: 21 Avg: 5866.6666666667 Violations: 0
+    ** LSHK4 - Chunk Load - TileEntities Time: 606800 Count: 4 Avg: 151700 Violations: 0
+    ** Receive - SetLocalPlayerAsInitializedPacket Time: 2309500 Count: 1 Avg: 2309500 Violations: 0
+    ** Decode - SetLocalPlayerAsInitializedPacket Time: 9200 Count: 1 Avg: 9200 Violations: 0
+    ** Handler - SetLocalPlayerAsInitializedPacket Time: 2285800 Count: 1 Avg: 2285800 Violations: 0
+    ** Send - TextPacket Time: 84800 Count: 6 Avg: 14133.333333333 Violations: 0
+    ** Encode - TextPacket Time: 40700 Count: 6 Avg: 6783.3333333333 Violations: 0
+    Player Movement Time: 134143100 Count: 2344 Avg: 57228.284982935 Violations: 0
+    Plugin: BlockSniper v4.0.0 Event: BlockHorizons\BlockSniper\listener\BrushListener->onMove(PlayerMoveEvent) Time: 51334000 Count: 736 Avg: 69747.282608696 Violations: 0
+    ** Broadcast Packets Time: 65107800 Count: 8375 Avg: 7774.0656716418 Violations: 0
+    ** Entity Base Tick Time: 659350200 Count: 16321 Avg: 40398.88487225 Violations: 1
+    ** Entity Base Tick - Living Time: 55672600 Count: 1557 Avg: 35756.326268465 Violations: 0
+    ** checkNearEntities Time: 12052600 Count: 1557 Avg: 7740.9120102762 Violations: 0
+    ** Receive - CommandRequestPacket Time: 8651300 Count: 3 Avg: 2883766.6666667 Violations: 0
+    ** Decode - CommandRequestPacket Time: 7177700 Count: 4 Avg: 1794425 Violations: 0
+    ** Handler - CommandRequestPacket Time: 1456600 Count: 3 Avg: 485533.33333333 Violations: 0
+    ** Player Command Time: 900900 Count: 3 Avg: 300300 Violations: 0
+    ** Command: time Time: 276700 Count: 1 Avg: 276700 Violations: 0
+    ** Command: give Time: 576800 Count: 2 Avg: 288400 Violations: 0
+    Plugin: BlockSniper v4.0.0 Event: BlockHorizons\BlockSniper\listener\BrushListener->onItemHeld(PlayerItemHeldEvent) Time: 1106700 Count: 74 Avg: 14955.405405405 Violations: 0
+    ** Entity Movement Time: 192448800 Count: 5469 Avg: 35189.029072957 Violations: 0
+    ** Entity Movement - Collision Checks Time: 117588300 Count: 5469 Avg: 21500.877674163 Violations: 0
+    ** Encode - LevelSoundEventPacket Time: 1057200 Count: 157 Avg: 6733.7579617834 Violations: 0
+    ** Send - LevelSoundEventPacket Time: 1057200 Count: 157 Avg: 6733.7579617834 Violations: 0
+    ** Receive - LevelSoundEventPacket Time: 509600 Count: 21 Avg: 24266.666666667 Violations: 0
+    ** Decode - LevelSoundEventPacket Time: 286000 Count: 21 Avg: 13619.047619048 Violations: 0
+    ** Handler - LevelSoundEventPacket Time: 26600 Count: 21 Avg: 1266.6666666667 Violations: 0
+    ** Receive - PlayerActionPacket Time: 3981700 Count: 134 Avg: 29714.179104478 Violations: 0
+    ** Decode - PlayerActionPacket Time: 1607500 Count: 134 Avg: 11996.268656716 Violations: 0
+    ** Handler - PlayerActionPacket Time: 844100 Count: 134 Avg: 6299.2537313433 Violations: 0
+    ** Receive - AnimatePacket Time: 640800 Count: 76 Avg: 8431.5789473684 Violations: 0
+    ** Decode - AnimatePacket Time: 254800 Count: 76 Avg: 3352.6315789474 Violations: 0
+    ** Handler - AnimatePacket Time: 60400 Count: 76 Avg: 794.73684210526 Violations: 0
+    ** Receive - InventoryTransactionPacket Time: 44685400 Count: 133 Avg: 335980.45112782 Violations: 0
+    ** Decode - InventoryTransactionPacket Time: 16807900 Count: 133 Avg: 126375.18796992 Violations: 0
+    ** Handler - InventoryTransactionPacket Time: 27142300 Count: 133 Avg: 204077.44360902 Violations: 0
+    Plugin: HardnessCalculator v0.0.1 Event: dktapps\HardnessCalculator\Main->onPlayerInteract(PlayerInteractEvent) Time: 82000 Count: 69 Avg: 1188.4057971014 Violations: 0
+    Plugin: BlockSniper v4.0.0 Event: BlockHorizons\BlockSniper\listener\BrushListener->onBlockClick(PlayerInteractEvent) Time: 1933100 Count: 69 Avg: 28015.942028986 Violations: 0
+    ** LSHK4 - setBlock Time: 48927700 Count: 3071 Avg: 15932.171930967 Violations: 0
+    ** LSHK4 - Sky Light Updates Time: 25483300 Count: 3150 Avg: 8089.9365079365 Violations: 0
+    ** LSHK4 - Block Light Updates Time: 11272300 Count: 3150 Avg: 3578.5079365079 Violations: 0
+    Plugin: AimTP v0.1.0 Event: dktapps\AimTP\Main->onItemUse(PlayerItemUseEvent) Time: 256800 Count: 66 Avg: 3890.9090909091 Violations: 0
+    Plugin: BlockSniper v4.0.0 Event: BlockHorizons\BlockSniper\listener\BrushListener->brush(PlayerItemUseEvent) Time: 957100 Count: 66 Avg: 14501.515151515 Violations: 0
+    ** Encode - UpdateBlockPacket Time: 4553000 Count: 3071 Avg: 1482.5789645067 Violations: 0
+    ** Send - UpdateBlockPacket Time: 4553000 Count: 3071 Avg: 1482.5789645067 Violations: 0
+    Plugin: AimTP v0.1.0 Event: dktapps\AimTP\Main->onBreakBlock(BlockBreakEvent) Time: 24900 Count: 2 Avg: 12450 Violations: 0
+    Plugin: HardnessCalculator v0.0.1 Event: dktapps\HardnessCalculator\Main->onBlockBreak(BlockBreakEvent) Time: 94000 Count: 2 Avg: 47000 Violations: 0
+    Plugin: BlockSniper v4.0.0 Event: BlockHorizons\BlockSniper\listener\BrushListener->onBlockBreak(BlockBreakEvent) Time: 43800 Count: 2 Avg: 21900 Violations: 0
+    ** Send - AddItemActorPacket Time: 7207300 Count: 561 Avg: 12847.237076649 Violations: 0
+    ** Encode - AddItemActorPacket Time: 5063600 Count: 561 Avg: 9026.0249554367 Violations: 0
+    ** Entity Tick - ItemEntity Time: 245485400 Count: 13395 Avg: 18326.64427025 Violations: 0
+    ** Encode - MoveActorAbsolutePacket Time: 10629200 Count: 3903 Avg: 2723.3410197284 Violations: 0
+    ** Send - MoveActorAbsolutePacket Time: 10629200 Count: 3903 Avg: 2723.3410197284 Violations: 0
+    ** Encode - SetActorMotionPacket Time: 4958400 Count: 3359 Avg: 1476.153617148 Violations: 0
+    ** Send - SetActorMotionPacket Time: 4958400 Count: 3359 Avg: 1476.153617148 Violations: 0
+    ** Entity Base Tick - ItemEntity Time: 36490200 Count: 13395 Avg: 2724.1657334826 Violations: 0
+    ** Encode - LevelEventPacket Time: 277000 Count: 134 Avg: 2067.1641791045 Violations: 0
+    ** Send - LevelEventPacket Time: 277000 Count: 134 Avg: 2067.1641791045 Violations: 0
+    ** Encode - TakeItemActorPacket Time: 17800 Count: 2 Avg: 8900 Violations: 0
+    ** Send - TakeItemActorPacket Time: 17800 Count: 2 Avg: 8900 Violations: 0
+    ** Encode - RemoveActorPacket Time: 803300 Count: 550 Avg: 1460.5454545455 Violations: 0
+    ** Send - RemoveActorPacket Time: 803300 Count: 550 Avg: 1460.5454545455 Violations: 0
+    ** Send - AddActorPacket Time: 877300 Count: 64 Avg: 13707.8125 Violations: 0
+    ** Encode - AddActorPacket Time: 668900 Count: 64 Avg: 10451.5625 Violations: 0
+    ** Entity Tick - PrimedTNT Time: 638778600 Count: 1369 Avg: 466602.33747261 Violations: 1
+    ** Encode - ActorEventPacket Time: 155400 Count: 72 Avg: 2158.3333333333 Violations: 0
+    ** Send - ActorEventPacket Time: 155400 Count: 72 Avg: 2158.3333333333 Violations: 0
+# Version v1.19.70
+# PocketMine-MP 4.18.4+dev
+# Entities 76
+# LivingEntities 1
+Sample time 85733248100 (85.7332481s)

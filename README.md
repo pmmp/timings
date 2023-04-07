@@ -32,7 +32,7 @@ This timings viewer has significant improvements compared to aikar/timings v1, i
 ## Why not use Timings v2?
 
 Due to lack of any kind of specification or reference implementation for Timings v2, implementing Timings v2 did not make much sense.
-In addition, the Timings v2 format is specifically described as "proprietary" and "subject to change without notice", which did not give the PMMP Team a lot of motivation to attempt to implement it ([source](https://github.com/aikar/timings#timings-file-format).
+In addition, the Timings v2 format is specifically described as "proprietary" and "subject to change without notice", which did not give the PMMP Team a lot of motivation to attempt to implement it ([source](https://github.com/aikar/timings#timings-file-format)).
 
 Timings v1 can be altered to support being displayed as a tree with minimal changes to the timings format, allowing us to develop a version of Timings which accepts both legacy v1 reports and newer reports with tree metadata. Newer reports can also be displayed by a legacy v1 viewer with no changes.
 

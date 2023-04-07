@@ -45,5 +45,5 @@ The report sample time **MUST** be provided on the **last line** of the report. 
 The time is provided in nanoseconds, followed by the time formatted in seconds in brackets.
 
 ### Example reports
-- [PocketMine-MP 4.19.0+dev](/docs/pm-tree-initial.txt)
-- [PocketMine-MP 4.18.3](/docs/pm-legacy.txt)
+- [PocketMine-MP 4.19.0+dev (tree enabled)](/docs/pm-tree-initial.txt)
+- [PocketMine-MP 4.18.3 (legacy)](/docs/pm-legacy.txt)

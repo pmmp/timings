@@ -26,6 +26,9 @@ function showChildren(element) {
                 if (children == 1) { //this element is an only child, expand its children too
                     children = $(this).data('children');
                     depth++;
+                    if ($(this).hasClass('hidden-children')) {
+                        $(this).click(hideMyChildren).addClass('visible-children').removeClass('hidden-children');
+                    }
                 }
                 $(this).show();
             }

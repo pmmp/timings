@@ -36,8 +36,6 @@ The following metadata fields are used by the viewer:
 |:-----------------|:------------------------------------------------------------------------------------------------|
 | `Version`        | Minecraft version supported by the server which generated this report                           |
 | `PocketMine-MP`  | PocketMine-MP version which generated this report                                               |
-| `Entities`       | Number of entities on the server when the report was generated, including players               |
-| `LivingEntities` | Number of living entities (mobs) on the server when the report was generated, including players |
 
 ### Sample time
 The report sample time **MUST** be provided on the **last line** of the report. This is used to calculate server load totals and TPS.

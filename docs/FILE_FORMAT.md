@@ -32,10 +32,11 @@ Metadata lines should be placed on a new line starting with a `#`.
 
 The following metadata fields are used by the viewer:
 
-| Field            | Description                                                                                     |
-|:-----------------|:------------------------------------------------------------------------------------------------|
-| `Version`        | Minecraft version supported by the server which generated this report                           |
-| `PocketMine-MP`  | PocketMine-MP version which generated this report                                               |
+| Field            | Description                                                                                                            |
+|:-----------------|:-----------------------------------------------------------------------------------------------------------------------|
+| `Version`        | Minecraft version supported by the server which generated this report                                                  |
+| `PocketMine-MP`  | PocketMine-MP version which generated this report                                                                      |
+| `FormatVersion`  | Format version of this report (currently `1`. If omitted, the report will be treated as a legacy Aikar timings report. |
 
 ### Sample time
 The report sample time **MUST** be provided on the **last line** of the report. This is used to calculate server load totals and TPS.

@@ -102,6 +102,13 @@ class Parser{
 				if(isset($groups[$result->group][$result->name])){
 					$groups[$result->group][$result->name]->count += $result->count;
 					$groups[$result->group][$result->name]->timeNs += $result->timeNs;
+					$groups[$result->group][$result->name]->violations += $result->violations;
+
+					//different records may have been active on the same ticks, so we can't just add their ticksActive
+					//together - force the table display to use total time / count instead
+					//we also can't add or max peak time - it's across the span of a tick, not a single activation
+					$groups[$result->group][$result->name]->ticksActive = null;
+					$groups[$result->group][$result->name]->peakTime = null;
 				}else{
 					$groups[$result->group][$result->name] = clone $result;
 				}

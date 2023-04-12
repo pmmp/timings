@@ -13,6 +13,7 @@ class TimingsReport{
 	 * @phpstan-param array<string, float>                       $groupTotals
 	 */
 	public function __construct(
+		public int $formatVersion,
 		public ?array $tree,
 		public array $groups,
 		public array $groupTotals,

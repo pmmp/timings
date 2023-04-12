@@ -151,6 +151,7 @@ class Parser{
 		$sampleTimeNs = 0;
 		$serverVersion = "unknown";
 		$minecraftVersion = "unknown";
+		$formatVersion = 0;
 
 		if(preg_match('/(*ANYCRLF)^Sample time (\d+) \(([\d.]+s)\)$/mi', $reportData, $matches)){
 			$sampleTimeNs = (int) $matches[1];
@@ -160,6 +161,9 @@ class Parser{
 		}
 		if(preg_match('/^# Version (.*)$/mi', $reportData, $matches)){
 			$minecraftVersion = $matches[1];
+		}
+		if(preg_match('/^# FormatVersion (\d+)$/mi', $reportData, $matches)){
+			$formatVersion = (int) $matches[1];
 		}
 
 		$fullServerTick = null;
@@ -187,6 +191,6 @@ class Parser{
 		$entityTicks = $entityTicks?->count ?? 0;
 		$playerTicks = $playerTicks?->count ?? 0;
 
-		return new TimingsReport($roots, $groups, $groupTotals, $serverVersion, $minecraftVersion, $sampleTimeNs, $activeTimeNs, $numTicks, $entityTicks, $playerTicks);
+		return new TimingsReport($formatVersion, $roots, $groups, $groupTotals, $serverVersion, $minecraftVersion, $sampleTimeNs, $activeTimeNs, $numTicks, $entityTicks, $playerTicks);
 	}
 }

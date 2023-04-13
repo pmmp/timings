@@ -34,6 +34,10 @@ class Timings{
 
 		if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_GET['upload']) && $_GET['upload'] === 'true'){
 			$storage = new MySqlStorageService($mysqlHost, $mysqlDatabase, $mysqlUser, $mysqlPassword);
+			if(!isset($_POST['data'])){
+				http_response_code(400);
+				die();
+			}
 			$id = $storage->set($_POST['data']);
 			if(!empty($_POST['browser']) && $_POST['browser'] !== 'true'){
 				header('Content-Type: application/json');

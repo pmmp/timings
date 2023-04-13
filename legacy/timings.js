@@ -14,7 +14,7 @@ function showMyChildren() {
 function showChildren(element) {
     $(element).show()
     if ($(element).hasClass('hidden-children')) {
-        $(element).click(hideMyChildren).addClass('visible-children').removeClass('hidden-children');
+        $(element).off("click").click(hideMyChildren).addClass('visible-children').removeClass('hidden-children');
         var depth = $(element).data('depth');
         var children = $(element).data('children');
         $(element).nextUntil(
@@ -27,7 +27,7 @@ function showChildren(element) {
                     children = $(this).data('children');
                     depth++;
                     if ($(this).hasClass('hidden-children')) {
-                        $(this).click(hideMyChildren).addClass('visible-children').removeClass('hidden-children');
+                        $(this).off("click").click(hideMyChildren).addClass('visible-children').removeClass('hidden-children');
                     }
                 }
                 $(this).show();
@@ -43,13 +43,13 @@ function hideMyChildren() {
 function hideChildren(element) {
     if ($(element).hasClass('visible-children')) {
         var depth = $(element).data('depth');
-        $(element).click(showMyChildren).addClass('hidden-children').removeClass('visible-children');
+        $(element).off("click").click(showMyChildren).addClass('hidden-children').removeClass('visible-children');
         $(element).nextUntil(function() {
             return $(this).data('depth') <= depth;
         }).each(function() {
             $(this).hide();
             if ($(this).hasClass('visible-children')) {
-                $(this).click(showMyChildren).addClass('hidden-children').removeClass('visible-children');
+                $(this).off("click").click(showMyChildren).addClass('hidden-children').removeClass('visible-children');
             }
         })
     }
@@ -101,8 +101,8 @@ $(document).ready(function() {
             }
         })
     })
-    $('.event.hidden-children').click(showMyChildren);
-    $('.event.visible-children').click(hideMyChildren);
+    $('.event.hidden-children').off("click").click(showMyChildren);
+    $('.event.visible-children').off("click").click(hideMyChildren);
     $('.event.hidden-children, .event.visible-children').mouseover(function() {
         var depth = $(this).data('depth');
         $(this).nextUntil(function() {

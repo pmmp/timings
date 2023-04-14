@@ -9,6 +9,7 @@ use function count;
 use function explode;
 use function htmlspecialchars_decode;
 use function preg_match;
+use function str_starts_with;
 use function substr;
 use function trim;
 use function uasort;
@@ -181,6 +182,9 @@ class Parser{
 					'tickEntity - EntityPlayer', 'Entity Tick - Player' => $playerTicks = $ent,
 					default => null,
 				};
+				if($playerTicks === null && str_starts_with($ent->name, 'Entity Tick - Player')){
+					$playerTicks = $ent;
+				}
 			}
 		}
 		if($fullServerTick === null){

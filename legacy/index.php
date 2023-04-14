@@ -14,8 +14,7 @@ global $reportData;
 use Starlis\Timings\Parser\Parser;
 use Starlis\Timings\Parser\ParserException;
 use Starlis\Timings\TimingResult;
-
-const BREAKDOWN_SUBKEY = 'Minecraft - Breakdown';
+use Starlis\Timings\TimingsReport;
 
 /**
  * @param TimingResult[] $timings
@@ -370,7 +369,7 @@ ROW;
 				if($report->tree !== null){
 					echo generateTable($report->tree, "Minecraft (Tree View)", $report->groupTotals["Minecraft"], $report->numTicks, $report->sampleTimeNs, $report->activeTimeNs, $exclude, PHP_INT_MAX, 1);
 				}
-				$tableOrder = ["Minecraft" => true, BREAKDOWN_SUBKEY => true];
+				$tableOrder = ["Minecraft" => true, TimingsReport::BREAKDOWN_SUBKEY => true];
 				foreach($report->groupTotals as $groupName => $total){
 					if(!isset($tableOrder[$groupName])){
 						$tableOrder[$groupName] = true;

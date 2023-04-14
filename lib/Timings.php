@@ -11,10 +11,12 @@
 
 namespace Starlis\Timings;
 
+use Starlis\Timings\Parser\Parser;
 use function filter_var;
 use function header;
 use function http_response_code;
 use function is_string;
+use function json_encode;
 
 class Timings{
 
@@ -36,6 +38,15 @@ class Timings{
 			$storage = new MySqlStorageService($mysqlHost, $mysqlDatabase, $mysqlUser, $mysqlPassword);
 			if(!isset($_POST['data'])){
 				http_response_code(400);
+				die();
+			}
+			try{
+				//validate the report before saving it
+				Parser::buildTree($_POST['data']);
+			}catch(\Exception $e){
+				http_response_code(400);
+				header('Content-Type: application/json');
+				echo json_encode(["error" => "Failed to parse report: " . $e->getMessage()]);
 				die();
 			}
 			$id = $storage->set($_POST['data']);

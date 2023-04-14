@@ -28,7 +28,6 @@ class MySqlStorageService{
 	}
 
 	public function set(string $data) : int{
-		if(substr($data, 0, 9) !== "Minecraft") return -1;
 		$stmt = $this->db->prepare("INSERT INTO timings (data) VALUES (:data)");
 		$stmt->bindParam(':data', $data);
 		$stmt->execute();

@@ -3,6 +3,8 @@
 namespace Starlis\Timings;
 
 class TimingsReport{
+	public const BREAKDOWN_SUBKEY = 'Minecraft - Breakdown';
+
 	/**
 	 * @param TimingResult[]|null                                $tree
 	 * @param TimingResult[][]                                   $groups

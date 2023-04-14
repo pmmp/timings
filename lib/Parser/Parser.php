@@ -13,7 +13,6 @@ use function str_starts_with;
 use function substr;
 use function trim;
 use function uasort;
-use const BREAKDOWN_SUBKEY;
 
 class Parser{
 	/**
@@ -73,7 +72,7 @@ class Parser{
 				$timingName = htmlspecialchars_decode(trim($timingName));
 				if(str_starts_with($timingName, "** ")){
 					$timingName = substr($timingName, 3);
-					$overrideGroup = BREAKDOWN_SUBKEY;
+					$overrideGroup = TimingsReport::BREAKDOWN_SUBKEY;
 				}elseif(preg_match('/^Plugin: (.+) Event: (.+)$/', $timingName, $matches) === 1){
 					$overrideGroup = $matches[1];
 					$timingName = "Event: " . $matches[2];
@@ -113,7 +112,7 @@ class Parser{
 				}else{
 					$groups[$result->group][$result->name] = clone $result;
 				}
-				if($result->group !== BREAKDOWN_SUBKEY){
+				if($result->group !== TimingsReport::BREAKDOWN_SUBKEY){
 					$groupTotals[$result->group] = ($groupTotals[$result->group] ?? 0) + $result->timeNs;
 				}
 			}

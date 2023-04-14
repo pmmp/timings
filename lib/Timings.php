@@ -38,6 +38,8 @@ class Timings{
 			$storage = new MySqlStorageService($mysqlHost, $mysqlDatabase, $mysqlUser, $mysqlPassword);
 			if(!isset($_POST['data'])){
 				http_response_code(400);
+				header('Content-Type: application/json');
+				echo json_encode(["error" => "No data provided"]);
 				die();
 			}
 			try{
@@ -71,6 +73,8 @@ class Timings{
 			$timingData = $rawData !== null ? trim($rawData) : null;
 			if($timingData === null){
 				http_response_code(404);
+				header('Content-Type: application/json');
+				echo json_encode(["error" => "Report not found"]);
 				die();
 			}
 			if(isset($_GET['raw'])){

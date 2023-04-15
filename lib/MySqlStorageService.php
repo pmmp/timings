@@ -21,11 +21,12 @@ class MySqlStorageService{
 	public function get(int $id, int &$timestamp) : ?string{
 		$stmt = $this->db->prepare("SELECT data, UNIX_TIMESTAMP(timestamp) AS timestamp FROM timings WHERE ID=:ID");
 		$stmt->bindParam(":ID", $id);
-		if(!$stmt->execute()){
+		$stmt->execute();
+		$row = $stmt->fetch(\PDO::FETCH_ASSOC);
+		if($row === false){
 			$timestamp = 0;
 			return null;
 		}
-		$row = $stmt->fetch(\PDO::FETCH_ASSOC);
 		$data = $row["data"];
 		assert(is_string($data));
 		assert(is_int($row["timestamp"]));

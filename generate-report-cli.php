@@ -12,5 +12,6 @@ if(count($argv) < 3){
 $raw = file_get_contents($argv[1]);
 ob_start();
 $GLOBALS['reportData'] = $raw;
+$GLOBALS['reportTimestamp'] = time();
 require 'legacy/index.php';
 file_put_contents($argv[2], ob_get_clean());

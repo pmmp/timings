@@ -4,6 +4,7 @@ namespace Starlis\Timings;
 
 use function assert;
 use function htmlentities;
+use function is_int;
 use function is_string;
 use function strip_tags;
 
@@ -17,14 +18,20 @@ class MySqlStorageService{
 		$this->db->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
 	}
 
-	public function get(int $id) : ?string{
-		$stmt = $this->db->prepare("SELECT data FROM timings WHERE ID=:ID");
+	public function get(int $id, int &$timestamp) : ?string{
+		$stmt = $this->db->prepare("SELECT data, UNIX_TIMESTAMP(timestamp) AS timestamp FROM timings WHERE ID=:ID");
 		$stmt->bindParam(":ID", $id);
-		$stmt->execute();
-		$data = $stmt->fetchColumn();
-		assert(is_string($data) || $data === false);
+		if(!$stmt->execute()){
+			$timestamp = 0;
+			return null;
+		}
+		$row = $stmt->fetch(\PDO::FETCH_ASSOC);
+		$data = $row["data"];
+		assert(is_string($data));
+		assert(is_int($row["timestamp"]));
+		$timestamp = $row["timestamp"];
 
-		return is_string($data) ? htmlentities(strip_tags($data)) : null;
+		return htmlentities(strip_tags($data));
 	}
 
 	public function set(string $data) : int{

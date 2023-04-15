@@ -10,6 +10,7 @@
  */
 
 global $reportData;
+global $reportTimestamp;
 
 use Starlis\Timings\Parser\Parser;
 use Starlis\Timings\Parser\ParserException;
@@ -330,6 +331,15 @@ ROW;
 							<span class="highlighted-metric" style="background-color: <?php echo heatmapColor($report->getServerLoad(), 100) ?>"><?php echo number_format($report->getServerLoad(), 2) ?>%</span>
 						</td>
 					</tr>
+					<?php if(isset($reportTimestamp) && is_int($reportTimestamp)){
+						?>
+						<tr>
+							<td class="metadataName">Submitted</td>
+							<td><?php echo date("Y-m-d H:i:s P", $reportTimestamp) ?></td>
+						</tr>
+						<?php
+					}
+					?>
 				</table>
 				<div class="links">
 					<a href="/?id=<?php echo $_GET['id'] ?? 0 ?>&amp;raw=1">View raw</a>

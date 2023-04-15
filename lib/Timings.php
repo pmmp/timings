@@ -69,14 +69,15 @@ class Timings{
 		if(!empty($_GET['id']) && ($id = filter_var($_GET['id'], FILTER_VALIDATE_INT, $filterOptions)) !== false){
 			$id = (int) $id;
 			$storage = new MySqlStorageService($mysqlHost, $mysqlDatabase, $mysqlUser, $mysqlPassword);
-			$rawData = $storage->get($id);
-			$timingData = $rawData !== null ? trim($rawData) : null;
-			if($timingData === null){
+			$timestamp = 0;
+			$rawData = $storage->get($id, $timestamp);
+			if($rawData === null){
 				http_response_code(404);
 				header('Content-Type: application/json');
 				echo json_encode(["error" => "Report not found"]);
 				die();
 			}
+			$timingData = trim($rawData);
 			if(isset($_GET['raw'])){
 				header('Content-Type: text/plain');
 				echo $timingData;
@@ -84,6 +85,7 @@ class Timings{
 			}
 
 			$GLOBALS['reportData'] = $timingData;
+			$GLOBALS['reportTimestamp'] = $timestamp;
 			require_once "legacy/index.php";
 		}
 

@@ -92,7 +92,7 @@ $(document).ready(function() {
         showChildren(first);
         first.nextUntil(function() {
             var currentDepth = $(this).data('depth');
-            if (currentDepth >= depth) {
+            if (currentDepth > depth) {
                 depth = currentDepth;
                 showChildren($(this));
                 return false;

@@ -161,6 +161,9 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 		"Scheduler" => showInfo('sched', 'Plugin Scheduler'),
 		default => ""
 	};
+	if($time->selfRecord){
+		$learnMore = showInfo('self', 'Self Timer Records');
+	}
 
 	$cleanedEventName = str_replace(["\\", "/", "-&gt;", "::"], ["<wbr>\\", "<wbr>/", "<wbr>&#8209;&gt;", "<wbr>::"], htmlspecialchars($event));
 	$eventNameCell = "<span class='event-name'>$cleanedEventName$learnMore</span>";
@@ -433,6 +436,11 @@ ROW;
 				Look at "Task: " entries to find out which tasks are taking the most time.
 				<br/><br/>
 				Note: Async Tasks are not counted here, since they run in a separate thread.
+			</div>
+			<div id="info-self" title="Self Timings">
+				<b>Self Timings</b> account for time when the parent timer was active, but none of its child timers were
+				active. For example, <b>Entity Movement</b> might use specialized timers to cover certain parts of the
+				movement code, leaving the remainder to self timings.
 			</div>
 		</div>
 	</body>

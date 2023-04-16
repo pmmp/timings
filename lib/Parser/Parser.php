@@ -5,6 +5,7 @@ namespace Starlis\Timings\Parser;
 use Starlis\Timings\TimingResult;
 use Starlis\Timings\TimingsReport;
 use function arsort;
+use function assert;
 use function count;
 use function explode;
 use function htmlspecialchars_decode;
@@ -132,6 +133,27 @@ class Parser{
 						unset($orphans[$recordId]);
 					}
 				}
+
+				foreach($parents as $parentId => $parent){
+					if(count($parent->children) === 0){
+						continue;
+					}
+					$self = clone $parent;
+					$self->selfRecord = true;
+					$self->name = "[self]";
+					$self->peakNs = null; //we can't calculate this with the available data
+					$self->children = [];
+					$self->parentId = $parentId;
+
+					foreach($parent->children as $child){
+						$self->timeNs -= $child->timeNs;
+						$self->violations -= $child->violations;
+					}
+					//the parent should not have been referencing itself, so using parent ID here should be fine
+					assert(!isset($parent->children[$parentId]));
+					$parent->children[$parentId] = $self;
+				}
+
 				if(count($newParents) === 0){
 					//we may have a circular reference or missing parent - or everything is fine, and we're done
 					break;

@@ -149,9 +149,11 @@ class Parser{
 						$self->timeNs -= $child->timeNs;
 						$self->violations -= $child->violations;
 					}
-					//the parent should not have been referencing itself, so using parent ID here should be fine
-					assert(!isset($parent->children[$parentId]));
-					$parent->children[$parentId] = $self;
+					if($self->timeNs > 0){
+						//the parent should not have been referencing itself, so using parent ID here should be fine
+						assert(!isset($parent->children[$parentId]));
+						$parent->children[$parentId] = $self;
+					}
 				}
 
 				if(count($newParents) === 0){

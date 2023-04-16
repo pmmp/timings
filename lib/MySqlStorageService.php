@@ -22,6 +22,7 @@ class MySqlStorageService{
 		$stmt = $this->db->prepare("SELECT data, UNIX_TIMESTAMP(timestamp) AS timestamp FROM timings WHERE ID=:ID");
 		$stmt->bindParam(":ID", $id);
 		$stmt->execute();
+		/** @var mixed[]|false $row */
 		$row = $stmt->fetch(\PDO::FETCH_ASSOC);
 		if($row === false){
 			$timestamp = 0;

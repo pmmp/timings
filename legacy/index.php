@@ -363,6 +363,12 @@ ROW;
 					"<b>Your server is lagging because it is overloaded. Your server may have more players online than it can handle.</b>"
 				];
 			}
+			if($report->sampleTimeNs < 60_000_000_000){
+				$recommendations[] = [
+					"<b>This report is very short. It may not be representative of your server's actual performance.</b>",
+					"Timings should be run for at least 1 minute to gather useful data.",
+				];
+			}
 			foreach($recommendations as $recommendation){
 				?>
 				<span class="recommendation">

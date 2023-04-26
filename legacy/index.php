@@ -358,8 +358,10 @@ ROW;
 					"too much activity on the network, or something else might be running on the machine and hogging the CPU.",
 					"You should check the machine's overall CPU usage to see if anything else might be using a lot of CPU."
 				];
-			}else if($report->getServerLoad() >= 97){
-				$recommendations[] = ["<b>Your server is lagging because it is overloaded (97%+ Server Load). Try reducing View Distance if it is above 4.</b>"];
+			}elseif($report->getAverageTPS() < 19){
+				$recommendations[] = [
+					"<b>Your server is lagging because it is overloaded. Your server may have more players online than it can handle.</b>"
+				];
 			}
 			foreach($recommendations as $recommendation){
 				?>

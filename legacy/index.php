@@ -457,7 +457,7 @@ ROW;
 <?php
 
 function showInfo(string $id, string $title) : string{
-	return "<a class='learnmore' data-info='$id' title='$title' href='#'>[Learn More]</a></b>";
+	return "<a class='learnmore' data-info='$id' title='$title' href='#'>[?]</a></b>";
 }
 
 function amountUnits(float $amount, int $dividedPrecision = 2, int $unitPrecision = 2) : string{

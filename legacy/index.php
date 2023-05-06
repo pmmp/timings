@@ -365,7 +365,7 @@ ROW;
 			}
 			if($report->sampleTimeNs < 60_000_000_000){
 				$recommendations[] = [
-					"<b>This report is very short. It may not be representative of your server's actual performance.</b>",
+					"<b>This report is very short. It may not be representative of your server's actual performance.</b><br/>",
 					"Timings should be run for at least 1 minute to gather useful data.",
 				];
 			}

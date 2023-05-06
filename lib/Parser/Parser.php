@@ -172,13 +172,14 @@ class Parser{
 		}
 		arsort($groupTotals);
 
-		$sampleTimeNs = 0;
 		$serverVersion = "unknown";
 		$minecraftVersion = "unknown";
 		$formatVersion = 0;
 
 		if(preg_match('/(*ANYCRLF)^Sample time (\d+) \(([\d.]+s)\)$/mi', $reportData, $matches)){
 			$sampleTimeNs = (int) $matches[1];
+		}else{
+			throw new ParserException("Sample time not found");
 		}
 		if(preg_match('/(*ANYCRLF)^# PocketMine-MP (.*)$/mi', $reportData, $matches)){
 			$serverVersion = $matches[1];

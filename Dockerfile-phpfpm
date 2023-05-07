@@ -1,7 +1,12 @@
+FROM php:8.2-cli as build
+COPY . /src
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+WORKDIR /src
+RUN composer update --no-dev --no-interaction --optimize-autoloader
 
 FROM php:8.2-fpm
 RUN docker-php-ext-install -j$(nproc) mysqli pdo pdo_mysql
 RUN echo 'display_errors=off' >> /usr/local/etc/php/php.ini
 RUN echo 'error_log=stderr' >> /usr/local/etc/php/php.ini
 RUN echo 'log_errors=1' >> /usr/local/etc/php/php.ini
-COPY . /var/www/html/timings
+COPY --from=build /src /var/www/html/timings

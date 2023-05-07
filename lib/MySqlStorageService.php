@@ -43,6 +43,8 @@ class MySqlStorageService{
 		$stmt = $this->db->prepare("SELECT ID FROM timings");
 		$stmt->execute();
 		while(($row = $stmt->fetch(\PDO::FETCH_ASSOC)) !== false){
+			assert(is_array($row));
+			assert(is_int($row["ID"]));
 			yield $row["ID"];
 		}
 	}

@@ -37,13 +37,13 @@ class MySqlStorageService{
 	}
 
 	/**
-	 * @phpstan-return \Generator<int, array{string, int}>
+	 * @phpstan-return \Generator<int, int>
 	 */
 	public function getAll() : \Generator{
-		$stmt = $this->db->prepare("SELECT ID, data, UNIX_TIMESTAMP(timestamp) AS timestamp FROM timings");
+		$stmt = $this->db->prepare("SELECT ID FROM timings");
+		$stmt->execute();
 		while(($row = $stmt->fetch(\PDO::FETCH_ASSOC)) !== false){
-			$id = $row["ID"];
-			yield $id => [$row["data"], $row["timestamp"]];
+			yield $row["ID"];
 		}
 	}
 

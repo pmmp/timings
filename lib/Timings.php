@@ -37,8 +37,12 @@ class Timings{
 
 		$storage = new MySqlStorageService($mysqlHost, $mysqlDatabase, $mysqlUser, $mysqlPassword);
 
-		foreach($storage->getAll() as $id => $row){
-			[$data, ] = $row;
+		foreach($storage->getAll() as $id){
+			$timestamp = 0;
+			$data = $storage->get($id, $timestamp);
+			if($data === null){
+				continue;
+			}
 
 			try{
 				$report = Parser::buildTree($data);

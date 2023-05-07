@@ -63,4 +63,7 @@ ALTER TABLE `timings`
   ADD `averageEntities` FLOAT NOT NULL,
   ADD `averagePlayers` FLOAT NOT NULL;
 
+ALTER TABLE `timings`
+  ADD `formatVersion` INT NOT NULL DEFAULT 0;
+
 COMMIT;

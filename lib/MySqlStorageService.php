@@ -57,6 +57,7 @@ class MySqlStorageService{
 		float $averageLoad,
 		float $averageEntities,
 		float $averagePlayers,
+		int $formatVersion
 	) : int{
 		$stmt = $this->db->prepare(<<<'QUERY'
 			INSERT INTO timings (
@@ -66,7 +67,8 @@ class MySqlStorageService{
 				averageTPS,
 				averageLoad,
 				averageEntities,
-				averagePlayers
+				averagePlayers,
+				formatVersion
 			) VALUES (
 				:data,
 				:serverVersion,
@@ -74,7 +76,8 @@ class MySqlStorageService{
 				:averageTPS,
 				:averageLoad,
 				:averageEntities,
-				:averagePlayers
+				:averagePlayers,
+				:formatVersion
 			)
 		QUERY);
 		$stmt->bindParam(':data', $data);
@@ -84,6 +87,7 @@ class MySqlStorageService{
 		$stmt->bindParam(':averageLoad', $averageLoad);
 		$stmt->bindParam(':averageEntities', $averageEntities);
 		$stmt->bindParam(':averagePlayers', $averagePlayers);
+		$stmt->bindParam(':formatVersion', $formatVersion);
 
 		$stmt->execute();
 		return (int) $this->db->lastInsertId();
@@ -98,6 +102,7 @@ class MySqlStorageService{
 		float $averageLoad,
 		float $averageEntities,
 		float $averagePlayers,
+		int $formatVersion
 	) : bool{
 		$stmt = $this->db->prepare(<<<'QUERY'
 			UPDATE timings SET
@@ -107,7 +112,8 @@ class MySqlStorageService{
 				averageTPS = :averageTPS,
 				averageLoad = :averageLoad,
 				averageEntities = :averageEntities,
-				averagePlayers = :averagePlayers
+				averagePlayers = :averagePlayers,
+				formatVersion = :formatVersion
 			WHERE ID = :ID
 		QUERY);
 		$stmt->bindParam(':data', $data);
@@ -117,6 +123,7 @@ class MySqlStorageService{
 		$stmt->bindParam(':averageLoad', $averageLoad);
 		$stmt->bindParam(':averageEntities', $averageEntities);
 		$stmt->bindParam(':averagePlayers', $averagePlayers);
+		$stmt->bindParam(':formatVersion', $formatVersion);
 
 		$stmt->bindParam(':ID', $id);
 

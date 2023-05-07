@@ -16,6 +16,10 @@ use function trim;
 use function uasort;
 
 class Parser{
+	public const VERSION_INITIAL = 0;
+	public const VERSION_PEAK_BORKED = 1;
+	public const VERSION_PEAK_FIXED = 2;
+
 	/**
 	 * @param TimingResult[] $timings
 	 *
@@ -38,6 +42,11 @@ class Parser{
 
 		$groups = [];
 		$groupTotals = [];
+
+		$formatVersion = self::VERSION_INITIAL;
+		if(preg_match('/^# FormatVersion (\d+)$/mi', $reportData, $matches)){
+			$formatVersion = (int) $matches[1];
+		}
 
 		foreach(explode("\n", $reportData) as $line){
 			$line = trim($line, "\r\n");
@@ -69,6 +78,10 @@ class Parser{
 					$peakTime = null;
 				}else{
 					[, $timingName, $timeNs, $count, /* avg unused */, $violations, $recordId, $parentRecordIdStr, $timerId, $ticksActive, $peakTime] = $matches;
+					if($formatVersion < self::VERSION_PEAK_FIXED){
+						//peak was incorrectly calculated across all activations in a tick in older versions, rather than just the current activation
+						$peakTime = null;
+					}
 				}
 				$timingName = htmlspecialchars_decode(trim($timingName));
 				if(str_starts_with($timingName, "** ")){
@@ -104,12 +117,11 @@ class Parser{
 					$groups[$result->group][$result->name]->count += $result->count;
 					$groups[$result->group][$result->name]->timeNs += $result->timeNs;
 					$groups[$result->group][$result->name]->violations += $result->violations;
+					$groups[$result->group][$result->name]->peakNs = max($groups[$result->group][$result->name]->peakNs, $result->peakNs);
 
 					//different records may have been active on the same ticks, so we can't just add their ticksActive
 					//together - force the table display to use total time / count instead
-					//we also can't add or max peak time - it's across the span of a tick, not a single activation
 					$groups[$result->group][$result->name]->ticks = null;
-					$groups[$result->group][$result->name]->peakNs = null;
 				}else{
 					$groups[$result->group][$result->name] = clone $result;
 				}
@@ -174,7 +186,6 @@ class Parser{
 
 		$serverVersion = "unknown";
 		$minecraftVersion = "unknown";
-		$formatVersion = 0;
 
 		if(preg_match('/(*ANYCRLF)^Sample time (\d+) \(([\d.]+s)\)$/mi', $reportData, $matches)){
 			$sampleTimeNs = (int) $matches[1];
@@ -186,9 +197,6 @@ class Parser{
 		}
 		if(preg_match('/^# Version (.*)$/mi', $reportData, $matches)){
 			$minecraftVersion = $matches[1];
-		}
-		if(preg_match('/^# FormatVersion (\d+)$/mi', $reportData, $matches)){
-			$formatVersion = (int) $matches[1];
 		}
 
 		$fullServerTick = null;

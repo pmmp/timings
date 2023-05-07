@@ -58,7 +58,8 @@ class Timings{
 				$report->getAverageTPS(),
 				$report->getServerLoad(),
 				$report->getAverageEntities(),
-				$report->getAveragePlayers()
+				$report->getAveragePlayers(),
+				$report->formatVersion
 			)){
 				echo "Updated report $id\n";
 			}else{
@@ -97,7 +98,8 @@ class Timings{
 				$report->getAverageTPS(),
 				$report->getServerLoad(),
 				$report->getAverageEntities(),
-				$report->getAveragePlayers()
+				$report->getAveragePlayers(),
+				$report->formatVersion
 			);
 			if(!empty($_POST['browser']) && $_POST['browser'] !== 'true'){
 				header('Content-Type: application/json');

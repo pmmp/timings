@@ -12,6 +12,7 @@
 namespace Starlis\Timings;
 
 use Starlis\Timings\Parser\Parser;
+use Starlis\Timings\Parser\ParserException;
 use function filter_var;
 use function header;
 use function http_response_code;
@@ -26,6 +27,40 @@ class Timings{
 			throw new \RuntimeException("Environment variable $name is not set correctly");
 		}
 		return $var;
+	}
+
+	public static function updateDB() : void{
+		$mysqlHost = self::getenv_string('MYSQL_HOST');
+		$mysqlDatabase = self::getenv_string('MYSQL_DATABASE');
+		$mysqlUser = self::getenv_string('MYSQL_USER');
+		$mysqlPassword = self::getenv_string('MYSQL_PASSWORD');
+
+		$storage = new MySqlStorageService($mysqlHost, $mysqlDatabase, $mysqlUser, $mysqlPassword);
+
+		foreach($storage->getAll() as $id => $row){
+			[$data, ] = $row;
+
+			try{
+				$report = Parser::buildTree($data);
+			}catch(ParserException $e){
+				echo "Error parsing report $id: " . $e->getMessage() . "\n";
+				continue;
+			}
+			if($storage->update(
+				$id,
+				$data,
+				$report->serverVersion,
+				$report->sampleTimeNs,
+				$report->getAverageTPS(),
+				$report->getServerLoad(),
+				$report->getAverageEntities(),
+				$report->getAveragePlayers()
+			)){
+				echo "Updated report $id\n";
+			}else{
+				echo "Failed to update report $id\n";
+			}
+		}
 	}
 
 	public static function bootstrap() : never{
@@ -44,14 +79,22 @@ class Timings{
 			}
 			try{
 				//validate the report before saving it
-				Parser::buildTree($_POST['data']);
+				$report = Parser::buildTree($_POST['data']);
 			}catch(\Exception $e){
 				http_response_code(400);
 				header('Content-Type: application/json');
 				echo json_encode(["error" => "Failed to parse report: " . $e->getMessage()]);
 				die();
 			}
-			$id = $storage->set($_POST['data']);
+			$id = $storage->set(
+				$_POST['data'],
+				$report->serverVersion,
+				$report->sampleTimeNs,
+				$report->getAverageTPS(),
+				$report->getServerLoad(),
+				$report->getAverageEntities(),
+				$report->getAveragePlayers()
+			);
 			if(!empty($_POST['browser']) && $_POST['browser'] !== 'true'){
 				header('Content-Type: application/json');
 				echo \json_encode(["id" => $id]);

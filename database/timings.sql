@@ -54,4 +54,13 @@ ALTER TABLE `timings`
 
 ALTER TABLE `timings`
   MODIFY `data` MEDIUMBLOB NOT NULL;
+
+ALTER TABLE `timings`
+  ADD `serverVersion` VARCHAR(32) NOT NULL,
+  ADD `sampleTimeNs` BIGINT NOT NULL,
+  ADD `averageTPS` FLOAT NOT NULL,
+  ADD `averageLoad` FLOAT NOT NULL,
+  ADD `averageEntities` FLOAT NOT NULL,
+  ADD `averagePlayers` FLOAT NOT NULL;
+
 COMMIT;

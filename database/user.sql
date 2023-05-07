@@ -1,1 +1,1 @@
-REVOKE ALL PRIVILEGES ON `timings`.* FROM 'timings'@'%'; GRANT SELECT, INSERT ON `timings`.* TO 'timings'@'%';
+REVOKE ALL PRIVILEGES ON `timings`.* FROM 'timings'@'%'; GRANT SELECT, INSERT, UPDATE ON `timings`.* TO 'timings'@'%';

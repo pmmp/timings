@@ -36,10 +36,88 @@ class MySqlStorageService{
 		return htmlentities(strip_tags($data));
 	}
 
-	public function set(string $data) : int{
-		$stmt = $this->db->prepare("INSERT INTO timings (data) VALUES (:data)");
+	/**
+	 * @phpstan-return \Generator<int, array{string, int}>
+	 */
+	public function getAll() : \Generator{
+		$stmt = $this->db->prepare("SELECT ID, data, UNIX_TIMESTAMP(timestamp) AS timestamp FROM timings");
+		while(($row = $stmt->fetch(\PDO::FETCH_ASSOC)) !== false){
+			$id = $row["ID"];
+			yield $id => [$row["data"], $row["timestamp"]];
+		}
+	}
+
+	public function set(
+		string $data,
+		string $serverVersion,
+		int $sampleTimeNs,
+		float $averageTPS,
+		float $averageLoad,
+		float $averageEntities,
+		float $averagePlayers,
+	) : int{
+		$stmt = $this->db->prepare(<<<'QUERY'
+			INSERT INTO timings (
+				data,
+				serverVersion,
+				sampleTimeNs,
+				averageTPS,
+				averageLoad,
+				averageEntities,
+				averagePlayers
+			) VALUES (
+				:data,
+				:serverVersion,
+				:sampleTimeNs,
+				:averageTPS,
+				:averageLoad,
+				:averageEntities,
+				:averagePlayers
+			)
+		QUERY);
 		$stmt->bindParam(':data', $data);
+		$stmt->bindParam(':serverVersion', $serverVersion);
+		$stmt->bindParam(':sampleTimeNs', $sampleTimeNs);
+		$stmt->bindParam(':averageTPS', $averageTPS);
+		$stmt->bindParam(':averageLoad', $averageLoad);
+		$stmt->bindParam(':averageEntities', $averageEntities);
+		$stmt->bindParam(':averagePlayers', $averagePlayers);
+
 		$stmt->execute();
 		return (int) $this->db->lastInsertId();
+	}
+
+	public function update(
+		int $id,
+		string $data,
+		string $serverVersion,
+		int $sampleTimeNs,
+		float $averageTPS,
+		float $averageLoad,
+		float $averageEntities,
+		float $averagePlayers,
+	) : bool{
+		$stmt = $this->db->prepare(<<<'QUERY'
+			UPDATE timings SET
+				data = :data,
+				serverVersion = :serverVersion,
+				sampleTimeNs = :sampleTimeNs,
+				averageTPS = :averageTPS,
+				averageLoad = :averageLoad,
+				averageEntities = :averageEntities,
+				averagePlayers = :averagePlayers
+			WHERE ID = :ID
+		QUERY);
+		$stmt->bindParam(':data', $data);
+		$stmt->bindParam(':serverVersion', $serverVersion);
+		$stmt->bindParam(':sampleTimeNs', $sampleTimeNs);
+		$stmt->bindParam(':averageTPS', $averageTPS);
+		$stmt->bindParam(':averageLoad', $averageLoad);
+		$stmt->bindParam(':averageEntities', $averageEntities);
+		$stmt->bindParam(':averagePlayers', $averagePlayers);
+
+		$stmt->bindParam(':ID', $id);
+
+		return $stmt->execute();
 	}
 }

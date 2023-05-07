@@ -43,4 +43,12 @@ class TimingsReport{
 		$desiredTicks = $this->sampleTimeNs / 1_000_000_000 * 20;
 		return $this->numTicks / $desiredTicks * 20;
 	}
+
+	public function getAverageEntities() : float{
+		return $this->entityTicks / $this->numTicks;
+	}
+
+	public function getAveragePlayers() : float{
+		return $this->playerTicks / $this->numTicks;
+	}
 }

@@ -26,7 +26,7 @@ function generateTable(array $timings, string $plugin, ?float $ptotal, int $numT
 	$shown = 0;
 	$rows = [];
 	foreach($timings as $time){
-		foreach(generateTableRow($time, $numTicks, $sample, $total, $time->name, $exclude, $totalRows, $shown, $plugin, 0, $visibleRows) as $row){
+		foreach(generateTableRow($time, $numTicks, $sample, $total, $exclude, $totalRows, $shown, 0, $visibleRows) as $row){
 			$rows[] = $row;
 		}
 	}
@@ -118,7 +118,7 @@ function heatmapColor(float $amount, float $max) : string{
  * @phpstan-param-out int $i
  * @phpstan-param-out int $shown
  */
-function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, float $total, string $event, array $exclude, int &$i, int &$shown, string $plugin, int $depth, int $visibleRows) : array{
+function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, float $total, array $exclude, int &$i, int &$shown, int $depth, int $visibleRows) : array{
 	$i++;
 
 	$isTreeTable = $depth > 0 || count($time->children) > 0;
@@ -155,7 +155,7 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 	$pctTotalStyle = "background-color: " . heatmapColor($pctTotal, 100);
 	$pctTotalStr = number_format($pctTotal, 2) . '%';
 
-	$learnMore = match ($event) {
+	$learnMore = match ($time->name) {
 		"Full Server Tick" => showInfo('fst', 'Full Server Tick'),
 		"Connection Handler" => showInfo('connhandler', 'Connection Handler'),
 		"Scheduler" => showInfo('sched', 'Plugin Scheduler'),
@@ -165,7 +165,7 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 		$learnMore = showInfo('self', 'Self Timer Records');
 	}
 
-	$cleanedEventName = str_replace(["\\", "/", "-&gt;", "::"], ["<wbr>\\", "<wbr>/", "<wbr>&#8209;&gt;", "<wbr>::"], htmlspecialchars($event));
+	$cleanedEventName = str_replace(["\\", "/", "-&gt;", "::"], ["<wbr>\\", "<wbr>/", "<wbr>&#8209;&gt;", "<wbr>::"], htmlspecialchars($time->name));
 	$eventNameCell = "<span class='event-name'>$cleanedEventName$learnMore</span>";
 
 	$hideBeyondDepth = 2;
@@ -177,7 +177,7 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 		$hiddenelem = false;
 		$shown++;
 	}
-	$title = $event;
+	$title = $cleanedEventName;
 	$children = count($time->children);
 	if($isTreeTable){
 		$indentSize = $depth;
@@ -188,7 +188,7 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 			}else{
 				$rowClasses .= " visible-children";
 			}
-			$title = "$event ($children children)";
+			$title = "$cleanedEventName ($children children)";
 		}else{
 			$rowClasses .= " no-children";
 		}
@@ -216,7 +216,7 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 </tr>
 ROW;
 	foreach($time->children as $child){
-		foreach(generateTableRow($child, $numTicks, $sample, $total, $child->name, $exclude, $i, $shown, $plugin, $depth + 1, $visibleRows) as $row){
+		foreach(generateTableRow($child, $numTicks, $sample, $total, $exclude, $i, $shown, $depth + 1, $visibleRows) as $row){
 			$result[] = $row;
 		}
 	}

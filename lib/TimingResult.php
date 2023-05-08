@@ -3,9 +3,7 @@
 namespace Starlis\Timings;
 
 class TimingResult{
-	/**
-	 * @var self[]
-	 */
+	/** @var self[] */
 	public array $children = [];
 
 	public bool $selfRecord = false;

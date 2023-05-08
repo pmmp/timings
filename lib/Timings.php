@@ -14,10 +14,13 @@ namespace Starlis\Timings;
 use Starlis\Timings\Parser\Parser;
 use Starlis\Timings\Parser\ParserException;
 use function filter_var;
+use function getenv;
 use function header;
 use function http_response_code;
 use function is_string;
 use function json_encode;
+use function trim;
+use const FILTER_VALIDATE_INT;
 
 class Timings{
 
@@ -103,7 +106,7 @@ class Timings{
 			);
 			if(!empty($_POST['browser']) && $_POST['browser'] !== 'true'){
 				header('Content-Type: application/json');
-				echo \json_encode(["id" => $id]);
+				echo json_encode(["id" => $id]);
 				die();
 			}
 			header('Location: ?id=' . $id);

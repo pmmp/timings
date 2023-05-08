@@ -6,9 +6,9 @@ class TimingsReport{
 	public const BREAKDOWN_SUBKEY = 'Minecraft - Breakdown';
 
 	/**
-	 * @param TimingResult[]|null                                $tree
-	 * @param TimingResult[][]                                   $groups
-	 * @param float[]                                            $groupTotals
+	 * @param TimingResult[]|null $tree
+	 * @param TimingResult[][]    $groups
+	 * @param float[]             $groupTotals
 	 *
 	 * @phpstan-param array<int, TimingResult>|null              $tree
 	 * @phpstan-param array<string, array<string, TimingResult>> $groups

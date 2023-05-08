@@ -9,6 +9,7 @@ use function assert;
 use function count;
 use function explode;
 use function htmlspecialchars_decode;
+use function max;
 use function preg_match;
 use function str_starts_with;
 use function substr;

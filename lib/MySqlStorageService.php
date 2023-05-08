@@ -4,6 +4,7 @@ namespace Starlis\Timings;
 
 use function assert;
 use function htmlentities;
+use function is_array;
 use function is_int;
 use function is_string;
 use function strip_tags;

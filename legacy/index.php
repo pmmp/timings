@@ -239,7 +239,7 @@ ROW;
 	</head>
 	<body>
 		<div class="pageHeader">
-			<img src="https://github.com/pmmp/PocketMine-MP/raw/stable/.github/readme/pocketmine.png" loading="eager"/>
+			<img src="static/img/pocketmine-rgb.gif" loading="eager"/>
 			<br/>
 			<h1>Timings Viewer</h1>
 		</div>

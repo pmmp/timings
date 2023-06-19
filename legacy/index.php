@@ -233,9 +233,9 @@ ROW;
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css"/>
 		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-		<script src="legacy/timings.js"></script>
+		<script src="static/js/timings.js"></script>
 		<meta name="robots" content="noindex">
-		<link rel="stylesheet" href="legacy/timings.css"/>
+		<link rel="stylesheet" href="static/css/timings.css"/>
 	</head>
 	<body>
 		<div class="pageHeader">

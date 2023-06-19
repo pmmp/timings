@@ -7,11 +7,7 @@ server {
 
 	server_name timings.pmmp.io;
 
-	location =/legacy/timings.js {
-		try_files $uri =404;
-	}
-
-	location =/legacy/timings.css {
+	location /static/ {
 		try_files $uri =404;
 	}
 
@@ -42,7 +38,7 @@ server {
 		allow all;
 	}
 
-	location ~ / {
+	location / {
 		deny all;
 	}
 }

@@ -110,6 +110,14 @@ function heatmapColor(float $amount, float $max) : string{
 	return "hsl($hue, 90%, 70%);";
 }
 
+function getTotalDescendants(TimingResult $time) : int{
+	$total = count($time->children);
+	foreach($time->children as $child){
+		$total += getTotalDescendants($child);
+	}
+	return $total;
+}
+
 /**
  * @param string[] $exclude
  *
@@ -183,12 +191,13 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 		$indentSize = $depth;
 		$eventNameCell = "<span class='triangle-icon'><div></div></span>" . $eventNameCell;
 		if($children > 0){
+			$totalDescendents = getTotalDescendants($time);
 			if($hiddenelem || $depth >= $hideBeyondDepth){
 				$rowClasses .= " hidden-children children-hidden-by-default";
 			}else{
 				$rowClasses .= " visible-children";
 			}
-			$title = "$cleanedEventName ($children children)";
+			$title = "$cleanedEventName ($children children, $totalDescendents total descendants)";
 		}else{
 			$rowClasses .= " no-children";
 		}

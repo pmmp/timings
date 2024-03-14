@@ -406,6 +406,9 @@ ROW;
 					}
 				}
 				foreach($tableOrder as $groupName => $timings){
+					if(!isset($report->groups[$groupName])){
+						//continue;
+					}
 					$visibleRows = 5;
 					$loadHeatmapFactor = 0.06;
 					if($groupName === "Minecraft"){

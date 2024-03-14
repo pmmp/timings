@@ -19,6 +19,8 @@ use function header;
 use function http_response_code;
 use function is_string;
 use function json_encode;
+use function ob_end_flush;
+use function ob_start;
 use function trim;
 use const FILTER_VALIDATE_INT;
 
@@ -138,10 +140,14 @@ class Timings{
 
 			$GLOBALS['reportData'] = $timingData;
 			$GLOBALS['reportTimestamp'] = $timestamp;
+			ob_start();
 			require_once "legacy/index.php";
+			ob_end_flush();
 		}
 
+		ob_start();
 		require_once "legacy/index.php";
+		ob_end_flush();
 		exit;
 	}
 }

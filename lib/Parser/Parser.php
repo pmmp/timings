@@ -45,7 +45,7 @@ class Parser{
 		$groupTotals = [];
 
 		$formatVersion = self::VERSION_INITIAL;
-		if(preg_match('/^# FormatVersion (\d+)$/mi', $reportData, $matches)){
+		if(preg_match('/(*ANYCRLF)^# FormatVersion (\d+)$/mi', $reportData, $matches)){
 			$formatVersion = (int) $matches[1];
 		}
 

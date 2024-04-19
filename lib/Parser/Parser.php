@@ -9,17 +9,19 @@ use function assert;
 use function count;
 use function explode;
 use function htmlspecialchars_decode;
-use function max;
 use function preg_match;
+use function spl_object_id;
 use function str_starts_with;
 use function substr;
 use function trim;
 use function uasort;
+use const PHP_INT_MAX;
 
 class Parser{
 	public const VERSION_INITIAL = 0;
 	public const VERSION_PEAK_BORKED = 1;
 	public const VERSION_PEAK_FIXED = 2;
+	public const VERSION_THREAD_TIMINGS = 3;
 
 	/**
 	 * @param TimingResult[] $timings
@@ -40,6 +42,7 @@ class Parser{
 		$orphans = [];
 		$parents = [];
 		$group = "";
+		$threadId = "";
 
 		$groups = [];
 		$groupTotals = [];
@@ -60,6 +63,11 @@ class Parser{
 					continue;
 				}
 				$group = trim($line);
+				if($formatVersion >= self::VERSION_THREAD_TIMINGS && preg_match('/ThreadId: (\d+)$/', $line, $matches) === 1){
+					$threadId = trim($matches[1]);
+				}else{
+					$threadId = "";
+				}
 				continue;
 			}
 
@@ -103,26 +111,19 @@ class Parser{
 					(int) $count,
 					(int) $timeNs,
 					(int) $violations,
-					$parentRecordId,
+					$parentRecordId !== null ? $threadId . ":" . $parentRecordId : null,
 					(int) $timerId,
 					$ticksActive !== null ? (int) $ticksActive : null,
 					$peakTime !== null ? (int) $peakTime : null
 				);
 				if($parentRecordId === null){
-					$parents[(int) $recordId] = $result;
+					$parents[$threadId . ":" . $recordId] = $result;
 				}else{
-					$orphans[(int) $recordId] = $result;
+					$orphans[$threadId . ":" . $recordId] = $result;
 				}
 
 				if(isset($groups[$result->group][$result->name])){
-					$groups[$result->group][$result->name]->count += $result->count;
-					$groups[$result->group][$result->name]->timeNs += $result->timeNs;
-					$groups[$result->group][$result->name]->violations += $result->violations;
-					$groups[$result->group][$result->name]->peakNs = max($groups[$result->group][$result->name]->peakNs, $result->peakNs);
-
-					//different records may have been active on the same ticks, so we can't just add their ticksActive
-					//together - force the table display to use total time / count instead
-					$groups[$result->group][$result->name]->ticks = null;
+					$groups[$result->group][$result->name]->add($result, $threadId . ":" . $recordId);
 				}else{
 					$groups[$result->group][$result->name] = clone $result;
 				}
@@ -135,15 +136,15 @@ class Parser{
 		if(count($orphans) !== 0){
 			//this is a new timings report which has tree association metadata on the records
 
-			$roots = $parents;
-			while(true){
+			$roots = self::compressAndConnectChildren($parents, []);
 
-				$newParents = [];
-				foreach($orphans as $recordId => $orphan){
-					if(isset($parents[$orphan->parentId])){
-						$parents[$orphan->parentId]->children[$recordId] = $orphan;
-						$newParents[$recordId] = $orphan;
-						unset($orphans[$recordId]);
+			$parents = $roots;
+			while(true){
+				$newParents = self::compressAndConnectChildren($orphans, $parents);
+				foreach($newParents as $recordId => $newParent){
+					unset($orphans[$recordId]);
+					foreach($newParent->mergedRecords as $mergedRecordId){
+						unset($orphans[$mergedRecordId]);
 					}
 				}
 
@@ -229,5 +230,59 @@ class Parser{
 		$playerTicks = $playerTicks?->count ?? 0;
 
 		return new TimingsReport($formatVersion, $roots, $groups, $groupTotals, $serverVersion, $minecraftVersion, $sampleTimeNs, $activeTimeNs, $numTicks, $entityTicks, $playerTicks);
+	}
+
+	/**
+	 * Combines duplicate records with the same parents into a single record, and connects the children to the parents
+	 *
+	 * @param TimingResult[] $records
+	 * @param TimingResult[] $parents
+	 * @phpstan-param array<int, TimingResult> $records
+	 * @phpstan-param array<int, TimingResult> $parents
+	 *
+	 * @return TimingResult[]
+	 */
+	private static function compressAndConnectChildren(array $records, array $parents) : array{
+		$parentIndex = [];
+		foreach($parents as $recordId => $parent){
+			$parentIndex[$recordId] = $parent;
+			foreach($parent->mergedRecords as $mergedRecordId){
+				$parentIndex[$mergedRecordId] = $parent;
+			}
+		}
+
+		/**
+		 * @var TimingResult[][] $compressedRecordIndex
+		 * @phpstan-var array<int, array<string, TimingResult>> $compressedRecordIndex
+		 */
+		$compressedRecordIndex = [];
+		$compressedRecords = [];
+
+		foreach($records as $recordId => $root){
+			//null parent ID means this record is a report root
+			if($root->parentId !== null){
+				$parentRecord = $parentIndex[$root->parentId] ?? null;
+				if($parentRecord === null){
+					//parent is not in the current set - most likely belongs to a deeper level of the tree
+					continue;
+				}
+			}else{
+				$parentRecord = null;
+			}
+			$parentKey = $parentRecord !== null ? spl_object_id($parentRecord) : PHP_INT_MAX;
+
+			$existingRoot = $compressedRecordIndex[$parentKey][$root->name] ?? null;
+			if($existingRoot === null){
+				$compressedRecordIndex[$parentKey][$root->name] = $root;
+				$compressedRecords[$recordId] = $root;
+				if($parentRecord !== null){
+					$parentRecord->children[$recordId] = $root;
+				}
+			}else{
+				$existingRoot->add($root, $recordId);
+			}
+		}
+
+		return $compressedRecords;
 	}
 }

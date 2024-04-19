@@ -131,7 +131,7 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 
 	$isTreeTable = $depth > 0 || count($time->children) > 0;
 
-	$timesPerTick = round($time->count / $numTicks, 1);
+	$timesPerTick = $time->count / $numTicks;
 
 	if($time->ticks !== null && $time->ticks > 0){
 		//If we have the active ticks information from a newer timings report, this allows us to calculate a better
@@ -167,13 +167,18 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 		"Full Server Tick" => showInfo('fst', 'Full Server Tick'),
 		"Connection Handler" => showInfo('connhandler', 'Connection Handler'),
 		"Scheduler" => showInfo('sched', 'Plugin Scheduler'),
+		"Async Task Workers" => showInfo('async', 'Async Task Workers'),
 		default => ""
 	};
 	if($time->selfRecord){
 		$learnMore = showInfo('self', 'Self Timer Records');
 	}
 
-	$cleanedEventName = str_replace(["\\", "/", "-&gt;", "::"], ["<wbr>\\", "<wbr>/", "<wbr>&#8209;&gt;", "<wbr>::"], htmlspecialchars($time->name));
+	$baseName = $time->name;
+	if(count($time->mergedRecords) > 0){
+		$baseName .= " (" . (count($time->mergedRecords) + 1) . " combined)";
+	}
+	$cleanedEventName = str_replace(["\\", "/", "-&gt;", "::"], ["<wbr>\\", "<wbr>/", "<wbr>&#8209;&gt;", "<wbr>::"], htmlspecialchars($baseName));
 	$eventNameCell = "<span class='event-name'>$cleanedEventName$learnMore</span>";
 
 	$hideBeyondDepth = 2;
@@ -302,7 +307,7 @@ ROW;
 						<td><?php echo timeUnits($report->sampleTimeNs) ?> (Ticks: <?php echo $report->numTicks ?>)</td>
 					</tr>
 					<tr>
-						<td class="metadataName">Total CPU time spent</td>
+						<td class="metadataName">Main thread CPU time spent</td>
 						<td><?php echo timeUnits($report->activeTimeNs) ?></td>
 					</tr>
 					<?php if($report->numTicks > 0){
@@ -338,7 +343,7 @@ ROW;
 					}
 					?>
 					<tr>
-						<td class="metadataName">Server Load</td>
+						<td class="metadataName">Main Thread Load</td>
 						<td>
 							<span class="highlighted-metric" style="background-color: <?php echo heatmapColor($report->getServerLoad(), 100) ?>"><?php echo number_format($report->getServerLoad(), 2) ?>%</span>
 						</td>
@@ -461,6 +466,17 @@ ROW;
 				<b>Self Timings</b> account for time when the parent timer was active, but none of its child timers were
 				active. For example, <b>Entity Movement</b> might use specialized timers to cover certain parts of the
 				movement code, leaving the remainder to self timings.
+			</div>
+			<div id="info-async" title="Async Task Workers">
+				This timer accounts for the combined CPU time spent by all server Async Task worker threads. This is
+				subdivided into timings for individual async tasks.
+				High numbers here don't directly affect TPS and usually aren't a cause for concern. However, slow async
+				tasks can cause other problems, such as delayed terrain loading.
+				<br/><br/>
+				You might see very large Pct Total numbers here. A value of 100% means that async tasks are maxing out
+				1 CPU core on average. It will be larger than 100% if multiple workers (and therefore multiple CPU
+				cores) are being used. For example, if you have 4 async workers and they are all maxed out, you would
+				see a value close to 400%.
 			</div>
 		</div>
 	</body>

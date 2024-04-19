@@ -237,8 +237,8 @@ class Parser{
 	 *
 	 * @param TimingResult[] $records
 	 * @param TimingResult[] $parents
-	 * @phpstan-param array<int, TimingResult> $records
-	 * @phpstan-param array<int, TimingResult> $parents
+	 * @phpstan-param array<string, TimingResult> $records
+	 * @phpstan-param array<string, TimingResult> $parents
 	 *
 	 * @return TimingResult[]
 	 */

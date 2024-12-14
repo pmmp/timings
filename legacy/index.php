@@ -72,7 +72,6 @@ TITLE;
 <tr>
 	<th class="event-name-column"><span class="event-name">Event</span></th>
 	<th class="metrics-column">% Total</th>
-	<th class="metrics-column">Time ÷ Ticks</th>
 	<th class="metrics-column">Time ÷ Count</th>
 	<th class="metrics-column">Violations</th>
 	<th class="metrics-column">Peak</th>
@@ -135,7 +134,6 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 	$timesPerTick = $time->count / $numTicks;
 
 	$avgPerTick = round($time->timeNs / $time->count, 3) * $timesPerTick;
-	$pctTickStyle = "background-color: " . heatmapColor($avgPerTick, 1000 * 1000 * 50);
 	$avgPerTickStr = timeUnits($avgPerTick);
 
 	$avgPerCount = $time->timeNs / $time->count;
@@ -215,8 +213,7 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 	$result[] = <<<ROW
 <tr class='event $rowClasses' data-depth="$depth" data-children="$children">
 	<td class="event-name-column" title="$title">$eventNameCell</td>
-	<td class="metrics-column" style="$pctTotalStyle" title="% of the sample time spent ($timeStr)">$pctTotalStr</td>
-	<td class="metrics-column" style="$pctTickStyle" title="Average time per tick this timer was active">$avgPerTickStr</td>
+	<td class="metrics-column" style="$pctTotalStyle" title="% of the sample time spent ($timeStr total, $avgPerTickStr per tick)">$pctTotalStr</td>
 	<td class="metrics-column" style="$avgPerCountStyle" title="Average time per occurrence">$avgPerCountStr</td>
 	<td class="metrics-column" style="$violationsStyle" title="Total number of ticks that took too long because of this event">$violationsStr</td>
 	<td class="metrics-column" style="$peakStyle" title="The longest time spent by this timer in a single activation">$peakStr</td>

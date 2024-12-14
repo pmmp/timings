@@ -73,9 +73,9 @@ TITLE;
 	<th class="event-name-column"><span class="event-name">Event</span></th>
 	<th class="metrics-column">% Total</th>
 	<th class="metrics-column">Time ÷ Ticks</th>
+	<th class="metrics-column">Time ÷ Count</th>
 	<th class="metrics-column">Violations</th>
 	<th class="metrics-column">Peak</th>
-	<th class="metrics-column">Time ÷ Count</th>
 	<th class="metrics-column">Count ÷ Ticks</th>
 	<th class="metrics-column">Count</th>
 </tr>
@@ -217,9 +217,9 @@ function generateTableRow(TimingResult $time, int $numTicks, ?float $sample, flo
 	<td class="event-name-column" title="$title">$eventNameCell</td>
 	<td class="metrics-column" style="$pctTotalStyle" title="% of the sample time spent ($timeStr)">$pctTotalStr</td>
 	<td class="metrics-column" style="$pctTickStyle" title="Average time per tick this timer was active">$avgPerTickStr</td>
+	<td class="metrics-column" style="$avgPerCountStyle" title="Average time per occurrence">$avgPerCountStr</td>
 	<td class="metrics-column" style="$violationsStyle" title="Total number of ticks that took too long because of this event">$violationsStr</td>
 	<td class="metrics-column" style="$peakStyle" title="The longest time spent by this timer in a single activation">$peakStr</td>
-	<td class="metrics-column" style="$avgPerCountStyle" title="Average time per occurrence">$avgPerCountStr</td>
 	<td class="metrics-column" title="Average number of occurrences per server tick">$timesPerTickStr</td>
 	<td class="metrics-column" title="Total number of occurrences">$countStr</td>
 </tr>

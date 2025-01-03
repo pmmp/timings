@@ -11,6 +11,7 @@
 
 global $reportData;
 global $reportTimestamp;
+global $reportId;
 
 use Starlis\Timings\Parser\Parser;
 use Starlis\Timings\Parser\ParserException;
@@ -351,7 +352,7 @@ ROW;
 					?>
 				</table>
 				<div class="links">
-					<a href="/?id=<?php echo $_GET['id'] ?? 0 ?>&amp;raw=1">View raw</a>
+					<a href="/?id=<?php echo $reportId ?? 0 ?>&amp;raw=1">View raw</a>
 				</div>
 			</div>
 			<?php

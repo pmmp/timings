@@ -81,10 +81,10 @@ class Timings{
 
 		if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_GET['upload']) && $_GET['upload'] === 'true'){
 			$storage = new MySqlStorageService($mysqlHost, $mysqlDatabase, $mysqlUser, $mysqlPassword);
-			if(!isset($_POST['data'])){
+			if(!isset($_POST['data']) || !is_string($_POST['data'])){
 				http_response_code(400);
 				header('Content-Type: application/json');
-				echo json_encode(["error" => "No data provided"]);
+				echo json_encode(["error" => "Invalid or no data provided"]);
 				die();
 			}
 			try{
@@ -140,6 +140,7 @@ class Timings{
 
 			$GLOBALS['reportData'] = $timingData;
 			$GLOBALS['reportTimestamp'] = $timestamp;
+			$GLOBALS['reportId'] = $id;
 			ob_start();
 			require_once "legacy/index.php";
 			ob_end_flush();

@@ -11,48 +11,71 @@
 function showMyChildren() {
     showChildren($(this));
 }
-function showChildren(element) {
+function showChildrenStep(element, depth) {
     $(element).show()
+
     if ($(element).hasClass('hidden-children')) {
         $(element).off("click").click(hideMyChildren).addClass('visible-children').removeClass('hidden-children');
-        var depth = $(element).data('depth');
+        var last;
         var children = $(element).data('children');
+        var done = 1;
         $(element).nextUntil(
             function() {
-                return $(this).data('depth') == depth;
+                return $(this).data('depth') == depth || done >= 1000;
             }
         ).each(function() {
+            last = $(this).data('depth');
             if ($(this).data('depth') == depth + 1){
                 if (children == 1) { //this element is an only child, expand its children too
                     children = $(this).data('children');
                     depth++;
                     if ($(this).hasClass('hidden-children')) {
                         $(this).off("click").click(hideMyChildren).addClass('visible-children').removeClass('hidden-children');
+                        done++;
                     }
                 }
                 $(this).show();
             }
         })
+        if ($(last).data('depth') != depth) {
+            setTimeout(showChildrenStep, 0, last, depth)
+        }
     }
+}
+
+function showChildren(element) {
+    var stopDepth = $(element).data('depth');
+    setTimeout(showChildrenStep, 0, element, stopDepth);
 }
 
 function hideMyChildren() {
     hideChildren($(this));
 }
 
-function hideChildren(element) {
+function hideChildrenStep(element, depth) {
     if ($(element).hasClass('visible-children')) {
-        var depth = $(element).data('depth');
+        var last;
+        var done = 1;
         $(element).off("click").click(showMyChildren).addClass('hidden-children').removeClass('visible-children');
         $(element).nextUntil(function() {
-            return $(this).data('depth') <= depth;
+            return $(this).data('depth') <= depth || done >= 1000;
         }).each(function() {
+            last = $(this).data('depth');
             $(this).hide();
             if ($(this).hasClass('visible-children')) {
                 $(this).off("click").click(showMyChildren).addClass('hidden-children').removeClass('visible-children');
+                done++;
             }
         })
+        if ($(last).data('depth') != depth){
+            setTimeout(showChildrenStep, 0, last, depth)
+        }
     }
+}
+
+function hideChildren(element){
+    var stopDepth = $(element).data('depth');
+    setTimeout(hideChildrenStep, 0, element, stopDepth);
 }
 
 function hideAll() {

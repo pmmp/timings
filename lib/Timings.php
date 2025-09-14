@@ -44,7 +44,8 @@ class Timings{
 
 		foreach($storage->getAll() as $id){
 			$timestamp = 0;
-			$data = $storage->get($id, $timestamp);
+			$accessToken = "";
+			$data = $storage->get($id, $timestamp, $accessToken);
 			if($data === null){
 				continue;
 			}
@@ -96,7 +97,7 @@ class Timings{
 				echo json_encode(["error" => "Failed to parse report: " . $e->getMessage()]);
 				die();
 			}
-			$id = $storage->set(
+			[$id, $token] = $storage->set(
 				$_POST['data'],
 				$report->serverVersion,
 				$report->sampleTimeNs,
@@ -104,14 +105,15 @@ class Timings{
 				$report->getServerLoad(),
 				$report->getAverageEntities(),
 				$report->getAveragePlayers(),
-				$report->formatVersion
+				$report->formatVersion,
+				($_POST['private'] ?? null) === 'true'
 			);
 			if(!empty($_POST['browser']) && $_POST['browser'] !== 'true'){
 				header('Content-Type: application/json');
-				echo json_encode(["id" => $id]);
+				echo json_encode(["id" => $id, "access_token" => $token]);
 				die();
 			}
-			header('Location: ?id=' . $id);
+			header('Location: ?id=' . $id . '&access_token=' . $token);
 			die();
 		}
 
@@ -124,11 +126,18 @@ class Timings{
 			$id = (int) $id;
 			$storage = new MySqlStorageService($mysqlHost, $mysqlDatabase, $mysqlUser, $mysqlPassword);
 			$timestamp = 0;
-			$rawData = $storage->get($id, $timestamp);
+			$accessToken = "";
+			$rawData = $storage->get($id, $timestamp, $accessToken);
 			if($rawData === null){
 				http_response_code(404);
 				header('Content-Type: application/json');
 				echo json_encode(["error" => "Report not found"]);
+				die();
+			}
+			if($accessToken !== "" && (!isset($_GET["access_token"]) || $_GET["access_token"] !== $accessToken)){
+				http_response_code(403);
+				header('Content-Type: application/json');
+				echo json_encode(["error" => "Incorrect or no access token provided"]);
 				die();
 			}
 			$timingData = trim($rawData);
@@ -141,6 +150,7 @@ class Timings{
 			$GLOBALS['reportData'] = $timingData;
 			$GLOBALS['reportTimestamp'] = $timestamp;
 			$GLOBALS['reportId'] = $id;
+			$GLOBALS['accessToken'] = $accessToken;
 			ob_start();
 			require_once "legacy/index.php";
 			ob_end_flush();

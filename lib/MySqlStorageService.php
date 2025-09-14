@@ -3,10 +3,12 @@
 namespace Starlis\Timings;
 
 use function assert;
+use function bin2hex;
 use function htmlentities;
 use function is_array;
 use function is_int;
 use function is_string;
+use function random_bytes;
 use function strip_tags;
 
 class MySqlStorageService{
@@ -19,8 +21,8 @@ class MySqlStorageService{
 		$this->db->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
 	}
 
-	public function get(int $id, int &$timestamp) : ?string{
-		$stmt = $this->db->prepare("SELECT data, UNIX_TIMESTAMP(timestamp) AS timestamp FROM timings WHERE ID=:ID");
+	public function get(int $id, int &$timestamp, string &$accessToken) : ?string{
+		$stmt = $this->db->prepare("SELECT data, UNIX_TIMESTAMP(timestamp) AS timestamp, accessToken FROM timings WHERE ID=:ID");
 		$stmt->bindParam(":ID", $id);
 		$stmt->execute();
 		/** @var mixed[]|false $row */
@@ -33,6 +35,7 @@ class MySqlStorageService{
 		assert(is_string($data));
 		assert(is_int($row["timestamp"]));
 		$timestamp = $row["timestamp"];
+		$accessToken = $row["accessToken"] ?? "";
 
 		return htmlentities(strip_tags($data));
 	}
@@ -50,6 +53,10 @@ class MySqlStorageService{
 		}
 	}
 
+	/**
+	 * @return int[]|string[]
+	 * @phpstan-return array{int, string}
+	 */
 	public function set(
 		string $data,
 		string $serverVersion,
@@ -58,8 +65,10 @@ class MySqlStorageService{
 		float $averageLoad,
 		float $averageEntities,
 		float $averagePlayers,
-		int $formatVersion
-	) : int{
+		int $formatVersion,
+		bool $privateReport
+	) : array{
+		$accessToken = $privateReport ? bin2hex(random_bytes(8)) : "";
 		$stmt = $this->db->prepare(<<<'QUERY'
 			INSERT INTO timings (
 				data,
@@ -69,7 +78,8 @@ class MySqlStorageService{
 				averageLoad,
 				averageEntities,
 				averagePlayers,
-				formatVersion
+				formatVersion,
+				accessToken
 			) VALUES (
 				:data,
 				:serverVersion,
@@ -78,7 +88,8 @@ class MySqlStorageService{
 				:averageLoad,
 				:averageEntities,
 				:averagePlayers,
-				:formatVersion
+				:formatVersion,
+				:accessToken
 			)
 		QUERY);
 		$stmt->bindParam(':data', $data);
@@ -89,9 +100,10 @@ class MySqlStorageService{
 		$stmt->bindParam(':averageEntities', $averageEntities);
 		$stmt->bindParam(':averagePlayers', $averagePlayers);
 		$stmt->bindParam(':formatVersion', $formatVersion);
+		$stmt->bindParam(':accessToken', $accessToken);
 
 		$stmt->execute();
-		return (int) $this->db->lastInsertId();
+		return [(int) $this->db->lastInsertId(), $accessToken];
 	}
 
 	public function update(

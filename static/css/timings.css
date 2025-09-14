@@ -242,3 +242,9 @@ a.learnmore {
 .ui-widget-overlay {
     background: #000;
 }
+.private-report-notice {
+    background: darkcyan;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}

@@ -66,4 +66,6 @@ ALTER TABLE `timings`
 ALTER TABLE `timings`
   ADD `formatVersion` INT NOT NULL DEFAULT 0;
 
+ALTER TABLE `timings`
+  ADD `accessToken` VARCHAR(32) DEFAULT '';
 COMMIT;

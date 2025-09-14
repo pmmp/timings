@@ -262,6 +262,9 @@ ROW;
 				<form id="paste" method='post' action="?upload=true">
 					<br/>
 					<textarea id="uploadbox" name='data' cols="100" rows="8"></textarea><br/>
+					<input id="private" name="private" type="checkbox" checked value="true">
+					<label for="private">Private report (can only be viewed via a link provided on submission)</label>
+					<br/><br/>
 					<form type="hidden" name="browser" value="true">
 						<input type='submit' value='Paste'/>
 					</form>
@@ -352,7 +355,11 @@ ROW;
 					?>
 				</table>
 				<div class="links">
-					<a href="/?id=<?php echo $reportId ?? 0 ?>&amp;raw=1">View raw</a>
+					<a href="/?id=<?php echo $reportId ?? 0 ?>&amp;accessToken=<?php echo $accessToken ?? "" ?>&amp;raw=1">View raw</a>
+					<br><br>
+					<?php if(($accessToken ?? "") !== ""){ ?>
+					<span class="private-report-notice">This is a private report. Make sure to copy the URL if you want to view it again in the future.</span>
+					<?php } ?>
 				</div>
 			</div>
 			<?php

@@ -246,190 +246,166 @@ ROW;
 	</head>
 	<body>
 		<div class="pageHeader">
-			<img src="static/img/pocketmine-rgb.gif" loading="eager"/>
+			<img class="logo" src="static/img/pocketmine-rgb.gif" loading="eager"/>
 			<br/>
 			<h1>Timings Viewer</h1>
 		</div>
 		<?php
-
-		if(!$reportData) {
+		$spigotConfigPattern = "/&amp;amp;lt;spigotConfig&amp;amp;gt;(.*)&amp;amp;lt;\\/spigotConfig&amp;amp;gt;/ms";
+		if(preg_match($spigotConfigPattern, $reportData, $configMatch)){
+			$spigotConfig = $configMatch[1];
+			$reportData = preg_replace($spigotConfigPattern, "", $reportData);
+		}
+		try{
+			$report = Parser::buildTree($reportData);
+		}catch(ParserException $e){
 			?>
-			<div style="padding:50px;margin:auto;text-align: center">
-				To use the Timings parser, please type <b>/timings paste</b> in game, console or RCON.
-				It will then give you a link to view it on this page.<br/><br/>
-				Or paste your timings output below
-
-				<form id="paste" method='post' action="?upload=true">
-					<br/>
-					<textarea id="uploadbox" name='data' cols="100" rows="8"></textarea><br/>
-					<input id="private" name="private" type="checkbox" checked value="true">
-					<label for="private">Private report (can only be viewed via a link provided on submission)</label>
-					<br/><br/>
-					<form type="hidden" name="browser" value="true">
-						<input type='submit' value='Paste'/>
-					</form>
-				</form>
-			</div>
-
+			<span class="recommendation">
+				Sorry, this timings report appears to be invalid: <?php echo $e->getMessage() ?><br/>
+				If this is incorrect, please submit an issue on our <a href="https://github.com/pmmp/timings/issues">Issues Page</a>.
+			</span>
 			<?php
-
-		} else {
-			$spigotConfigPattern = "/&amp;amp;lt;spigotConfig&amp;amp;gt;(.*)&amp;amp;lt;\\/spigotConfig&amp;amp;gt;/ms";
-			if(preg_match($spigotConfigPattern, $reportData, $configMatch)){
-				$spigotConfig = $configMatch[1];
-				$reportData = preg_replace($spigotConfigPattern, "", $reportData);
-			}
-			try{
-				$report = Parser::buildTree($reportData);
-			}catch(ParserException $e){
-				?>
-				<span class="recommendation">
-					Sorry, this timings report appears to be invalid: <?php echo $e->getMessage() ?><br/>
-					If this is incorrect, please submit an issue on our <a href="https://github.com/pmmp/timings/issues">Issues Page</a>.
-				</span>
-				<?php
-				$report = null;
-			}
-			if($report !== null){
-			?>
-			<div class="head">
-				<table>
-					<tr>
-						<td class="metadataName">PocketMine-MP Version</td>
-						<td><?php echo $report->serverVersion ?></td>
-					</tr>
-					<tr>
-						<td class="metadataName">Sample time</td>
-						<td><?php echo timeUnits($report->sampleTimeNs) ?> (Ticks: <?php echo $report->numTicks ?>)</td>
-					</tr>
-					<tr>
-						<td class="metadataName">Main thread CPU time spent</td>
-						<td><?php echo timeUnits($report->activeTimeNs) ?></td>
-					</tr>
-					<?php if($report->numTicks > 0){
-						if($report->entityTicks > 0){
-							?>
-							<tr>
-								<td class="metadataName">Average Entities</td>
-								<td><?php echo number_format($report->entityTicks / $report->numTicks, 2) ?></td>
-							</tr>
-							<?php
-						}
-						if($report->playerTicks > 0){
-							?>
-							<tr>
-								<td class="metadataName">Average Players</td>
-								<td><?php echo number_format($report->playerTicks / $report->numTicks, 2) ?></td>
-							</tr>
-							<?php
-						}
-						if($report->sampleTimeNs > 0){
-							$tps = $report->getAverageTPS();
-							//10 TPS will be red, 20 will be normal
-							$tpsHighlight = heatmapColor(10 - ($tps - 10), 10);
-							?>
-							<tr>
-								<td class="metadataName">Average TPS</td>
-								<td>
-									<span class="highlighted-metric" style="background-color: <?php echo $tpsHighlight ?>"><?php echo number_format($tps, 2) ?></span>
-								</td>
-							</tr>
-							<?php
-						}
-					}
-					?>
-					<tr>
-						<td class="metadataName">Main Thread Load</td>
-						<td>
-							<span class="highlighted-metric" style="background-color: <?php echo heatmapColor($report->getServerLoad(), 100) ?>"><?php echo number_format($report->getServerLoad(), 2) ?>%</span>
-						</td>
-					</tr>
-					<?php if(isset($reportTimestamp) && is_int($reportTimestamp)){
+			$report = null;
+		}
+		if($report !== null){
+		?>
+		<div class="head">
+			<table>
+				<tr>
+					<td class="metadataName">PocketMine-MP Version</td>
+					<td><?php echo $report->serverVersion ?></td>
+				</tr>
+				<tr>
+					<td class="metadataName">Sample time</td>
+					<td><?php echo timeUnits($report->sampleTimeNs) ?> (Ticks: <?php echo $report->numTicks ?>)</td>
+				</tr>
+				<tr>
+					<td class="metadataName">Main thread CPU time spent</td>
+					<td><?php echo timeUnits($report->activeTimeNs) ?></td>
+				</tr>
+				<?php if($report->numTicks > 0){
+					if($report->entityTicks > 0){
 						?>
 						<tr>
-							<td class="metadataName">Submitted</td>
-							<td><?php echo date("Y-m-d H:i:s P", $reportTimestamp) ?></td>
+							<td class="metadataName">Average Entities</td>
+							<td><?php echo number_format($report->entityTicks / $report->numTicks, 2) ?></td>
 						</tr>
 						<?php
 					}
-					?>
-				</table>
-				<div class="links">
-					<a href="/?id=<?php echo $reportId ?? 0 ?>&amp;accessToken=<?php echo $accessToken ?? "" ?>&amp;raw=1">View raw</a>
-					<br><br>
-					<?php if(($accessToken ?? "") !== ""){ ?>
-					<span class="private-report-notice">This is a private report. Make sure to copy the URL if you want to view it again in the future.</span>
-					<?php } ?>
-				</div>
-			</div>
-			<?php
-			$recommendations = [];
-			if($report->getServerLoad() < 95 && $report->getAverageTPS() < 19){
-				$recommendations[] = [
-					"<b>Notice: Your AVG TPS is less than 19 but server load is less than 95.</b><br/>",
-					"This means that something (not the server's main thread) is hogging the CPU.",
-					"This might be because of overloaded AsyncWorkers (plugins scheduling too many AsyncTasks or AsyncTasks running for too long),",
-					"too much activity on the network, or something else might be running on the machine and hogging the CPU.",
-					"You should check the machine's overall CPU usage to see if anything else might be using a lot of CPU."
-				];
-			}elseif($report->getAverageTPS() < 19){
-				$recommendations[] = [
-					"<b>Your server is lagging because it is overloaded. Your server may have more players online than it can handle.</b>"
-				];
-			}
-			if($report->sampleTimeNs < 60_000_000_000){
-				$recommendations[] = [
-					"<b>This report is very short. It may not be representative of your server's actual performance.</b><br/>",
-					"Timings should be run for at least 1 minute to gather useful data.",
-				];
-			}
-			foreach($recommendations as $recommendation){
+					if($report->playerTicks > 0){
+						?>
+						<tr>
+							<td class="metadataName">Average Players</td>
+							<td><?php echo number_format($report->playerTicks / $report->numTicks, 2) ?></td>
+						</tr>
+						<?php
+					}
+					if($report->sampleTimeNs > 0){
+						$tps = $report->getAverageTPS();
+						//10 TPS will be red, 20 will be normal
+						$tpsHighlight = heatmapColor(10 - ($tps - 10), 10);
+						?>
+						<tr>
+							<td class="metadataName">Average TPS</td>
+							<td>
+								<span class="highlighted-metric" style="background-color: <?php echo $tpsHighlight ?>"><?php echo number_format($tps, 2) ?></span>
+							</td>
+						</tr>
+						<?php
+					}
+				}
 				?>
-				<span class="recommendation">
-					<?php
-					echo implode("\n", $recommendation);
+				<tr>
+					<td class="metadataName">Main Thread Load</td>
+					<td>
+						<span class="highlighted-metric" style="background-color: <?php echo heatmapColor($report->getServerLoad(), 100) ?>"><?php echo number_format($report->getServerLoad(), 2) ?>%</span>
+					</td>
+				</tr>
+				<?php if(isset($reportTimestamp) && is_int($reportTimestamp)){
 					?>
-				</span>
-				<?php
-			}
-			?>
-			<div id="reports" class="reports">
-				<?php
-
-				$exclude = ['entityAIJump', 'entityAILoot', 'entityAIMove',
-					'entityTickRest', 'entityAI', 'entityBaseTick'];
-
-				$recommendations = [];
-
-				if($report->tree !== null){
-					echo generateTable($report->tree, "Minecraft (Tree View)", $report->groupTotals["Minecraft"], $report->numTicks, $report->sampleTimeNs, $report->activeTimeNs, $exclude, PHP_INT_MAX, 1);
+					<tr>
+						<td class="metadataName">Submitted</td>
+						<td><?php echo date("Y-m-d H:i:s P", $reportTimestamp) ?></td>
+					</tr>
+					<?php
 				}
-				$tableOrder = ["Minecraft" => true, TimingsReport::BREAKDOWN_SUBKEY => true];
-				foreach($report->groupTotals as $groupName => $total){
-					if(!isset($tableOrder[$groupName])){
-						$tableOrder[$groupName] = true;
-					}
-				}
-				foreach($tableOrder as $groupName => $timings){
-					if(!isset($report->groups[$groupName])){
-						continue;
-					}
-					$visibleRows = 5;
-					$loadHeatmapFactor = 0.06;
-					if($groupName === "Minecraft"){
-						$visibleRows = 10;
-						$loadHeatmapFactor = 1.0;
-					}
-					$groupTitle = $groupName;
-					$groupTotal = $report->groupTotals[$groupName] ?? null;
-					if($groupTotal === null){
-						$groupTitle .= " (counted by other timings)";
-					}
-					echo generateTable($report->groups[$groupName], $groupTitle, $groupTotal, $report->numTicks, $report->sampleTimeNs, $report->activeTimeNs, $exclude, $visibleRows, $loadHeatmapFactor);
-				} ?>
+				?>
+			</table>
+			<div class="links">
+				<a href="/?id=<?php echo $reportId ?? 0 ?>&amp;accessToken=<?php echo $accessToken ?? "" ?>&amp;raw=1">View raw</a>
+				<br><br>
+				<?php if(($accessToken ?? "") !== ""){ ?>
+				<span class="private-report-notice">This is a private report. Make sure to copy the URL if you want to view it again in the future.</span>
+				<?php } ?>
 			</div>
+		</div>
+		<?php
+		$recommendations = [];
+		if($report->getServerLoad() < 95 && $report->getAverageTPS() < 19){
+			$recommendations[] = [
+				"<b>Notice: Your AVG TPS is less than 19 but server load is less than 95.</b><br/>",
+				"This means that something (not the server's main thread) is hogging the CPU.",
+				"This might be because of overloaded AsyncWorkers (plugins scheduling too many AsyncTasks or AsyncTasks running for too long),",
+				"too much activity on the network, or something else might be running on the machine and hogging the CPU.",
+				"You should check the machine's overall CPU usage to see if anything else might be using a lot of CPU."
+			];
+		}elseif($report->getAverageTPS() < 19){
+			$recommendations[] = [
+				"<b>Your server is lagging because it is overloaded. Your server may have more players online than it can handle.</b>"
+			];
+		}
+		if($report->sampleTimeNs < 60_000_000_000){
+			$recommendations[] = [
+				"<b>This report is very short. It may not be representative of your server's actual performance.</b><br/>",
+				"Timings should be run for at least 1 minute to gather useful data.",
+			];
+		}
+		foreach($recommendations as $recommendation){
+			?>
+			<span class="recommendation">
 				<?php
+				echo implode("\n", $recommendation);
+				?>
+			</span>
+			<?php
+		}
+		?>
+		<div id="reports" class="reports">
+			<?php
+
+			$exclude = ['entityAIJump', 'entityAILoot', 'entityAIMove',
+				'entityTickRest', 'entityAI', 'entityBaseTick'];
+
+			$recommendations = [];
+
+			if($report->tree !== null){
+				echo generateTable($report->tree, "Minecraft (Tree View)", $report->groupTotals["Minecraft"], $report->numTicks, $report->sampleTimeNs, $report->activeTimeNs, $exclude, PHP_INT_MAX, 1);
 			}
+			$tableOrder = ["Minecraft" => true, TimingsReport::BREAKDOWN_SUBKEY => true];
+			foreach($report->groupTotals as $groupName => $total){
+				if(!isset($tableOrder[$groupName])){
+					$tableOrder[$groupName] = true;
+				}
+			}
+			foreach($tableOrder as $groupName => $timings){
+				if(!isset($report->groups[$groupName])){
+					continue;
+				}
+				$visibleRows = 5;
+				$loadHeatmapFactor = 0.06;
+				if($groupName === "Minecraft"){
+					$visibleRows = 10;
+					$loadHeatmapFactor = 1.0;
+				}
+				$groupTitle = $groupName;
+				$groupTotal = $report->groupTotals[$groupName] ?? null;
+				if($groupTotal === null){
+					$groupTitle .= " (counted by other timings)";
+				}
+				echo generateTable($report->groups[$groupName], $groupTitle, $groupTotal, $report->numTicks, $report->sampleTimeNs, $report->activeTimeNs, $exclude, $visibleRows, $loadHeatmapFactor);
+			} ?>
+		</div>
+			<?php
 		} ?>
 		<div class="footer">
 			&copy; Aikar of <a href='http://ref.emc.gs/?gas=timingsphp' rel="nofollow">Empire Minecraft</a> 2017<br/>

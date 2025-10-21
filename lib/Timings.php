@@ -13,6 +13,7 @@ namespace Starlis\Timings;
 
 use Starlis\Timings\Parser\Parser;
 use Starlis\Timings\Parser\ParserException;
+use function file_get_contents;
 use function filter_var;
 use function getenv;
 use function header;
@@ -74,6 +75,20 @@ class Timings{
 		}
 	}
 
+	private static function badRequestNoReturn(string $error) : never{
+		if(!empty($_POST['browser']) && $_POST['browser'] !== 'true'){
+			http_response_code(400);
+			header('Content-Type: application/json');
+			echo json_encode(["error" => $error]);
+		}else{
+			//user-readable error
+			http_response_code(400);
+			header('Content-Type: text/plain');
+			echo "Bad Request: " . $error;
+		}
+		die();
+	}
+
 	public static function bootstrap() : never{
 		$mysqlHost = self::getenv_string('MYSQL_HOST');
 		$mysqlDatabase = self::getenv_string('MYSQL_DATABASE');
@@ -82,23 +97,27 @@ class Timings{
 
 		if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_GET['upload']) && $_GET['upload'] === 'true'){
 			$storage = new MySqlStorageService($mysqlHost, $mysqlDatabase, $mysqlUser, $mysqlPassword);
-			if(!isset($_POST['data']) || !is_string($_POST['data'])){
-				http_response_code(400);
-				header('Content-Type: application/json');
-				echo json_encode(["error" => "Invalid or no data provided"]);
-				die();
+			if(isset($_FILES['reportFile'])){
+				if(!isset($_FILES['reportFile']['tmp_name'])){
+					self::badRequestNoReturn("File upload requested but no file provided");
+				}
+				$timingData = file_get_contents($_FILES['reportFile']['tmp_name']);
+			}elseif(isset($_POST['data'])){
+				if(!is_string($_POST['data'])){
+					self::badRequestNoReturn("Invalid uploaded data");
+				}
+				$timingData = $_POST['data'];
+			}else{
+				self::badRequestNoReturn("Neither paste nor file upload provided");
 			}
 			try{
 				//validate the report before saving it
-				$report = Parser::buildTree($_POST['data']);
+				$report = Parser::buildTree($timingData);
 			}catch(\Exception $e){
-				http_response_code(400);
-				header('Content-Type: application/json');
-				echo json_encode(["error" => "Failed to parse report: " . $e->getMessage()]);
-				die();
+				self::badRequestNoReturn("Failed to parse report: " . $e->getMessage());
 			}
 			[$id, $token] = $storage->set(
-				$_POST['data'],
+				$timingData,
 				$report->serverVersion,
 				$report->sampleTimeNs,
 				$report->getAverageTPS(),
@@ -154,10 +173,11 @@ class Timings{
 			ob_start();
 			require_once "legacy/index.php";
 			ob_end_flush();
+			die();
 		}
 
 		ob_start();
-		require_once "legacy/index.php";
+		require_once "templates/index.html";
 		ob_end_flush();
 		exit;
 	}

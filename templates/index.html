@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>PocketMine-MP Timings Viewer</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+		<style>
+			body {
+				display: flex;
+				flex-direction: column;
+				min-height: 100vh;
+				background-color: #f0f0f0;
+				color: #000;
+				font-family: monospace;
+			}
+
+			.page-header {
+				text-align: center;
+				padding: 2rem 1rem 1rem;
+			}
+
+			img.logo {
+				object-fit: contain;
+				max-width: 90%;
+				max-height: 50px;
+			}
+
+			main {
+				flex: 1;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				padding: 2rem;
+			}
+
+			.card {
+				max-width: 700px;
+				width: 100%;
+			}
+
+			footer {
+				background: #dddddd;
+				text-align: center;
+				padding: 1rem 0;
+				font-size: 0.9rem;
+				color: #555;
+				margin-top: auto;
+			}
+		</style>
+	</head>
+	<body>
+		<header class="page-header">
+			<img class="logo" src="static/img/pocketmine-rgb.gif" alt="PocketMine Logo" loading="eager">
+			<h1 class="mt-3">Timings Viewer</h1>
+		</header>
+
+		<main>
+			<div class="card shadow-sm p-4">
+				<p class="text-center">
+					To use the Timings parser, please type <b>/timings paste</b> in game, console, or RCON.<br>
+					It will give you a link to view it on this page.<br><br>
+					Or paste your timings output below.
+				</p>
+
+				<div class="mb-3 text-center">
+					<div class="btn-group" role="group" aria-label="Input mode">
+						<input type="radio" class="btn-check" name="inputMode" id="modeUpload" checked>
+						<label class="btn btn-outline-primary" for="modeUpload">Upload File</label>
+						<input type="radio" class="btn-check" name="inputMode" id="modePaste">
+						<label class="btn btn-outline-primary" for="modePaste">Paste Report</label>
+					</div>
+				</div>
+
+				<form id="uploadForm" method="post" action="?upload=true" enctype="multipart/form-data"
+					  class="text-center">
+					<div class="mb-3" id="uploadInput" style="display: inline-block">
+						<input type="file" name="reportFile" accept=".txt" class="form-control">
+					</div>
+					<textarea id="pasteInput" name="reportData" class="form-control mb-3" rows="8"
+							  placeholder="Paste your timings data here..." style="display: none;"></textarea>
+					<div class="align-items-center">
+						<div class="form-check align-items-center" style="display: inline-block">
+							<input id="privateFile" name="private" type="checkbox" class="form-check-input" checked
+								   value="true">
+							<label for="privateFile"
+								   class="form-check-label">Private report (can only be viewed via the provided link)</label>
+						</div>
+					</div>
+
+					<button type="submit" class="btn btn-primary mt-3">Upload</button>
+				</form>
+			</div>
+		</main>
+
+		<footer>
+			&copy; Aikar of <a href="http://ref.emc.gs/?gas=timingsphp" rel="nofollow">Empire Minecraft</a> 2017<br>
+			&copy; <a href="https://github.com/pmmp">PMMP Team</a> 2017–2023<br>
+			<a href="https://github.com/pmmp/timings" title="Source Code">[source]</a>
+		</footer>
+
+		<script>
+			document.getElementById('modePaste').addEventListener('change', function() {
+			  document.getElementById('pasteInput').style.display = 'block';
+			  document.getElementById('uploadInput').style.display = 'none';
+			});
+			document.getElementById('modeUpload').addEventListener('change', function() {
+			  document.getElementById('pasteInput').style.display = 'none';
+			  document.getElementById('uploadInput').style.display = 'inline-block';
+			});
+		</script>
+	</body>
+</html>
+

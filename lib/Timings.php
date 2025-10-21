@@ -18,6 +18,7 @@ use function filter_var;
 use function getenv;
 use function header;
 use function http_response_code;
+use function is_array;
 use function is_string;
 use function json_encode;
 use function ob_end_flush;
@@ -98,10 +99,13 @@ class Timings{
 		if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_GET['upload']) && $_GET['upload'] === 'true'){
 			$storage = new MySqlStorageService($mysqlHost, $mysqlDatabase, $mysqlUser, $mysqlPassword);
 			if(isset($_FILES['reportFile'])){
-				if(!isset($_FILES['reportFile']['tmp_name'])){
+				if(!is_array($_FILES['reportFile']) || !isset($_FILES['reportFile']['tmp_name']) || !is_string($_FILES['reportFile']['tmp_name'])){
 					self::badRequestNoReturn("File upload requested but no file provided");
 				}
 				$timingData = file_get_contents($_FILES['reportFile']['tmp_name']);
+				if($timingData === false){
+					self::badRequestNoReturn("Failed to read uploaded file");
+				}
 			}elseif(isset($_POST['data'])){
 				if(!is_string($_POST['data'])){
 					self::badRequestNoReturn("Invalid uploaded data");

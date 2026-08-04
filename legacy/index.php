@@ -332,7 +332,7 @@ ROW;
 				?>
 			</table>
 			<div class="links">
-				<a href="/?id=<?php echo $reportId ?? 0 ?>&amp;accessToken=<?php echo $accessToken ?? "" ?>&amp;raw=1">View raw</a>
+				<a href="/?id=<?php echo $reportId ?? 0 ?>&amp;access_token=<?php echo $accessToken ?? "" ?>&amp;raw=1">View raw</a>
 				<br><br>
 				<?php if(($accessToken ?? "") !== ""){ ?>
 				<span class="private-report-notice">This is a private report. Make sure to copy the URL if you want to view it again in the future.</span>
